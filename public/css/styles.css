@@ -1,4 +1,113 @@
-::root{
-
+:root{
+    --main-color: #954edb;
+    --main-light-color: #a66ce0;
+    --grey-color: #eeeeee;
 }
 
+body{
+    min-height: 100vh;
+}
+
+ul{
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+    list-style-type: none;
+    color: white;
+}
+
+.header{
+    height: 80px;
+    padding: 12px 0;
+}
+
+.logo{
+    height: 56px;
+}
+
+.search_bar{
+    display: flex;
+    align-items: center;
+    min-width: 400px;
+    border-radius: 24px;
+    outline: var(--main-light-color) solid 1px;
+    overflow: hidden;
+}
+
+.search_input{
+    flex: 1;
+    border: none;
+    margin: 0 12px;
+    padding: 8px 8px;
+}
+
+.search_input:focus-visible{
+    outline: none;
+}
+
+.search_bar:has(> .search_input:focus-visible){
+    outline: var(--main-color) solid 2px;
+}
+
+.search_icon_wrap{
+    padding: 8px 12px;
+    background-color: var(--main-light-color);
+    transition: all .4s;
+    border-radius: 0 24px 24px 0;
+    cursor: pointer;
+}
+
+.search_icon{
+    color: white;
+}
+
+.search_icon_wrap:hover{
+    background-color: var(--main-color);
+}
+
+.search_icon_wrap:hover .search_icon{
+    color: black;
+}
+
+.avatar_wrap{
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    transition: .4s;
+    border-radius: 16px;
+}
+
+.avatar_wrap:hover{
+    cursor: pointer;
+    background-color: var(--grey-color);
+}
+
+.user_avatar{
+    border-radius: 50%;
+    width: 44px;
+    margin-right: 8px; 
+}
+
+.nav_bar{
+    background-color: black;
+    height: 50px;
+}
+
+.nav_item{
+    flex: 1;
+    line-height: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 16px 0;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+.nav_item:not(:last-child){
+    background: url(../images/UI/split.png) no-repeat center right;
+}
+
+.nav_item:hover{
+    letter-spacing: 3px;
+    color: var(--main-color);
+}
