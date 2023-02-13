@@ -2,12 +2,14 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.render('ticket', {
+    res.render('home', {
         layout: 'mainLayout',
         carousel: [
-            'images/Carousel/Film1.jpg',
-            'images/Carousel/Film2.jpg',
-            'images/Carousel/Film3.jpg',
+            {index: 0, src: 'images/Carousel/Babylon.jpg'},
+            {index: 1, src: 'images/Carousel/Knock-at-the-Cabin.jpg'},
+            {index: 2, src: 'images/Carousel/Missing.jpg'},
+            {index: 3, src: 'images/Carousel/Shazam_-Fury-of-the-Gods.jpg'},
+            {index: 4, src: 'images/Carousel/Titanic.jpg'},
         ]
     })
 })
