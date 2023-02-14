@@ -22,6 +22,10 @@ a{
     text-decoration: none !important;
 }
 
+p{
+    margin-bottom: .25rem !important;
+}
+
 .carousel-item img{
     max-height: 100vh;
 }
@@ -183,4 +187,53 @@ button{
 
 .custom_btn:hover::before{
     transform: skewX(45deg) translateX(200%);
+}
+
+.movie_filter{
+    width: 84px;
+    height: 36px;
+    margin-right: 24px;
+    border-radius: 6px;
+    transition: all .4s;
+    box-shadow: 0 0 8px 4px #d1d5db;
+}
+
+.movie_filter:hover{
+    background-color: var(--main-color);
+    transform: scale(1.1);
+}
+
+div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){ 
+    background-color: #0f0f0f0f !important;
+    opacity: 0.5;
+}
+
+.filter-active{
+    background-color: var(--main-light-color);
+}
+
+.list_movie{
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .75rem;
+}
+
+.movie_wrap{
+    background-color: var(--grey-color);
+    border-radius: 8px;
+    width: 100%;
+}
+
+.movie_poster{
+    width: 100%;
+    aspect-ratio: .75;
+    border-radius: 8px 8px 0 0;
+}
+
+.movie_name{
+    font-weight: 600;
+}
+
+.movie_duration, .movie_category, .movie_split{
+    color: var(--main-light-color);
 }
