@@ -2,8 +2,11 @@
     --main-color: #954edb;
     --main-light-color: #a66ce0;
     --grey-color: #eeeeee;
-    --pri-btn-color: #d9ffd8;
-    --sed-btn-color: #fcc8ff;
+    --pri-btn-color: #8d9cef;
+    --sed-btn-color: #eda0e0;
+    --grey-trans-color: rgba(238, 238, 238, 0.3);
+    --card-color: #f7d4c8;
+    --tag-color: #f99b9d;
 }
 
 body{
@@ -45,12 +48,15 @@ button{
 .header{
     height: 80px;
     padding: 12px 0;
-    background-color: transparent;
-    position: absolute;
+    background-color: var(--grey-trans-color);
+    position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
     right: 0;
+    box-shadow: 0 4px 12px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0 4px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0 4px 12px 0px rgba(0,0,0,0.75);
 }
 
 .logo{
@@ -215,25 +221,53 @@ div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){
 .list_movie{
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: .75rem;
+    gap: 1.25rem;
+    margin-bottom: 32px;
 }
 
 .movie_wrap{
     background-color: var(--grey-color);
     border-radius: 8px;
     width: 100%;
+    transition: all .4s;
+    overflow: hidden;
+}
+
+.movie_wrap:hover{
+    transform: scale(1.05) translateZ(3px);
+}
+
+.movie_wrap:hover .movie_poster{
+    transform: scale(1.05);
 }
 
 .movie_poster{
     width: 100%;
     aspect-ratio: .75;
     border-radius: 8px 8px 0 0;
+    transition: all .4s;
+    background-position: center;
+    background-size: cover;
 }
 
 .movie_name{
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .movie_duration, .movie_category, .movie_split{
     color: var(--main-light-color);
+}
+
+.release_date{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 35%;
+    right: 0;
+    height: 40px;
+    width: 132px;
+    background-color: var(--tag-color);
+    font-weight: 500;
+    opacity: 0.8;
 }

@@ -16,6 +16,7 @@ app.engine('handlebars', hbs.engine())
 app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, 'views'))
 
+/* Setting up the middleware for the express app. */
 app.use(bodyParser.json({limit: '30mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}))
 app.use(cors())
@@ -33,7 +34,7 @@ app.use(session({
 //     delete req.session.flash
 //     next()
 // })
-  
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)

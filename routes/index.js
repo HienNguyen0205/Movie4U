@@ -22,6 +22,13 @@ router.get('/', (req, res) => {
             {src: 'images/Movie/star-wars.jpg', name: 'Star War', duration: '120 min', category: 'action'},
             {src: 'images/Movie/thor.jpg', name: 'Thor', duration: '120 min', category: 'action'},
             {src: 'images/Movie/toy-story-4.jpg', name: 'Toy Story: 4', duration: '120 min', category: 'action'},
+        ],
+        comingMovies: [
+            {src: 'images/Movie/aladdin.jpg', name: 'Aladdin', duration: '120 min', category: 'action', release: '02/05/2002'},
+            {src: 'images/Movie/avenger-endgame.jpg', name: 'Avenger Endgame', duration: '120 min', category: 'action', release: '02/05/2002'},
+            {src: 'images/Movie/captain-marvel.jpg', name: 'Captain Marvel', duration: '120 min', category: 'action', release: '02/05/2002'},
+            {src: 'images/Movie/cruella.jpg', name: 'Cruella', duration: '120 min', category: 'action', release: '02/05/2002'},
+            {src: 'images/Movie/glass.jpg', name: 'Glass', duration: '120 min', category: 'action', release: '02/05/2002'},
         ]
     })
 })

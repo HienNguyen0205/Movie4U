@@ -24,17 +24,36 @@
         </div>
     </div>
     <hr>
-    <div class="d-flex mb-4">
+    <div class="d-flex mb-4 align-items-center">
         <button class="movie_filter filter-active">All</button>
         <button class="movie_filter">2D</button>
         <button class="movie_filter">3D</button>
         <button class="movie_filter">IMAX</button>
         <button class="movie_filter">IMAX 3D</button>
+        <a class="ms-auto me-1" href="">See more..</a>
     </div>
     <div class="list_movie">
         {{#each movies}}
             <div class="movie_wrap">
                 <img class="movie_poster" src="{{this.src}}" alt="movie">
+                <div class="p-3">
+                    <p class="movie_name">{{this.name}}</p>
+                    <span class="movie_duration">{{this.duration}}</span>
+                    <span class="movie_split mx-1">|</span>
+                    <span class="movie_category">{{this.category}}</span>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div class="title_wrap">
+        <h3>Coming soon</h3>
+    </div>
+    <hr>
+    <div class="list_movie">
+        {{#each comingMovies}}
+            <div class="movie_wrap position-relative">
+                <img class="movie_poster" src="{{this.src}}" alt="movie">
+                <div class="release_date"><i class="fa-solid fa-calendar-days"></i> {{this.release}}</div>
                 <div class="p-3">
                     <p class="movie_name">{{this.name}}</p>
                     <span class="movie_duration">{{this.duration}}</span>
