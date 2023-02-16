@@ -44,7 +44,7 @@ body{
     background-color: var(--sub-color);
     backdrop-filter: blur(5px);
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-direction: column;
 }
 
@@ -88,7 +88,6 @@ body{
 .light-line {
     margin: auto !important;
     margin-top: 5px !important;
-    margin-bottom: 5px !important;
     width: 80%;
     height: 1px;
     background-color: var(--ic-unhover) !important;
@@ -108,7 +107,8 @@ ul li{
     justify-content: center;
     cursor: pointer;
     color: var(--grey);
-    font-size: 12px;
+    font-size: 14px;
+    transition: 0.4s;
 }
 ul li i{
     width: 36px !important;
@@ -118,6 +118,9 @@ ul li i{
 ul li:hover {
     background-image: linear-gradient(to left, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
     color: var(--light-grey);
+    border-left-width: 6px;
+    border-left-style: solid;
+    border-image: linear-gradient(to top, #c471f5 0%, #fa71cd 100%) 1;
 }
 ul li:hover i {
     color: var(--ic-hover);
