@@ -9,6 +9,7 @@ const session = require('express-session')
 const path = require('path')
 
 const indexRouter = require('./routes/index')
+const adminRouter = require('./routes/admin')
 
 const app = express()
 
@@ -38,5 +39,6 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+app.use('/admin', adminRouter)
 
 module.exports = app
