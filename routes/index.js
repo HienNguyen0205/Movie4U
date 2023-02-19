@@ -29,6 +29,11 @@ router.get('/', (req, res) => {
             {src: 'images/Movie/captain-marvel.jpg', name: 'Captain Marvel', duration: '120 min', category: 'action', release: '02/05/2002'},
             {src: 'images/Movie/cruella.jpg', name: 'Cruella', duration: '120 min', category: 'action', release: '02/05/2002'},
             {src: 'images/Movie/glass.jpg', name: 'Glass', duration: '120 min', category: 'action', release: '02/05/2002'},
+        ],
+        trailers: [
+            {name: 'Ant-Man and The Wasp: Quantumania', poster: 'images/PosterTrailer/ant_man_wasp_quantumania.jpg', src: 'https://www.youtube.com/embed/s3UD3qvJdao?enablejsapi=1'},
+            {name: 'Consectation', poster: 'images/PosterTrailer/consecration.jpg', src: 'https://www.youtube.com/embed/HRjG65M6L2c?enablejsapi=1'},
+            {name: 'Argonuts', poster: 'images/PosterTrailer/argonuts.jpg', src: 'https://www.youtube.com/embed/LiVyhdxLYFc?enablejsapi=1'}
         ]
     })
 })
