@@ -18,8 +18,7 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="side-nav">
+    <div class="side-nav">
             <div class="admin">
                 <div class="admin-img"><i class="fa-solid fa-user fa-xl"></i></div>
                 <div class="admin-title_name">
@@ -28,7 +27,7 @@
                 </div>
             </div>
             {{!-- <div class="light-line"></div> --}}
-            <ul>
+            <ul class="nav-opt">
                 <li><i class="fa-solid fa-chart-line fa-xl"></i><p>Dashboard</p></li>
                 <li><i class="fa-solid fa-film fa-xl"></i><p>Movie Theatres</p></li>
                 <li><i class="fa-solid fa-video fa-xl"></i><p>Movies</p></li>
@@ -38,11 +37,13 @@
                 <li><i class="fa-solid fa-ticket fa-xl"></i><p>Booking</p></li>
                 <li><i class="fa-solid fa-money-bill-1-wave fa-xl"></i><p>Expense</p></li>
             </ul>
-            <ul class="outer_logout">
+            <ul class="nav-opt outer_logout">
                 <li><i class="fa-solid fa-arrow-right-from-bracket fa-xl"></i><p>Logout</p></li>
             </ul>
         </div>
-    </div>
+    {{!-- <div class="header">
+        
+    </div> --}}
     {{{body}}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
