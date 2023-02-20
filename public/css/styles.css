@@ -7,6 +7,7 @@
     --grey-trans-color: rgba(238, 238, 238, 0.3);
     --card-color: #f7d4c8;
     --tag-color: #f99b9d;
+    --selected-color: #eb332b;
 }
 
 body{
@@ -22,11 +23,17 @@ ul{
 }
 
 a{
+    display: block;
     text-decoration: none !important;
 }
 
 p{
     margin-bottom: .25rem !important;
+}
+
+
+h1,h2,h3,h4,h5,h6,p,span,hr{
+    color: white !important;
 }
 
 .carousel-item img{
@@ -78,6 +85,8 @@ button{
     border: none;
     margin: 0 12px;
     padding: 8px 8px;
+    background-color: transparent !important;
+    color: white;
 }
 
 .search_input:focus-visible{
@@ -124,12 +133,12 @@ button{
     user-select: none;
     min-width: 120px;
     color: black;
-    text-shadow: 1px 0 #fff, -1px 0 #fff, 0 1px #fff, 0 -1px #fff,
-        1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+    text-shadow: 1px 0 1px #fff, -1px 0 1px #fff, 0 1px 1px #fff, 0 -1px 1px #fff,
+        1px 1px 1px #fff, -1px -1px 1px #fff, 1px -1px 1px #fff, -1px 1px 1px #fff;
 }
 
 .nav-active{
-    color: var(--main-light-color);
+    color: var(--selected-color);
 }
 
 .nav_item:hover{
@@ -176,7 +185,7 @@ button{
 
 .custom_btn:hover{
     letter-spacing: 0.125rem;
-    color: var(--main-color)
+    color: white;
 }
 
 .custom_btn::before{
@@ -196,22 +205,24 @@ button{
 }
 
 .movie_filter{
-    width: 84px;
-    height: 36px;
-    margin-right: 24px;
+    width: 100px;
+    height: 44px;
     border-radius: 6px;
     transition: all .4s;
-    box-shadow: 0 0 8px 4px #d1d5db;
+    box-shadow: 0 0 6px 3px #d1d5db;
+    margin-right: 24px;
 }
 
 .movie_filter:hover{
     background-color: var(--main-color);
     transform: scale(1.1);
+    color: white;
 }
 
 div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){ 
     background-color: #0f0f0f0f !important;
     opacity: 0.5;
+    color: white;
 }
 
 .filter-active{
@@ -226,8 +237,6 @@ div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){
 }
 
 .movie_wrap{
-    background-color: var(--grey-color);
-    border-radius: 8px;
     width: 100%;
     transition: all .4s;
     overflow: hidden;
@@ -244,7 +253,6 @@ div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){
 .movie_poster{
     width: 100%;
     aspect-ratio: .75;
-    border-radius: 8px 8px 0 0;
     transition: all .4s;
     background-position: center;
     background-size: cover;
@@ -252,6 +260,7 @@ div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){
 
 .movie_name{
     font-weight: bold;
+    font-size: 18px;
 }
 
 .movie_duration, .movie_category, .movie_split{
@@ -270,4 +279,74 @@ div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){
     background-color: var(--tag-color);
     font-weight: 500;
     opacity: 0.8;
+}
+
+.carousel_img{
+    filter: brightness(.8);
+}
+
+.list_trailer{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.trailer_item{
+    width: 100%;
+    height: 280px;
+    cursor: pointer;
+}
+
+.trailer_poster_wrap{
+    height: fit-content;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.trailer_item img{
+    width: 100%;
+    border-radius: 8px;
+    transition: all .3s;
+}
+
+.trailer_item i{
+    position: absolute;
+    top: calc(50% - 32px);
+    left: calc(50% - 32px);
+    color: white;
+    font-size: 64px;
+    opacity: .5;
+    transition: all .3s;
+}
+
+.trailer_item h5{
+    text-align: center;
+    margin-top: 6px;
+}
+
+.trailer_item:hover i{
+    opacity: 1;
+}
+
+.trailer_item:hover img{
+    transform: scale(1.1);
+}
+
+footer{
+    display: flex;
+    border-top: 1px solid white;
+    padding: 24px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#copyright{
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid white;
+    margin-top: 24px;
+    padding-top: 12px;
+    color: white;
 }
