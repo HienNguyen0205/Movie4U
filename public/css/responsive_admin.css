@@ -1,0 +1,52 @@
+@media only screen and (min-width: 1400px) {
+    .side-nav {
+        width: 15%;
+    }
+
+    .main-dashboard {
+        width: 85%;
+    }
+
+    .total-info {
+        height: 220px;
+    }
+
+    .views-icon_outer img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .order-icon_outer img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .revenue-icon_outer img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .views-info_title{
+        font-size: 20px;
+    }
+
+    .order-info_title{
+        font-size: 20px;
+    }
+
+    .revenue-info_title{
+        font-size: 20px;
+    }
+
+    .views-info_outer h6 {
+        font-size: 36px;
+    }
+
+    .order-info_outer h6 {
+        font-size: 36px
+    }
+
+    .revenue-info_outer h6 {
+        font-size: 36px;
+    }
+}

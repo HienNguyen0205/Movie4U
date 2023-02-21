@@ -28,8 +28,8 @@ body{
 }
 
 .side-nav {
-    min-width: 15%;
-    max-width: 30%;
+    width: 20%;
+    /* width: 15%; */
     height: 100vh;
     position: fixed;
     top: 0;
@@ -133,19 +133,20 @@ body{
 }
 
 .main-dashboard {
-    min-width: 85%;
-    max-width: 80%;
+    width: 80%;
     height: 100vh;
     background-color: var(--main-color);
     position: fixed;
     right: 0;
+    padding: 30px 30px;
 }
 
 .dashboard-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 35px 50px;
+    margin: 0px 5px;
+    margin-bottom: 30px;
 }
 .dashboard-header h4 {
     font-size: 24px;
@@ -173,14 +174,14 @@ body{
 .row {
     margin: 0 0 !important;
 }
-.dashboard-total {
+/* .dashboard-total {
     padding: 0 0 !important;
-}
+} */
 
 .total-info {
     display: inline-block;
     background-color: var(--light-grey);
-    height: 220px;
+    height: 170px;
     /* margin: 0 50px; */
     border-radius: 20px;
     box-shadow: 0px 0px 8px var(--white);
@@ -196,8 +197,8 @@ body{
     justify-content: flex-end;
 }
 .views-icon_outer img {
-    width: 110px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
     margin: 0 10px;
     /* position: fixed;
     right: 0;
@@ -210,12 +211,12 @@ body{
 .views-info_title{
     margin: 0 0 !important;
     color: var(--light-grey);
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 0.5px;
 }
 .views-info_outer h6{
     margin: 0 0 !important;
-    font-size: 36px;
+    font-size: 30px;
     color: var(--white);
     font-weight: 200;
 }
@@ -231,8 +232,8 @@ body{
     justify-content: flex-end;
 }
 .order-icon_outer img {
-    width: 110px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
     margin: 0 10px;
     margin-top: 10px !important;
 
@@ -244,17 +245,17 @@ body{
 .order-info_title{
     margin: 0 0 !important;
     color: var(--light-grey);
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 0.5px;
 }
 .order-info_outer h6{
     margin: 0 0 !important;
-    font-size: 36px;
+    font-size: 30px;
     color: var(--white);
     font-weight: 200;
 }
 .total-revenue {
-    background: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+    background: linear-gradient(to right, #ff758c 0%, #fea1c8 100%);
     margin-left: 10px !important;
     display: flex;
     flex-direction: column;
@@ -264,8 +265,8 @@ body{
     justify-content: flex-end;
 }
 .revenue-icon_outer img {
-    width: 110px;
-    height: 110px;
+    width: 80px;
+    height: 80px;
     margin: 0 10px;
     margin-top: 10px !important;
 
@@ -277,12 +278,12 @@ body{
 .revenue-info_title{
     margin: 0 0 !important;
     color: var(--light-grey);
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 0.5px;
 }
 .revenue-info_outer h6{
     margin: 0 0 !important;
-    font-size: 36px;
+    font-size: 30px;
     color: var(--white);
     font-weight: 200;
 }
