@@ -4,10 +4,16 @@
     --grey-color: #eeeeee;
     --pri-btn-color: #8d9cef;
     --sed-btn-color: #eda0e0;
-    --grey-trans-color: rgba(238, 238, 238, 0.3);
+    --grey-trans-color: rgba(33, 37, 41, 0.3);
     --card-color: #f7d4c8;
     --tag-color: #f99b9d;
     --selected-color: #eb332b;
+    --blue-color: #256EFF;
+    --purple-color: #944BBB;
+    --red-color: #E63946;
+    --blur-dark-color: rgba(0, 0, 0, 0.4);
+    --blur-bg: rgba(255, 255, 255, 0.4);
+    --modal-bg: #f0eef3;
 }
 
 body{
@@ -34,6 +40,13 @@ p{
 
 h1,h2,h3,h4,h5,h6,p,span,hr{
     color: white !important;
+}
+
+label{
+    display: block !important;
+    margin: 18px 0 8px 0;
+    font-size: 18px !important;
+    font-weight: 400;
 }
 
 .carousel-item img{
@@ -132,9 +145,9 @@ button{
     transition: all .4s;
     user-select: none;
     min-width: 120px;
-    color: black;
-    text-shadow: 1px 0 1px #fff, -1px 0 1px #fff, 0 1px 1px #fff, 0 -1px 1px #fff,
-        1px 1px 1px #fff, -1px -1px 1px #fff, 1px -1px 1px #fff, -1px 1px 1px #fff;
+    color: white;
+    text-shadow: 1px 0 4px var(--blur-dark-color), -1px 0 4px var(--blur-dark-color), 0 1px 4px var(--blur-dark-color), 0 -1px 4px var(--blur-dark-color),
+        1px 1px 4px var(--blur-dark-color), -1px -1px 4px var(--blur-dark-color), 1px -1px 4px var(--blur-dark-color), -1px 1px 4px var(--blur-dark-color);
 }
 
 .nav-active{
@@ -165,7 +178,7 @@ button{
     border-radius: 24px;
 }
 
-.custom_btn{
+.custom_btn, .custom_sign_btn{
     position: absolute;
     top: 0;
     left: 0;
@@ -183,12 +196,12 @@ button{
     transition: 0.5s;
 }
 
-.custom_btn:hover{
+.custom_btn:hover, .custom_sign_btn:hover{
     letter-spacing: 0.125rem;
     color: white;
 }
 
-.custom_btn::before{
+.custom_btn::before, .custom_sign_btn::before{
     content: '';
     position: absolute;
     top: 0;
@@ -200,7 +213,7 @@ button{
     transition: 0.5s;
 }
 
-.custom_btn:hover::before{
+.custom_btn:hover::before, .custom_sign_btn:hover::before{
     transform: skewX(45deg) translateX(200%);
 }
 
@@ -290,6 +303,7 @@ div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
+    margin: 24px 0;
 }
 
 .trailer_item{
@@ -342,11 +356,149 @@ footer{
     flex-wrap: wrap;
 }
 
+footer h3{
+    border-left: 4px solid orange;
+    padding-left: 6px;
+    margin-bottom: 12px;
+}
+
+footer a{
+    margin: 8px 0;
+    transition: all .3s;
+    color: white;
+}
+
+footer > div > a:hover{
+    transform: translateX(8px);
+    color: var(--selected-color) !important;
+}
+
+.contact_icon{
+    margin-right: 8px;
+    font-size: 32px;
+    color: white;
+    transition: all .15s;
+}
+
+.contact_icon:hover{
+    transform: scale(1.1);
+}
+
+.contact_icon:nth-child(1):hover{
+    color: var(--blue-color) !important;
+}
+
+.contact_icon:nth-child(2):hover{
+    color: var(--red-color) !important;
+}
+
+.contact_icon:nth-child(3):hover{
+    color: var(--purple-color) !important;
+}
+
 #copyright{
     width: 100%;
     text-align: center;
-    border-top: 1px solid white;
-    margin-top: 24px;
-    padding-top: 12px;
+    padding-top: 24px;
     color: white;
+}
+
+#blur_bg{
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background-color: var(--blur-dark-color);
+}
+
+#sign_in_modal, #sign_up_modal{
+    display: none;
+    position: fixed;
+    width: 440px;
+    height: fit-content;
+    z-index: 20;
+    top: calc(50% - 264px);
+    left: calc(50% - 220px);
+    background-color: var(--modal-bg);
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.modal_show{
+    display: block !important;
+    animation: comeIn .3s ease-in;
+}
+
+@keyframes comeIn {
+    from{
+        transform: translateY(-40px);
+        opacity: 0.5;
+    }to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+#sign_title_wrap{
+    display: grid;
+    grid-template-columns: auto 52px;
+    align-items: center;
+}
+
+#sign_title{
+    color: black !important;
+    margin: 12px 0;
+    justify-self: center;
+    margin-left: 52px;
+}
+
+.close_sign_modal{
+    color: var(--red-color);
+    justify-self: flex-end;
+    font-size: 24px;
+    padding: 16px;
+    margin: 8px;
+    transition: all .4s;
+    cursor: pointer;
+}
+
+.close_sign_modal:hover{
+    transform: rotate(360deg) scale(1.5);
+}
+
+#sign_in_form, #sign_up_form{
+    margin: 24px;
+}
+
+#sign_in_form p, #sign_up_form p{
+    color: black !important;
+}
+
+#sign_in_form a:hover, #sign_up_form a:hover{
+    color: var(--sed-btn-color);
+    cursor: pointer;
+}
+
+.input{
+    border-radius: 6px;
+    width: 100%;
+    padding: 4px 6px;
+    border-color: black;
+}
+
+.input:focus-visible{
+    outline: 2px solid var(--pri-btn-color);
+    border-color: transparent;
+}
+
+.btn_sign_config{
+    width: 100%;
+    height: 52px;
+    border-radius: 18px;
+    background-color: var(--pri-btn-color);
+    margin: 24px 0;
+}
+
+.custom_sign_btn{
+    border-radius: 18px !important;
 }

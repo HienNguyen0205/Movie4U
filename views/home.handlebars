@@ -67,13 +67,13 @@
     <hr>
     <div class="list_trailer">
         {{#each trailers}}
-            <div class="trailer_item" data-bs-toggle="modal" data-bs-target="#trailer" data-src="{{this.src}}">
-                <div class="trailer_poster_wrap">
-                    <img src="{{this.poster}}" alt="trailer">
-                    <i class="fa-regular fa-circle-play"></i>
-                </div>
-                <h5>{{this.name}}</h5>
+        <div class="trailer_item" data-bs-toggle="modal" data-bs-target="#trailer" data-src="{{this.src}}">
+            <div class="trailer_poster_wrap">
+                <img src="{{this.poster}}" alt="trailer">
+                <i class="fa-regular fa-circle-play"></i>
             </div>
+            <h5>{{this.name}}</h5>
+        </div>
         {{/each}}
     </div>
     <div id="trailer" class="modal fade" tabindex="-1" aria-modal="true" aria-hidden="true" role="dialog">
@@ -83,13 +83,54 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe id="trailer_iframe" width="712px" height="400px"
-                        src="" frameborder="0"
+                    <iframe id="trailer_iframe" width="712px" height="400px" src="" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen>
                     </iframe>
                 </div>
             </div>
         </div>
+    </div>
+    <div id="blur_bg"></div>
+    <div id="sign_in_modal">
+        <div id="sign_title_wrap">
+            <h3 id="sign_title">Sign In</h3>
+            <i class="fa-solid fa-xmark close_sign_modal"></i>
+        </div>
+        <form id="sign_in_form" action="" method="post">
+            <label for="email_sign_in">Email</label>
+            <input id="email_sign_in" class="input" name="email_sign_in" type="email">
+            <label for="password_sign_in">Password</label>
+            <input id="password_sign_in" class="input" name="password_sign_in" type="password">
+            <p class="text-end mt-1"><a href="">Forget your password?</a></p>
+            <button type="submit" class="position-relative btn_sign_config">
+                <div class="custom_sign_btn">
+                    Sign In
+                </div>
+            </button>
+            <p class="text-end">Need an account?<a class="d-inline-block ms-1 switch_sign">Sign up</a></p>
+        </form>
+    </div>
+    <div id="sign_up_modal">
+        <div id="sign_title_wrap">
+            <h3 id="sign_title">Sign Up</h3>
+            <i class="fa-solid fa-xmark close_sign_modal"></i>
+        </div>
+        <form id="sign_up_form" action="" method="post">
+            <label for="full_name">Full Name</label>
+            <input id="full_name" class="input" name="full_name" type="text">
+            <label for="email_sign_up">Email</label>
+            <input id="email_sign_up" class="input" name="email_sign_up" type="email">
+            <label for="password">Password</label>
+            <input id="password" class="input" name="password" type="text">
+            <label for="confirm_password">Confirm Password</label>
+            <input id="confirm_password" class="input" name="confirm_password" type="password">
+            <button type="submit" class="position-relative btn_sign_config">
+                <div class="custom_sign_btn">
+                    Sign Up
+                </div>
+            </button>
+            <p class="text-end">Already have an account?<a class="d-inline-block ms-1 switch_sign">Sign in</a></p>
+        </form>
     </div>
 </div>
