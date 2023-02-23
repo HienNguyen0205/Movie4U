@@ -49,4 +49,10 @@
     .revenue-info_outer h6 {
         font-size: 36px;
     }
+    .dashboard-profit_outer {
+        height: 380px;
+    }
+    .dashboard-ordered {
+        height: 380px;
+    }
 }

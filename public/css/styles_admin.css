@@ -146,7 +146,7 @@ body{
     flex-direction: row;
     justify-content: space-between;
     margin: 0px 5px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .dashboard-header h4 {
     font-size: 24px;
@@ -179,9 +179,7 @@ body{
 } */
 
 .total-info {
-    display: inline-block;
-    background-color: var(--light-grey);
-    height: 170px;
+    height: 150px;
     /* margin: 0 50px; */
     border-radius: 20px;
     box-shadow: 0px 0px 8px var(--white);
@@ -197,8 +195,8 @@ body{
     justify-content: flex-end;
 }
 .views-icon_outer img {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     margin: 0 10px;
     /* position: fixed;
     right: 0;
@@ -232,15 +230,14 @@ body{
     justify-content: flex-end;
 }
 .order-icon_outer img {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     margin: 0 10px;
     margin-top: 10px !important;
 
 }
 .order-info_outer {
     margin: 0 20px;
-
 }
 .order-info_title{
     margin: 0 0 !important;
@@ -265,15 +262,14 @@ body{
     justify-content: flex-end;
 }
 .revenue-icon_outer img {
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     margin: 0 10px;
     margin-top: 10px !important;
 
 }
 .revenue-info_outer {
     margin: 0 20px;
-
 }
 .revenue-info_title{
     margin: 0 0 !important;
@@ -286,4 +282,28 @@ body{
     font-size: 30px;
     color: var(--white);
     font-weight: 200;
+}
+.dashboard-footer_outer {
+    margin-top: 20px;
+}
+.dashboard-footer {
+    padding: 0 0 !important;
+}
+.dashboard-profit_outer {
+    height: 300px;
+    background-color: var(--sub-color);
+    border-radius: 20px;
+    padding: 0 0 !important;
+    margin-right: 10px;
+    /* box-shadow: 0px 0px 8px var(--light-grey); */
+
+}
+.dashboard-ordered {
+    height: 300px;
+    background-color: var(--sub-color);
+    border-radius: 20px;
+    padding: 0 0 !important;
+    margin-left: 10px;
+    /* box-shadow: 0px 0px 8px var(--light-grey); */
+
 }
