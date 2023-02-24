@@ -30,12 +30,14 @@
                     <li class="nav_item">About us</li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button id="sign_in_btn" class="position-relative btn_config" style="background-color: var(--pri-btn-color);">
+                    <button id="sign_in_btn" class="position-relative btn_config"
+                        style="background-color: var(--pri-btn-color);">
                         <div id="sign_in" class="custom_btn">
                             Sign In
                         </div>
                     </button>
-                    <button id="sign_up_btn" class="position-relative btn_config" style="background-color: var(--sed-btn-color);">
+                    <button id="sign_up_btn" class="position-relative btn_config"
+                        style="background-color: var(--sed-btn-color);">
                         <div id="sign_up" class="custom_btn">
                             Sign Up
                         </div>
@@ -70,6 +72,60 @@
             </div>
             <div id="copyright">©2023 Copyright: Team3Ga</div>
         </footer>
+        <div id="blur_bg"></div>
+        <div id="sign_in_modal">
+            <div id="sign_title_wrap">
+                <h3 id="sign_title">Sign In</h3>
+                <i class="fa-solid fa-xmark close_sign_modal"></i>
+            </div>
+            <form id="sign_in_form" action="" method="post">
+                <label for="email_sign_in">Email</label>
+                <input id="email_sign_in" class="input" name="email_sign_in" type="email" required>
+                <p id="email_sign_in_error" class="error_mess"></p>
+                <label for="password_sign_in">Password</label>
+                <div class="d-flex">
+                    <input id="password_sign_in" class="input" name="password_sign_in" type="password" required>
+                    <button class="btn toggle_pass" type="button"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <p id="password_sign_in_error" class="error_mess"></p>
+                <p class="text-end mt-1"><a class="d-inline-block" href="">Forget your password?</a></p>
+                <button id="sign_in_btn" type="button" class="position-relative btn_sign_config">
+                    <div class="custom_sign_btn">
+                        Sign In
+                    </div>
+                </button>
+                <p class="text-end">Need an account?<a class="d-inline-block ms-1 switch_sign">Sign up</a></p>
+            </form>
+        </div>
+        <div id="sign_up_modal">
+            <div id="sign_title_wrap">
+                <h3 id="sign_title">Sign Up</h3>
+                <i class="fa-solid fa-xmark close_sign_modal"></i>
+            </div>
+            <form id="sign_up_form" action="" method="post">
+                <label for="full_name">Full Name</label>
+                <input id="full_name" class="input" name="full_name" type="text" required>
+                <p id="name_error" class="error_mess"></p>
+                <label for="email_sign_up">Email</label>
+                <input id="email_sign_up" class="input" name="email_sign_up" type="email" required>
+                <p id="email_sign_up_error" class="error_mess"></p>
+                <label for="password_sign_up">Password</label>
+                <div class="d-flex">
+                    <input id="password_sign_up" class="input" name="password_sign_up" type="password" required>
+                    <button class="btn toggle_pass" type="button"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <p id="password_sign_up_error" class="error_mess"></p>
+                <label for="confirm_password">Confirm Password</label>
+                <input id="confirm_password" class="input" name="confirm_password" type="password" required>
+                <p id="password_confirm_sign_up_error" class="error_mess"></p>
+                <button id="sign_up_btn" type="button" class="position-relative btn_sign_config">
+                    <div class="custom_sign_btn">
+                        Sign Up
+                    </div>
+                </button>
+                <p class="text-end">Already have an account?<a class="d-inline-block ms-1 switch_sign">Sign in</a></p>
+            </form>
+        </div>
     </div>
     <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
