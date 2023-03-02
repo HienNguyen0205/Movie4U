@@ -6,11 +6,15 @@
     .main-dashboard {
         width: 85%;
     }
-
+    .dashboard-header {
+        margin-bottom: 60px;
+    }
     .total-info {
         height: 220px;
     }
-
+    .dashboard-footer_outer {
+        margin-top: 60px;
+    }
     .views-icon_outer img {
         width: 110px;
         height: 110px;
@@ -50,9 +54,9 @@
         font-size: 36px;
     }
     .dashboard-profit_outer {
-        height: 380px;
+        height: 450px;
     }
     .dashboard-ordered {
-        height: 380px;
+        height: 450px;
     }
 }
