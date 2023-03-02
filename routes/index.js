@@ -38,4 +38,11 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/Movie', (req, res) => {
+    res.render('movie', {
+        layout: 'mainLayout',
+        
+    })
+})
+
 module.exports = router

@@ -62,6 +62,7 @@ const toggleSwitchForm = e => {
         signUpModal.classList.remove('modal_show')
         signInModal.classList.add('modal_show')
     }
+    resetInput()
 }
 
 blurBG.addEventListener('click', closeSignHandle)
@@ -77,4 +78,102 @@ switchForm.forEach(element => {
 const resetInput = () => {
     signInForm.reset()
     signUpForm.reset()
+    emailSignInErrMess.innerHTML = ''
+    passSignInErrMess.innerHTML = ''
 }
+
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+
+const emailSignInErrMess = document.getElementById('email_sign_in_error')
+const passSignInErrMess = document.getElementById('password_sign_in_error')
+
+/**
+ * If the email and password are valid, submit the form. Otherwise, display an error message.
+ */
+const signInSubmitHandle = () => {
+    const email = signInForm.elements['email_sign_in'].value.trim()
+    const password = signInForm.elements['password_sign_in'].value.trim()
+    if(emailRegex.test(email) && passwordRegex.test(password)){
+        signInForm.submit()
+    }else{
+        if(email === ''){
+            emailSignInErrMess.innerText = 'Please enter your email'
+        }else if(emailRegex.test(email)){
+            emailSignInErrMess.innerText = 'Email is not valid'
+        }else{
+            emailSignInErrMess.innerText = ''
+        }
+        if(password === ''){
+            passSignInErrMess.innerText = 'Please enter your password'
+        }else if(passwordRegex.test(password)){
+            passSignInErrMess.innerText = 'Password need at least eight characters, one letter and one number'
+        }else{
+            passSignInErrMess.innerText = ''
+        }
+    }
+}
+
+const nameErrorMess = document.getElementById('name_error')
+const emailSignUpErrMess = document.getElementById('email_sign_up_error')
+const passSignUpErrMess = document.getElementById('password_sign_up_error')
+const confirmPassSignUpErrMess = document.getElementById('password_confirm_sign_up_error')
+
+const signUpSubmitHandle = () => {
+    const name = signUpForm.elements['full_name'].value.trim()
+    const email = signUpForm.elements['email_sign_up'].value.trim()
+    const pass = signUpForm.elements['password_sign_up'].value.trim()
+    const confirmPass = signUpForm.elements['confirm_password'].value.trim()
+    if(emailRegex.test(email) && passwordRegex.test(pass) && name !== '' && pass === confirmPass) {
+        signUpForm.submit()
+    }else{
+        if(name === ''){
+            nameErrorMess.innerText = 'Please enter your name'
+        }else{
+            nameErrorMess.innerText = ''
+        }
+        if(email === ''){
+            emailSignUpErrMess.innerText = 'Please enter your email'
+        }else if(emailRegex.test(email)){
+            emailSignUpErrMess.innerText = 'Email is not valid'
+        }else{
+            emailSignUpErrMess.innerText = ''
+        }
+        if(pass === ''){
+            passSignUpErrMess.innerText = 'Please enter your password'
+        }else if(passwordRegex.test(pass)){
+            passSignUpErrMess.innerText = 'Password need at least eight characters, one letter and one number'
+        }else{
+            passSignUpErrMess.innerText = ''
+        }
+        if(confirmPass === ''){
+            confirmPassSignUpErrMess.innerText = 'Please enter confirm password'
+        }else if(confirmPass !== password){
+            confirmPassSignUpErrMess.innerText = 'Wrong confirm password'
+        }else{
+            confirmPassSignUpErrMess.innerText = ''
+        }
+    }
+}
+
+signInForm.elements['sign_in_btn'].addEventListener('click', signInSubmitHandle)
+signUpForm.elements['sign_up_btn'].addEventListener('click', signUpSubmitHandle)
+
+/* A function that toggles the password field between text and password. */
+const togglePass = document.querySelectorAll('.toggle_pass')
+let isShowPass = false
+
+togglePass.forEach(element => {
+    element.addEventListener('click', () => {
+        if(isShowPass){
+            signInForm.elements['password_sign_in'].setAttribute('type', 'password');
+            element.firstChild.classList.add('fa-eye')
+            element.firstChild.classList.remove('fa-eye-slash')
+        }else{
+            signInForm.elements['password_sign_in'].setAttribute('type', 'text');
+            element.firstChild.classList.add('fa-eye-slash')
+            element.firstChild.classList.remove('fa-eye')
+        }
+        isShowPass = !isShowPass
+    })
+})

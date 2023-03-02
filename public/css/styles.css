@@ -14,6 +14,7 @@
     --blur-dark-color: rgba(0, 0, 0, 0.4);
     --blur-bg: rgba(255, 255, 255, 0.4);
     --modal-bg: #f0eef3;
+    --error-text: #dc3545;
 }
 
 body{
@@ -44,7 +45,7 @@ h1,h2,h3,h4,h5,h6,p,span,hr{
 
 label{
     display: block !important;
-    margin: 18px 0 8px 0;
+    margin: 12px 0 8px 0;
     font-size: 18px !important;
     font-weight: 400;
 }
@@ -215,31 +216,6 @@ button{
 
 .custom_btn:hover::before, .custom_sign_btn:hover::before{
     transform: skewX(45deg) translateX(200%);
-}
-
-.movie_filter{
-    width: 100px;
-    height: 44px;
-    border-radius: 6px;
-    transition: all .4s;
-    box-shadow: 0 0 6px 3px #d1d5db;
-    margin-right: 24px;
-}
-
-.movie_filter:hover{
-    background-color: var(--main-color);
-    transform: scale(1.1);
-    color: white;
-}
-
-div:has(.movie_filter:hover) .movie_filter:not(.movie_filter:hover){ 
-    background-color: #0f0f0f0f !important;
-    opacity: 0.5;
-    color: white;
-}
-
-.filter-active{
-    background-color: var(--main-light-color);
 }
 
 .list_movie{
@@ -463,14 +439,14 @@ footer > div > a:hover{
 }
 
 .close_sign_modal:hover{
-    transform: rotate(360deg) scale(1.5);
+    transform: rotate(180deg) scale(1.5);
 }
 
 #sign_in_form, #sign_up_form{
     margin: 24px;
 }
 
-#sign_in_form p, #sign_up_form p{
+#sign_in_form p:not(.error_mess), #sign_up_form p:not(.error_mess){
     color: black !important;
 }
 
@@ -482,13 +458,18 @@ footer > div > a:hover{
 .input{
     border-radius: 6px;
     width: 100%;
-    padding: 4px 6px;
+    padding: 4px 8px;
     border-color: black;
 }
 
 .input:focus-visible{
     outline: 2px solid var(--pri-btn-color);
     border-color: transparent;
+}
+
+.input:focus-visible + .toggle_pass{
+    outline: 2px solid var(--pri-btn-color) !important;
+    border-color: transparent !important;
 }
 
 .btn_sign_config{
@@ -501,4 +482,26 @@ footer > div > a:hover{
 
 .custom_sign_btn{
     border-radius: 18px !important;
+}
+
+.error_mess{
+    height: 12px;
+    color: var(--error-text) !important;
+    font-size: 12px;
+}
+
+#password_sign_in, #password_sign_up{
+    border-right-color: transparent;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+}
+
+.toggle_pass{
+    border: 2px solid black !important;
+    border-left: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    background-color: white !important;
+    transition: none !important;
 }
