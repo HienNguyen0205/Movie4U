@@ -1,12 +1,13 @@
 /* Changing the background color of the header when the user scrolls down. */
 const header = document.getElementsByClassName('header')
-window.addEventListener('scroll', e => {
+const scrollHandler = e => {
     if (this.scrollY >= 30) {
         header[0].style.backgroundColor = '#000000'
     } else {
         header[0].style.backgroundColor = 'rgba(238, 238, 238, 0.3)'
     }
-})
+}
+window.addEventListener('scroll', scrollHandler)
 
 /* Adding an event listener to each trailer item. When the trailer item is clicked, it will set the src
 of the iframe to the data-src attribute of the trailer item. Then it will play the video. */
@@ -40,9 +41,9 @@ const switchForm = document.querySelectorAll('.switch_sign')
 
 const openSignHandle = e => {
     blurBG.style.display = 'block'
-    if(e.target.id === 'sign_in'){
+    if (e.target.id === 'sign_in') {
         signInModal.classList.add('modal_show')
-    }else{
+    } else {
         signUpModal.classList.add('modal_show')
     }
 }
@@ -55,10 +56,10 @@ const closeSignHandle = () => {
 }
 
 const toggleSwitchForm = e => {
-    if(e.target.innerText === 'Sign up'){
+    if (e.target.innerText === 'Sign up') {
         signInModal.classList.remove('modal_show')
         signUpModal.classList.add('modal_show')
-    }else{
+    } else {
         signUpModal.classList.remove('modal_show')
         signInModal.classList.add('modal_show')
     }
@@ -78,8 +79,12 @@ switchForm.forEach(element => {
 const resetInput = () => {
     signInForm.reset()
     signUpForm.reset()
-    emailSignInErrMess.innerHTML = ''
-    passSignInErrMess.innerHTML = ''
+    emailSignInErrMess.innerText = ''
+    passSignInErrMess.innerText = ''
+    nameErrorMess.innerText = ''
+    emailSignUpErrMess.innerText = ''
+    passSignUpErrMess.innerText = ''
+    confirmPassSignUpErrMess.innerText = ''
 }
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
@@ -94,21 +99,21 @@ const passSignInErrMess = document.getElementById('password_sign_in_error')
 const signInSubmitHandle = () => {
     const email = signInForm.elements['email_sign_in'].value.trim()
     const password = signInForm.elements['password_sign_in'].value.trim()
-    if(emailRegex.test(email) && passwordRegex.test(password)){
+    if (emailRegex.test(email) && passwordRegex.test(password)) {
         signInForm.submit()
-    }else{
-        if(email === ''){
+    } else {
+        if (email === '') {
             emailSignInErrMess.innerText = 'Please enter your email'
-        }else if(emailRegex.test(email)){
+        } else if (emailRegex.test(email)) {
             emailSignInErrMess.innerText = 'Email is not valid'
-        }else{
+        } else {
             emailSignInErrMess.innerText = ''
         }
-        if(password === ''){
+        if (password === '') {
             passSignInErrMess.innerText = 'Please enter your password'
-        }else if(passwordRegex.test(password)){
+        } else if (passwordRegex.test(password)) {
             passSignInErrMess.innerText = 'Password need at least eight characters, one letter and one number'
-        }else{
+        } else {
             passSignInErrMess.innerText = ''
         }
     }
@@ -124,33 +129,33 @@ const signUpSubmitHandle = () => {
     const email = signUpForm.elements['email_sign_up'].value.trim()
     const pass = signUpForm.elements['password_sign_up'].value.trim()
     const confirmPass = signUpForm.elements['confirm_password'].value.trim()
-    if(emailRegex.test(email) && passwordRegex.test(pass) && name !== '' && pass === confirmPass) {
+    if (emailRegex.test(email) && passwordRegex.test(pass) && name !== '' && pass === confirmPass) {
         signUpForm.submit()
-    }else{
-        if(name === ''){
+    } else {
+        if (name === '') {
             nameErrorMess.innerText = 'Please enter your name'
-        }else{
+        } else {
             nameErrorMess.innerText = ''
         }
-        if(email === ''){
+        if (email === '') {
             emailSignUpErrMess.innerText = 'Please enter your email'
-        }else if(emailRegex.test(email)){
+        } else if (emailRegex.test(email)) {
             emailSignUpErrMess.innerText = 'Email is not valid'
-        }else{
+        } else {
             emailSignUpErrMess.innerText = ''
         }
-        if(pass === ''){
+        if (pass === '') {
             passSignUpErrMess.innerText = 'Please enter your password'
-        }else if(passwordRegex.test(pass)){
+        } else if (passwordRegex.test(pass)) {
             passSignUpErrMess.innerText = 'Password need at least eight characters, one letter and one number'
-        }else{
+        } else {
             passSignUpErrMess.innerText = ''
         }
-        if(confirmPass === ''){
+        if (confirmPass === '') {
             confirmPassSignUpErrMess.innerText = 'Please enter confirm password'
-        }else if(confirmPass !== password){
+        } else if (confirmPass !== password) {
             confirmPassSignUpErrMess.innerText = 'Wrong confirm password'
-        }else{
+        } else {
             confirmPassSignUpErrMess.innerText = ''
         }
     }
@@ -165,15 +170,74 @@ let isShowPass = false
 
 togglePass.forEach(element => {
     element.addEventListener('click', () => {
-        if(isShowPass){
+        if (isShowPass) {
             signInForm.elements['password_sign_in'].setAttribute('type', 'password');
             element.firstChild.classList.add('fa-eye')
             element.firstChild.classList.remove('fa-eye-slash')
-        }else{
+        } else {
             signInForm.elements['password_sign_in'].setAttribute('type', 'text');
             element.firstChild.classList.add('fa-eye-slash')
             element.firstChild.classList.remove('fa-eye')
         }
         isShowPass = !isShowPass
+    })
+})
+
+/* Checking if the user is on the homepage or not. If the user is not on the homepage, the header will
+have a black background and a static position. */
+if (window.location.pathname !== '/') {
+    header[0].style.backgroundColor = '#000000'
+    window.removeEventListener('scroll', scrollHandler)
+}
+
+/* A loader. */
+window.addEventListener('load', () => {
+    const loader = document.querySelector("#loader")
+    loader.classList.add('loader-hidden')
+    loader.addEventListener('transitionend', () => {
+        loader.remove()
+    })
+})
+
+const navBtn = document.querySelectorAll('.nav_item')
+const activeNav = document.querySelector('.nav-active').classList.remove('nav-active')
+switch(window.location.pathname){
+    case '/':
+        navBtn[0].classList.add('nav-active')
+        break
+    case '/Movie':
+        navBtn[1].classList.add('nav-active')
+        break
+    case '/Cinema':
+        navBtn[2].classList.add('nav-active')
+        break
+    case '/Event':
+        navBtn[3].classList.add('nav-active')
+        break
+    case '/Support':
+        navBtn[4].classList.add('nav-active')
+        break
+}
+
+const listMovie = document.querySelector('#list_movie')
+const movieTypeBtn = document.querySelectorAll('.movie_btn')
+const currMovieList = document.querySelector('#currMovie')
+const comingMovieList = document.querySelector('#comingMovie')
+
+listMovie.innerHTML = currMovieList.innerHTML
+
+movieTypeBtn.forEach((element,index) => {
+    element.addEventListener('click', () => {
+        const selectedMovieBtn = document.querySelector('.movie_btn-selected')
+        if(!element.isSameNode(selectedMovieBtn)){
+            selectedMovieBtn.classList.remove('movie_btn-selected')
+            element.classList.add('movie_btn-selected')
+            listMovie.innerHTML = ''
+            if(index === 0){
+                listMovie.innerHTML = currMovieList.innerHTML
+            }else{
+                listMovie.innerHTML = comingMovieList.innerHTML
+            }
+        }
     })
 })

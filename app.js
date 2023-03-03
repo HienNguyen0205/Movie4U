@@ -30,11 +30,11 @@ app.use(session({
     cookie: {secure: true}
 }))
 
-// app.use((req, res, next) => {
-//     res.locals.flash = req.session.flash
-//     delete req.session.flash
-//     next()
-// })
+app.use((req, res, next) => {
+    res.locals.flash = req.session.flash
+    delete req.session.flash
+    next()
+})
 
 app.use(express.static(path.join(__dirname, 'public')))
 
