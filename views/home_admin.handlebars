@@ -43,13 +43,61 @@
         <div class="row dashboard-footer">
             <div class="col-8 dashboard-footer dashboard-chart_outer">
                 <div class="dashboard-profit_outer">
+                    <div class="dashboard-footer_title profit-title">
+                        <i class="fa-regular fa-circle"></i>
+                        <h6>Profit</h6>
+                    </div>
                     <canvas id="dashboard-chart" class="dashboard-chart_profit">
-
                     </canvas>
                 </div>
             </div>
-            <div class="col-4 dashboard-footer dashboard-ordered_outer">
-                <div class="dashboard-ordered"></div>
+            <div class="col-4 dashboard-footer dashboard-most_outer">
+                <div class="dashboard-ordered_outer">
+                    <div class="dashboard-footer_title dashboard-most-outer">
+                        <div class="most-title">
+                            <i class="fa-regular fa-circle"></i>
+                            <h6>Most popular</h6>
+                        </div>
+                        {{!-- {{#each most_popular}}
+                        <div class="list-popular" data-movie="{{this.name}}">
+                            <div class="movie-wrap">
+                                <img class="movie-poster" src="{{this.src}}" alt="">
+                                <div class="movie-info">
+                                    <p class="movie-name">{{this.name}}</p>
+                                    <p class="movie-duration">{{this.duration}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}} --}}
+                        <div class="list-popular">
+                            <div class="movie-wrap">
+                                <img class="movie-poster" src="images/Movie/aladdin.jpg" alt="">
+                                <div class="movie-info">
+                                    <p class="movie-name">Aladdin</p>
+                                    <p class="movie-duration">120 min</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-popular">
+                            <div class="movie-wrap">
+                                <img class="movie-poster" src="images/Movie/avenger-endgame.jpg" alt="">
+                                <div class="movie-info">
+                                    <p class="movie-name">Avenger Endgame</p>
+                                    <p class="movie-duration">120 min</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-popular">
+                            <div class="movie-wrap">
+                                <img class="movie-poster" src="images/Movie/captain-marvel.jpg" alt="">
+                                <div class="movie-info">
+                                    <p class="movie-name">Captain Marvel</p>
+                                    <p class="movie-duration">120 min</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
