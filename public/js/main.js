@@ -1,3 +1,7 @@
+const getLastPath = href => {
+    return href.substring(href.lastIndexOf('/'))
+}
+
 /* Changing the background color of the header when the user scrolls down. */
 const header = document.getElementsByClassName('header')
 const scrollHandler = e => {
@@ -185,7 +189,8 @@ togglePass.forEach(element => {
 
 /* Checking if the user is on the homepage or not. If the user is not on the homepage, the header will
 have a black background and a static position. */
-if (window.location.pathname !== '/') {
+const blackHeaderRoute = ['/Movie','/user/Movie',]
+if (blackHeaderRoute.includes(window.location.pathname)) {
     header[0].style.backgroundColor = '#000000'
     window.removeEventListener('scroll', scrollHandler)
 }
@@ -201,30 +206,37 @@ window.addEventListener('load', () => {
 
 const navBtn = document.querySelectorAll('.nav_item')
 const activeNav = document.querySelector('.nav-active').classList.remove('nav-active')
-switch(window.location.pathname){
-    case '/':
-        navBtn[0].classList.add('nav-active')
-        break
-    case '/Movie':
-        navBtn[1].classList.add('nav-active')
-        break
-    case '/Cinema':
-        navBtn[2].classList.add('nav-active')
-        break
-    case '/Event':
-        navBtn[3].classList.add('nav-active')
-        break
-    case '/Support':
-        navBtn[4].classList.add('nav-active')
-        break
+const navPaths = ['/Movie', '/Event', '/Support']
+const homePaths = ['/', '/user']
+if(homePaths.includes(window.location.pathname)){
+    navBtn[0].classList.add('nav-active')
+}else{
+    navBtn[navPaths.indexOf(getLastPath(window.location.href)) + 1].classList.add('nav-active')
 }
+
+console.log(window.location.pathname)
+
+navBtn.forEach(element => {
+    element.addEventListener('click', () => {
+        const path = element.innerText
+        if(window.location.pathname === '/user'){
+            window.location.pathname += '/' + path
+        }else if(path === 'Home'){
+            window.location.pathname = '/'
+        }else{
+            window.location.pathname = '/' + path
+        }
+    })
+})
 
 const listMovie = document.querySelector('#list_movie')
 const movieTypeBtn = document.querySelectorAll('.movie_btn')
 const currMovieList = document.querySelector('#currMovie')
 const comingMovieList = document.querySelector('#comingMovie')
 
-listMovie.innerHTML = currMovieList.innerHTML
+if(getLastPath(window.location.href) === '/Movie'){
+    listMovie.innerHTML = currMovieList.innerHTML
+}
 
 movieTypeBtn.forEach((element,index) => {
     element.addEventListener('click', () => {
