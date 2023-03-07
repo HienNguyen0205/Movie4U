@@ -153,7 +153,7 @@ button {
   min-width: 120px;
 }
 
-.nav_item a {
+.nav_item{
   transition: all 0.4s;
   font-size: 18px;
   font-weight: 500;
@@ -165,11 +165,11 @@ button {
     -1px 1px 4px var(--blur-dark-color);
 }
 
-.nav-active a {
+.nav-active{
   color: var(--selected-color);
 }
 
-.nav_item:hover a {
+.nav_item:hover {
   letter-spacing: 3px;
   color: var(--main-color);
   font-weight: bold;
