@@ -54,9 +54,18 @@
         font-size: 36px;
     }
     .dashboard-profit_outer {
-        height: 450px;
+        height: 500px;
+        padding: 30px 30px !important;
     }
-    .dashboard-ordered {
-        height: 450px;
+    .dashboard-ordered_outer {
+        height: 500px;
+        padding: 30px 30px !important;
+
+    }
+    .movie-wrap {
+        height: 120px;
+    }
+    .movie-poster {
+        width: 30%;
     }
 }

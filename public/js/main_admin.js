@@ -71,3 +71,40 @@ new Chart(ctx, {
     }
   }
 });
+
+
+// Time dashboard click 
+
+function timeDashboardUnclick(x) {
+  x.style.backgroundColor = '#7A75E8'
+  x.style.color = '#FFFFFF'
+}
+function timeDashboardClick(x) {
+  x.style.backgroundColor = '#485296'
+  x.style.color = '#cccccc'
+}
+
+document.getElementById("today").onclick = function() {
+  timeDashboardUnclick(document.getElementById("today"))
+  timeDashboardClick(document.getElementById("week"))
+  timeDashboardClick(document.getElementById("month"))
+  timeDashboardClick(document.getElementById("year"))
+};
+document.getElementById("week").onclick = function() {
+  timeDashboardUnclick(document.getElementById("week"))
+  timeDashboardClick(document.getElementById("today"))
+  timeDashboardClick(document.getElementById("month"))
+  timeDashboardClick(document.getElementById("year"))
+};
+document.getElementById("month").onclick = function() {
+  timeDashboardUnclick(document.getElementById("month"))
+  timeDashboardClick(document.getElementById("week"))
+  timeDashboardClick(document.getElementById("today"))
+  timeDashboardClick(document.getElementById("year"))
+};
+document.getElementById("year").onclick = function() {
+  timeDashboardUnclick(document.getElementById("year"))
+  timeDashboardClick(document.getElementById("week"))
+  timeDashboardClick(document.getElementById("today"))
+  timeDashboardClick(document.getElementById("month"))
+};
