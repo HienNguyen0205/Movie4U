@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', (req, res) => {
+router.get('/Home', (req, res) => {
     res.render('home', {
         layout: 'mainLayout',
         carousel: [
@@ -26,9 +26,9 @@ router.get('/', (req, res) => {
             {src: '/images/Movie/glass.jpg', name: 'Glass', duration: '120 min', category: 'action', release: '02/05/2002'},
         ],
         trailers: [
-            {name: 'Ant-Man and The Wasp: Quantumania', poster: 'images/PosterTrailer/ant_man_wasp_quantumania.jpg', src: '/https://www.youtube.com/embed/s3UD3qvJdao?enablejsapi=1'},
-            {name: 'Consectation', poster: 'images/PosterTrailer/consecration.jpg', src: '/https://www.youtube.com/embed/HRjG65M6L2c?enablejsapi=1'},
-            {name: 'Argonuts', poster: 'images/PosterTrailer/argonuts.jpg', src: '/https://www.youtube.com/embed/LiVyhdxLYFc?enablejsapi=1'}
+            {name: 'Ant-Man and The Wasp: Quantumania', poster: '/images/PosterTrailer/ant_man_wasp_quantumania.jpg', src: '/https://www.youtube.com/embed/s3UD3qvJdao?enablejsapi=1'},
+            {name: 'Consectation', poster: '/images/PosterTrailer/consecration.jpg', src: '/https://www.youtube.com/embed/HRjG65M6L2c?enablejsapi=1'},
+            {name: 'Argonuts', poster: '/images/PosterTrailer/argonuts.jpg', src: '/https://www.youtube.com/embed/LiVyhdxLYFc?enablejsapi=1'}
         ]
     })
 })
@@ -55,6 +55,12 @@ router.get('/Movie', (req, res) => {
             {src: '/images/Movie/cruella.jpg', name: 'Cruella', duration: '120 min', category: 'action', release: '02/05/2002'},
             {src: '/images/Movie/glass.jpg', name: 'Glass', duration: '120 min', category: 'action', release: '02/05/2002'},
         ],
+    })
+})
+
+router.get('/MovieTicket', (req, res) => {
+    res.render('MovieTicket', {
+        layout: 'mainLayout'
     })
 })
 

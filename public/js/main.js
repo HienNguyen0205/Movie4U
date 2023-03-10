@@ -2,6 +2,12 @@ const getLastPath = href => {
     return href.substring(href.lastIndexOf('/'))
 }
 
+const changePath = path => {
+    const href = window.location.href
+    const currPath = href.slice(0, href.lastIndexOf('/'))
+    window.location.href = currPath + '/' + path
+}
+
 /* Changing the background color of the header when the user scrolls down. */
 const header = document.getElementsByClassName('header')
 const scrollHandler = e => {
@@ -189,7 +195,7 @@ togglePass.forEach(element => {
 
 /* Checking if the user is on the homepage or not. If the user is not on the homepage, the header will
 have a black background and a static position. */
-const blackHeaderRoute = ['/Movie','/user/Movie',]
+const blackHeaderRoute = ['/Movie','/user/Movie','/user/MovieTicket']
 if (blackHeaderRoute.includes(window.location.pathname)) {
     header[0].style.backgroundColor = '#000000'
     window.removeEventListener('scroll', scrollHandler)
@@ -214,18 +220,11 @@ if(homePaths.includes(window.location.pathname)){
     navBtn[navPaths.indexOf(getLastPath(window.location.href)) + 1].classList.add('nav-active')
 }
 
-console.log(window.location.pathname)
-
+/* This code is used to change the page when the user clicks on the navigation bar. */
 navBtn.forEach(element => {
     element.addEventListener('click', () => {
         const path = element.innerText
-        if(window.location.pathname === '/user'){
-            window.location.pathname += '/' + path
-        }else if(path === 'Home'){
-            window.location.pathname = '/'
-        }else{
-            window.location.pathname = '/' + path
-        }
+        changePath(path)
     })
 })
 
@@ -251,5 +250,13 @@ movieTypeBtn.forEach((element,index) => {
                 listMovie.innerHTML = comingMovieList.innerHTML
             }
         }
+    })
+})
+
+const viewMovieBtn = document.querySelectorAll('.buy_ticket_btn')
+viewMovieBtn.forEach(element => {
+    element.addEventListener('click', () => {
+        const movie = element.parentNode.parentNode.getAttribute('data-movie')
+        changePath('MovieTicket/' + movie.replace(' ', '-'))
     })
 })
