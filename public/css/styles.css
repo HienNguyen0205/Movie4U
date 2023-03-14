@@ -15,6 +15,7 @@
   --blur-bg: rgba(255, 255, 255, 0.4);
   --modal-bg: #f0eef3;
   --error-text: #dc3545;
+  --yellow: #ffff00;
 }
 
 body {
@@ -79,7 +80,7 @@ button {
   padding: 12px 0;
   background-color: var(--grey-trans-color);
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   top: 0;
   left: 0;
   right: 0;
@@ -543,8 +544,7 @@ footer > div > a:hover {
   transition: none !important;
 }
 
-#buy_ticket_btn,
-#detail_btn {
+.buy_ticket_btn {
   display: none;
   width: 52% !important;
   font-size: 1rem;
@@ -553,38 +553,18 @@ footer > div > a:hover {
   left: calc(25% - 12px);
 }
 
-#buy_ticket_btn {
-  top: 30%;
+.buy_ticket_btn {
+  top: 45%;
 }
 
-#detail_btn {
-  top: 50%;
-}
-
-.movie_wrap:hover #buy_ticket_btn {
+.movie_wrap:hover .buy_ticket_btn {
   display: block;
-  animation: leftIn 0.3s ease-in;
+  animation: rise 0.3s ease-in;
 }
 
-.movie_wrap:hover #detail_btn {
-  display: block;
-  animation: rightIn 0.3s ease-in;
-}
-
-@keyframes leftIn {
+@keyframes rise {
   from {
-    transform: translateX(-12px);
-    opacity: 0.5;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes rightIn {
-  from {
-    transform: translateX(12px);
+    transform: translateY(12px);
     opacity: 0.5;
   }
   to {
@@ -667,4 +647,70 @@ footer > div > a:hover {
 
 .movie_btn-selected{
   border-bottom-color: var(--sed-btn-color) !important;
+}
+
+#movie_ticket_container{
+  height: 1000px;
+  padding-top: 100px;
+}
+
+#movie_ticket_poster{
+  width: 24%;
+  padding-right: 1.5rem;
+}
+
+#movie_ticket_title{
+  max-width: 40%;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+#age_restrict{
+  border: 2px solid var(--yellow);
+  border-radius: 8px;
+  padding: 2px 6px;
+  color: var(--red-color);
+  height: fit-content;
+  font-weight: 500;
+}
+
+#trailer_btn{
+  width: 148px;
+  height: 54px;
+  margin: 12px 0;
+}
+
+.text-hightlight{
+  color: var(--tag-color) !important;
+  font-weight: 500;
+}
+
+.buy_ticket_step{
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  color: white;
+  border-bottom: 2px solid transparent;
+  font-size: 18px;
+  align-items: center;
+}
+
+.step_num{
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  margin: 8px;
+  background-color: black;
+  transition: all .3s;
+}
+
+.buy_ticket_step-active{
+  border-bottom-color: var(--selected-color);
+}
+
+.movie_ticket_main{
+  
 }
