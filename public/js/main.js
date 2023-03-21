@@ -25,7 +25,7 @@ const trailerIframe = document.getElementById('trailer_iframe')
 const trailerClose = document.querySelectorAll('.btn-close')
 const trailerItems = document.querySelectorAll('.trailer_item')
 trailerItems.forEach(trailerItem => {
-    trailerItem.addEventListener('click', async () => {
+    trailerItem.addEventListener('click', () => {
         const src = trailerItem.getAttribute('data-src')
         trailerIframe.setAttribute('src', src)
         setTimeout(() => {
@@ -195,7 +195,7 @@ togglePass.forEach(element => {
 
 /* Checking if the user is on the homepage or not. If the user is not on the homepage, the header will
 have a black background and a static position. */
-const blackHeaderRoute = ['/Movie','/user/Movie','/user/MovieTicket']
+const blackHeaderRoute = ['/Movie', '/user/Movie', '/user/MovieTicket']
 if (blackHeaderRoute.includes(window.location.pathname)) {
     header[0].style.backgroundColor = '#000000'
     window.removeEventListener('scroll', scrollHandler)
@@ -214,9 +214,9 @@ const navBtn = document.querySelectorAll('.nav_item')
 const activeNav = document.querySelector('.nav-active').classList.remove('nav-active')
 const navPaths = ['/Movie', '/Event', '/Support']
 const homePaths = ['/', '/user']
-if(homePaths.includes(window.location.pathname)){
+if (homePaths.includes(window.location.pathname)) {
     navBtn[0].classList.add('nav-active')
-}else{
+} else {
     navBtn[navPaths.indexOf(getLastPath(window.location.href)) + 1].classList.add('nav-active')
 }
 
@@ -233,20 +233,20 @@ const movieTypeBtn = document.querySelectorAll('.movie_btn')
 const currMovieList = document.querySelector('#currMovie')
 const comingMovieList = document.querySelector('#comingMovie')
 
-if(getLastPath(window.location.href) === '/Movie'){
+if (getLastPath(window.location.href) === '/Movie') {
     listMovie.innerHTML = currMovieList.innerHTML
 }
 
-movieTypeBtn.forEach((element,index) => {
+movieTypeBtn.forEach((element, index) => {
     element.addEventListener('click', () => {
         const selectedMovieBtn = document.querySelector('.movie_btn-selected')
-        if(!element.isSameNode(selectedMovieBtn)){
+        if (!element.isSameNode(selectedMovieBtn)) {
             selectedMovieBtn.classList.remove('movie_btn-selected')
             element.classList.add('movie_btn-selected')
             listMovie.innerHTML = ''
-            if(index === 0){
+            if (index === 0) {
                 listMovie.innerHTML = currMovieList.innerHTML
-            }else{
+            } else {
                 listMovie.innerHTML = comingMovieList.innerHTML
             }
         }
@@ -258,5 +258,116 @@ viewMovieBtn.forEach(element => {
     element.addEventListener('click', () => {
         const movie = element.parentNode.parentNode.getAttribute('data-movie')
         changePath('MovieTicket/' + movie.replace(' ', '-'))
+    })
+})
+
+/* The above code is adding an event listener to each element with the class name buy_ticket_step. When
+the element is clicked, the code checks if the index of the clicked element is less than the index
+of the element with the class name buy_ticket_step-active. If it is, the code adds the class name
+buy_ticket_step-active to the clicked element and removes it from the element with the class name
+buy_ticket_step-active. The code also displays the element with the index of the clicked element and
+hides the element with the index of the element with */
+const buyTicketStep = document.querySelectorAll('.buy_ticket_step')
+const buyTicketSection = document.querySelectorAll('.movie_ticket_main')
+let activeIndex = 0
+
+const changeTicketSection = (from, to) => {
+    buyTicketSection[to].classList.remove('d-none')
+    buyTicketSection[from].classList.add('d-none')
+}
+
+buyTicketStep.forEach((element, index) => {
+    element.addEventListener('click', () => {
+        if (index < activeIndex) {
+            element.classList.add('buy_ticket_step-active')
+            buyTicketStep[activeIndex].classList.remove('buy_ticket_step-active')
+            changeTicketSection(activeIndex, index)
+            activeIndex = index
+        }
+    })
+})
+
+/* Creating a seat layout for a theater. */
+const seatLayoutElement = document.querySelector('#seat_layout')
+const seatOrder = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+for (let i = 0; i < 12; i++) {
+    if (i === 7) {
+        seatLayoutElement.insertAdjacentHTML('beforeend', '<div class="seat_layout_row d-flex mt-3"></div>')
+    } else {
+        seatLayoutElement.insertAdjacentHTML('beforeend', '<div class="seat_layout_row d-flex"></div>')
+    }
+    let lastRow = document.querySelector('.seat_layout_row:last-child')
+    lastRow.insertAdjacentHTML('beforeend', `<div class="seat_order" style="top: ${i >= 7 ? 36 * i + 22 : 36 * i + 6}px;">${seatOrder[i]}</div>`)
+    for (let j = 0; j < 17; j++) {
+        if ((i === 0 && j === 11) || (i === 1 && j === 13) || (i < 7 && j === 15)) {
+            break
+        } else {
+            lastRow.insertAdjacentHTML('beforeend', `<div class="seat_item seat_item-empty ${seatOrder[i] + (j + 1)}_seat" data-row="${seatOrder[i]}" data-seat="${j + 1}">${j + 1}</div>`)
+        }
+    }
+}
+
+const theaterElement = document.querySelectorAll('.theater_item')
+theaterElement.forEach(element => {
+    element.addEventListener('click', () => {
+        const time = element.getAttribute('data-time')
+        const theater = element.parentNode.getAttribute('data-theater')
+        localStorage.setItem('time', time)
+        localStorage.setItem('theater', theater)
+        changeTicketSection(activeIndex, 1)
+        buyTicketStep[1].classList.add('buy_ticket_step-active')
+        buyTicketStep[activeIndex].classList.remove('buy_ticket_step-active')
+        activeIndex = 1
+    })
+})
+
+const ticketContainer = document.querySelector('#ticket_wrap')
+const seats = document.querySelectorAll('.seat_item')
+const totalTicketPrice = document.querySelector('#total_ticket_item')
+const ticketCancel = document.querySelectorAll('.cancel_ticket_btn')
+const nextStepBtn = document.querySelectorAll('.next_step_ticket_btn')
+let ticketList = []
+
+const checkTicketContainer = () => {
+    if(ticketContainer.childNodes.length === 0){
+        totalTicketPrice.style.display = 'none'
+        ticketCancel[0].style.display = 'none'
+        nextStepBtn[0].style.display = 'none'
+    }else{
+        totalTicketPrice.style.display = 'block'
+        ticketCancel[0].style.display = 'block'
+        nextStepBtn[0].style.display = 'block'
+    }
+}
+checkTicketContainer()
+
+const deleteTicketItem = seatId => {
+    const ticket = document.querySelector(`.${seatId}_ticket`)
+    const seat = document.querySelector(`.${seatId}_seat`)
+    console.log(`.${seatId}_seat`)
+    ticket.remove()
+    seat.classList.remove('seat_item-selected')
+    seat.classList.add('seat_item-empty')
+    checkTicketContainer()
+}
+
+seats.forEach(element => {
+    element.addEventListener('click', () => {
+        let ticketItem = document.querySelectorAll('.ticket_item')
+        if (element.classList.contains('seat_item-empty') && ticketItem.length < 6) {
+            const row = element.getAttribute('data-row')
+            const seatOrder = element.getAttribute('data-seat')
+            ticketContainer.insertAdjacentHTML('afterbegin',
+                `<div class="ticket_item ${row + seatOrder}_ticket">
+                    <p class="d-flex align-items-center">Row<span class="fs-4 fw-semibold mx-2">${row}</span></p>
+                    <p class="d-flex align-items-center">Seat<span class="fs-4 fw-semibold mx-2">${seatOrder}</span></p>
+                    <p class="text-secondary-emphasis fs-5">$35</p>
+                    <i class="fa-solid fa-xmark text-white fs-4 delete_ticket_item" onclick="deleteTicketItem('${row + seatOrder}')"></i>
+                </div>`
+            )
+            element.classList.remove('seat_item-empty')
+            element.classList.add('seat_item-selected')
+            checkTicketContainer()
+        }
     })
 })

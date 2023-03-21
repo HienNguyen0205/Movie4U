@@ -60,7 +60,8 @@ router.get('/Movie', (req, res) => {
 
 router.get('/MovieTicket', (req, res) => {
     res.render('MovieTicket', {
-        layout: 'mainLayout'
+        layout: 'mainLayout',
+        
     })
 })
 

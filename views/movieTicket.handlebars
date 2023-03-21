@@ -1,6 +1,6 @@
 <div id="movie_ticket_container" class="container">
     <div class="d-flex">
-        <image id="movie_ticket_poster" src="/images/Movie/aladdin.jpg" alt=""/>
+        <image id="movie_ticket_poster" src="/images/Movie/aladdin.jpg" alt="" />
         <div class="flex-grow-1">
             <div class="d-flex align-items-center">
                 <h1 id="movie_ticket_title">Aladdin</h1>
@@ -12,9 +12,13 @@
             <p class="py-1"><span class="text-hightlight">Duration: </span>128min</p>
             <p class="py-1"><span class="text-hightlight">Genres: </span>Adventage | Comedy | Family</p>
             <p class="py-1">
-                <span class="text-hightlight">Storyline: </span>A kind-hearted street urchin Aladdin vies for the love of the beautiful princess Jasmine, the princess of Agrabah. When he finds a magic lamp, he uses the genie's magic power to make himself a prince in order to marry her. He's also on a mission to stop the powerful Jafar who plots to steal the magic lamp that could make his deepest wishes come true.
+                <span class="text-hightlight">Storyline: </span>A kind-hearted street urchin Aladdin vies for the love
+                of the beautiful princess Jasmine, the princess of Agrabah. When he finds a magic lamp, he uses the
+                genie's magic power to make himself a prince in order to marry her. He's also on a mission to stop the
+                powerful Jafar who plots to steal the magic lamp that could make his deepest wishes come true.
             </p>
-            <button id="trailer_btn" class="position-relative btn_config" style="background-color: var(--pri-btn-color);">
+            <button id="trailer_btn" class="position-relative btn_config"
+                style="background-color: var(--pri-btn-color);">
                 <div class="custom_btn">
                     Watch trailer
                 </div>
@@ -23,26 +27,107 @@
     </div>
     <hr>
     <nav class="d-flex">
-        <div class="buy_ticket_step buy_ticket_step-active">
+        <div class="buy_ticket_step buy_ticket_step-active" data-index="0">
             <div class="step_num">1</div>
             Choose Theater
         </div>
-        <div class="buy_ticket_step">
+        <div class="buy_ticket_step" data-index="1">
             <div class="step_num">2</div>
             Choose your seat
         </div>
-        <div class="buy_ticket_step">
+        <div class="buy_ticket_step" data-index="2">
             <div class="step_num">3</div>
             Choose Ticket/Food
         </div>
-        <div class="buy_ticket_step">
+        <div class="buy_ticket_step" data-index="3">
             <div class="step_num">4</div>
             Confirm & Purchase
         </div>
     </nav>
     <div class="movie_ticket_main">
+        <div class="theater_wrap" data-theater="abc">
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+            <div class="theater_item" data-time="11:00">11:00</div>
+        </div>
         <div class="theater_wrap">
-            
+            <div class="theater_item">11:00</div>
+            <div class="theater_item">11:00</div>
+        </div>
+        <div class="theater_wrap">
+            <div class="theater_item">11:00</div>
+            <div class="theater_item">11:00</div>
+        </div>
+        <div class="theater_wrap">
+            <div class="theater_item">11:00</div>
+            <div class="theater_item">11:00</div>
+        </div>
+        <div class="theater_wrap">
+            <div class="theater_item">11:00</div>
+            <div class="theater_item">11:00</div>
+        </div>
+        <div class="theater_wrap">
+            <div class="theater_item">11:00</div>
+            <div class="theater_item">11:00</div>
+        </div>
+    </div>
+    <div class="movie_ticket_main d-none">
+        <div class="d-flex">
+            <div id="seat_display">
+                <div id="screen">
+                    <img src="/images/UI/screen.png" alt="">
+                </div>
+                <div id="seat_layout"
+                    class="d-flex justify-content-center align-items-center flex-column my-5 position-relative"></div>
+            </div>
+            <div id="ticket_container">
+                <div id="ticket_header-info" class="d-flex justify-content-around align-items-center">
+                    <div class="d-flex flex-column align-items-center">
+                        <h5 class="text-info">Date</h5>
+                        <p id="ticket_date">14 Dec</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <h5 class="text-info">Time</h5>
+                        <p id="ticket_time">9:40 pm</p>
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <h5 class="text-info">Type</h5>
+                        <p id="ticket_type">3D</p>
+                    </div>
+                </div>
+                <div id="ticket-content" class="mb-3">
+                    <div id="ticket_wrap"></div>
+                    <p id="total_ticket_item" class="text-secondary-emphasis fs-5 text-end mx-2">Total: <span
+                            class="fs-4 fw-semibold">$280</span></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="position-relative btn_config cancel_ticket_btn"
+                            style="background-color: var(--red-color);">
+                            <div class="custom_btn">
+                                Cancel
+                            </div>
+                        </button>
+                        <button class="position-relative btn_config next_step_ticket_btn"
+                            style="background-color: var(--pri-btn-color);">
+                            <div class="custom_btn">
+                                Next
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
