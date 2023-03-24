@@ -10,6 +10,7 @@ const path = require('path')
 
 const userRouter = require('./routes/user')
 const adminRouter = require('./routes/admin')
+const movieRouter = require('./routes/movie')
 
 const app = express()
 
@@ -40,5 +41,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/user', userRouter)
 app.use('/admin', adminRouter)
+app.use('/movie', movieRouter)
 
 module.exports = app
