@@ -3,10 +3,11 @@
         width: 15%;
     }
 
-    .main-dashboard {
+    .main-body {
         width: 85%;
+        margin-left: 15%;
     }
-    .dashboard-header {
+    .body-header {
         margin-bottom: 60px;
     }
     .total-info {
