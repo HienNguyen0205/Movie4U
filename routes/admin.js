@@ -16,4 +16,9 @@ router_admin.get('/MovieTheatres',(req, res) => {
         layout: 'mainLayout_admin'
     })
 })
+router_admin.get('/Movies',(req, res) => {
+    res.render('movies_admin', {
+        layout: 'mainLayout_admin'
+    })
+})
 module.exports = router_admin

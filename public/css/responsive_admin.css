@@ -58,6 +58,9 @@
         height: 500px;
         padding: 30px 30px !important;
     }
+    .dashboard-chart_profit {
+        height: 450px !important;
+    }
     .dashboard-ordered_outer {
         height: 500px;
         padding: 30px 30px !important;

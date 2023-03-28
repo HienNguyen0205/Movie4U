@@ -1,0 +1,118 @@
+<div class="main-body">
+    <div class="body-header">
+        <h4>Movie List </h4>
+        <div class="">
+            <button type="button" class="movies_btn movies_btn-add" data-bs-toggle="modal"
+                data-bs-target="#movies_add-modal">Add</button>
+            <button id="delete_selected-movies" type="button" class="movies_btn movies_btn-del"
+                onclick="removeSelectedRow()">Delete Selected</button>
+        </div>
+    </div>
+    <table id="table_movies" class="table">
+        <thead class="movies_title">
+            <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Movie Name</th>
+                <th scope="col">Poster</th>
+                <th scope="col">Trailer</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Modify</th>
+            </tr>
+        </thead>
+        <tbody id="list_movies" class="movies_content">
+            <tr>
+                <th scope="row">1</th>
+                <td>Aladdin</td>
+                <td><img class="movies_img" src="/images/Movie/aladdin.jpg" alt=""></td>
+                <td><iframe width="300" height="200" src="https://www.youtube.com/embed/VcBllhVj1eA"
+                        title="ALADDIN Trailer (2019)" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe></td>
+                <td><label class="movies_checkbox-outer"><input type="checkbox" id="movie1" class="movies_checkbox"
+                            name="movie1"><span class="checkmark"></span></label></td>
+                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                        data-bs-target="#movies_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
+            </tr>
+            {{!-- <tr>
+                <th scope="row">2</th>
+                <td>Go Vap Cinema</td>
+                <td><img class="movies_img" src="/images/Movie movies/govap_cinema.jpg" alt=""></td>
+                <td>Ben Tre Cinema</td>
+                <td><label class="movies_checkbox-outer"><input type="checkbox" id="theatre2" class="movies_checkbox"
+                            name="theatre2" value="Go Vap Cinema"><span class="checkmark"></span></label></td>
+                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                        data-bs-target="#movies_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>Binh Thanh Cinema</td>
+                <td><img class="movies_img" src="/images/Movie movies/govap_cinema.jpg" alt=""></td>
+                <td>Ben Tre Cinema</td>
+                <td><label class="movies_checkbox-outer"><input type="checkbox" id="theatre3" class="movies_checkbox"
+                            name="theatre3" value="Binh Thanh Cinema"><span class="checkmark"></span></label></td>
+                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                        data-bs-target="#movies_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
+            </tr> --}}
+        </tbody>
+    </table>
+    <div class="modal fade" id="movies_add-modal" tabindex="-1" aria-labelledby="movies_add-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_modal">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="movies_add-label">Add Movie Theatre</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Theatre Name</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_name" class="form-control" placeholder="Enter theatre name">
+                    </div>
+                    <p>Theatre Address</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_address" class="form-control"
+                            placeholder="Enter theatre address">
+                    </div>
+                    <p>Add Theatre Image</p>
+                    <div class="mb-3 add_image-outer">
+                        <input class="form-control" type="file" id="theatre_img">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="btn_add-theatre" onclick="addmoviesTableRow()" class="btn btn-primary"
+                        data-bs-dismiss="modal">Add Theatre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="movies_edit-modal" tabindex="-1" aria-labelledby="movies_edit-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_modal">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="movies_edit-label">Edit Movie Theatre</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Theatre Name</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_name-edit" class="form-control" placeholder="Enter theatre name">
+                    </div>
+                    <p>Theatre Address</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_address-edit" class="form-control"
+                            placeholder="Enter theatre address">
+                    </div>
+                    <div class="mb-3 add_image-outer">
+                        <p>Edit Theatre Image</p>
+                        <input class="form-control" type="file" id="theatre_img-edit">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="btn_edit-theatre" onclick="editTheatreTableRow()" class="btn btn-primary"
+                        data-bs-dismiss="modal">Edit Theatre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

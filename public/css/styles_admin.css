@@ -359,6 +359,7 @@ body {
 
 .dashboard-chart_profit {
     padding-top: 20px;
+    height: 350px !important;
 }
 
 .dashboard-ordered_outer {
@@ -424,13 +425,13 @@ body {
     color: var(--white);
 }
 
-.theatres_title {
+.theatres_title, .movies_title{
     color: var(--grey);
     text-align: center;
 
 }
 
-.theatres_content {
+.theatres_content, .movies_content {
     color: var(--white);
     text-align: center;
 }
@@ -439,42 +440,44 @@ body {
     width: 200px;
     height: 100px;
 }
-
-.theatres_btn {
+.movies_img {
+    width: 200px;
+    height: 200px;
+}
+.theatres_btn, .movies_btn {
     padding: 10px;
     border-radius: 10px;
+}
+.theatres_btn:hover, .movies_btn:hover{
     box-shadow: 0px 0px 8px var(--white);
 }
-
-
-
-.theatres_btn-add {
-    background-color: var(--white);
+.theatres_btn-add, .movies_btn-add{
+    background-color: green;
+    color: var(--white);
     border: 2px green solid;
     padding-left: 20px;
     padding-right: 20px;
-    color: green;
     margin-right: 5px;
 }
 
-.theatres_btn-add:hover {
-    background-color: green;
-    color: var(--white);
+.theatres_btn-add:hover, .movies_btn-add:hover {
+    background-color: var(--white);
+    color: green;
 }
 
-.theatres_btn-del {
-    background-color: var(--white);
+.theatres_btn-del, .movies_btn-del {
     border: 2px red solid;
-    color: red;
+    background-color: red;
+    color: var(--white);
     margin-left: 5px;
 }
 
-.theatres_btn-del:hover {
-    background-color: red;
-    color: var(--white);
+.theatres_btn-del:hover, .movies_btn-del:hover{
+    background-color: var(--white);
+    color: red;
 }
 
-.theatres_checkbox-outer {
+.theatres_checkbox-outer, .movies_checkbox-outer {
     display: inline-block;
     position: relative;
     cursor: pointer;
@@ -484,7 +487,7 @@ body {
     margin-bottom: 10px;
 }
 
-.theatres_checkbox-outer input {
+.theatres_checkbox-outer input, .movies_checkbox-outer input{
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -505,7 +508,9 @@ body {
 .theatres_checkbox-outer:hover .checkmark {
     background: #ccc;
 }
-
+.movies_checkbox-outer:hover .checkmark {
+    background: #ccc;
+}
 .checkmark:after {
     content:"";
     position:absolute;
@@ -529,7 +534,23 @@ body {
 .theatres_checkbox-outer input:checked~.checkmark:after {
     display: block;
 }
+.movies_checkbox-outer .checkmark:after {
+    top:50%;
+    left:50%;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
 
+.movies_checkbox-outer input:checked~.checkmark {
+    background: var(--pink);
+}
+
+.movies_checkbox-outer input:checked~.checkmark:after {
+    display: block;
+}
 .add_modal {
     background-color: var(--white) !important;
     border: 1px solid var(--pink) !important;
@@ -541,4 +562,14 @@ body {
 }
 .add_image-outer {
     margin-top: 10px;
+}
+.modal-body p:first-child {
+    margin-top: 5px !important;
+}
+.modal-body p {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.btn-outline-warning:hover {
+    color: var(--white) !important;
 }

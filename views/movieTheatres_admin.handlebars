@@ -4,15 +4,16 @@
         <div class="">
             <button type="button" class="theatres_btn theatres_btn-add" data-bs-toggle="modal"
                 data-bs-target="#theatres_add-modal">Add</button>
-            <button type="button" class="theatres_btn theatres_btn-del">Delete</button>
+            <button id="delete_selected-theatres" type="button" class="theatres_btn theatres_btn-del" onclick="removeSelectedRow()">Delete Selected</button>
         </div>
     </div>
-    <table  class="table">
+    <table id="table_theatres" class="table">
         <thead class="theatres_title">
             <tr>
                 <th scope="col">S.No.</th>
                 <th scope="col">Theatre Name</th>
                 <th scope="col">Image</th>
+                <th scope="col">Address</th>
                 <th scope="col">Delete</th>
                 <th scope="col">Modify</th>
             </tr>
@@ -22,28 +23,34 @@
                 <th scope="row">1</th>
                 <td>Ben Tre Cinema</td>
                 <td><img class="theatres_img" src="/images/Movie Theatres/govap_cinema.jpg" alt=""></td>
+                <td>Ben Tre Cinema</td>
                 <td><label class="theatres_checkbox-outer"><input type="checkbox" id="theatre1"
                             class="theatres_checkbox" name="theatre1" value="Ben Tre Cinema"><span
                             class="checkmark"></span></label></td>
-                <td>Edit</td>
+                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                data-bs-target="#theatres_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
             </tr>
             <tr>
                 <th scope="row">2</th>
                 <td>Go Vap Cinema</td>
                 <td><img class="theatres_img" src="/images/Movie Theatres/govap_cinema.jpg" alt=""></td>
+                <td>Ben Tre Cinema</td>
                 <td><label class="theatres_checkbox-outer"><input type="checkbox" id="theatre2"
                             class="theatres_checkbox" name="theatre2" value="Go Vap Cinema"><span
                             class="checkmark"></span></label></td>
-                <td>Edit</td>
+                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                data-bs-target="#theatres_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
             </tr>
             <tr>
                 <th scope="row">4</th>
                 <td>Binh Thanh Cinema</td>
                 <td><img class="theatres_img" src="/images/Movie Theatres/govap_cinema.jpg" alt=""></td>
+                <td>Ben Tre Cinema</td>
                 <td><label class="theatres_checkbox-outer"><input type="checkbox" id="theatre3"
                             class="theatres_checkbox" name="theatre3" value="Binh Thanh Cinema"><span
                             class="checkmark"></span></label></td>
-                <td>Edit</td>
+                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                data-bs-target="#theatres_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
             </tr> --}}
 
         </tbody>
@@ -56,20 +63,55 @@
                     <h4 class="modal-title" id="theatres_add-label">Add Movie Theatre</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                    <div class="modal-body">
-                            <p>Theatre Name</p>
-                        <div class="input-group flex-nowrap">
-                            <input type="text" id="theatre_name" class="form-control" placeholder="Enter theatre name">
-                        </div>
-                        <div class="mb-3 add_image-outer">
-                            <p>Add Theatre Image</p>
-                            <input class="form-control" type="file" id="theatre_img">
-                        </div>
+                <div class="modal-body">
+                    <p>Theatre Name</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_name" class="form-control" placeholder="Enter theatre name">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="btn_add-theatre" class="btn btn-primary" data-bs-dismiss="modal">Add Theatre</button>
+                    <p>Theatre Address</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_address" class="form-control" placeholder="Enter theatre address">
                     </div>
+                    <p>Add Theatre Image</p>
+                    <div class="mb-3 add_image-outer">
+                        <input class="form-control" type="file" id="theatre_img">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="btn_add-theatre" onclick="addTheatresTableRow()" class="btn btn-primary"
+                        data-bs-dismiss="modal">Add Theatre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="theatres_edit-modal" tabindex="-1" aria-labelledby="theatres_edit-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content add_modal">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="theatres_edit-label">Edit Movie Theatre</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Theatre Name</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_name-edit" class="form-control" placeholder="Enter theatre name">
+                    </div>
+                    <p>Theatre Address</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="theatre_address-edit" class="form-control" placeholder="Enter theatre address">
+                    </div>
+                    <div class="mb-3 add_image-outer">
+                        <p>Edit Theatre Image</p>
+                        <input class="form-control" type="file" id="theatre_img-edit" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="btn_edit-theatre" onclick="editTheatreTableRow()" class="btn btn-primary"
+                        data-bs-dismiss="modal" >Edit Theatre</button>
+                </div>
             </div>
         </div>
     </div>
