@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/Home', (req, res) => {
+router.get('/home', (req, res) => {
     res.render('home', {
         layout: 'mainLayout',
         carousel: [
@@ -33,9 +33,10 @@ router.get('/Home', (req, res) => {
     })
 })
 
-router.get('/Movie', (req, res) => {
+router.get('/movie', (req, res) => {
     res.render('movie', {
         layout: 'mainLayout',
+        script: '/js/movie.js',
         movies: [
             {src: '/images/Movie/aladdin.jpg', name: 'Aladdin', duration: '120 min', category: 'action'},
             {src: '/images/Movie/avenger-endgame.jpg', name: 'Avenger Endgame', duration: '120 min', category: 'action'},
@@ -58,8 +59,15 @@ router.get('/Movie', (req, res) => {
     })
 })
 
-router.get('/MovieTicket', (req, res) => {
+router.get('/movieticket', (req, res) => {
     res.render('MovieTicket', {
+        layout: 'mainLayout',
+        script: '/js/movie_ticket.js',
+    })
+})
+
+router.get('/event', (req, res) => {
+    res.render('Event', {
         layout: 'mainLayout',
         
     })
