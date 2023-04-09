@@ -2,7 +2,7 @@ Create database cinema_management;
 use cinema_management;
 
 -- Create tables
-CREATE TABLE user (
+CREATE TABLE account (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
@@ -16,6 +16,7 @@ CREATE TABLE cinema (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -30,7 +31,7 @@ CREATE TABLE movie (
   name VARCHAR(255) NOT NULL,
   duration INT NOT NULL,
   release_date DATE NOT NULL,
-  src_img VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
   trailer VARCHAR(255) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
   description VARCHAR(21844) DEFAULT NULL,
@@ -46,7 +47,7 @@ CREATE TABLE movie_category (
 
 CREATE TABLE poster (
   id INT NOT NULL AUTO_INCREMENT,
-  src VARCHAR(255) NOT NULL,
+  image VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -81,20 +82,20 @@ CREATE TABLE seat (
 
 CREATE TABLE ticket (
   id INT NOT NULL AUTO_INCREMENT,
-  user_id INT NOT NULL,
+  account_id INT NOT NULL,
   schedule_id INT NOT NULL,
   seat_id INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (seat_id) REFERENCES seat(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE 
+  FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE 
 ) ENGINE=InnoDB;
 
 -- Insert categories
 INSERT INTO category (name) VALUES ('action'), ('comedy'), ('drama'), ('horror'), ('science-fiction');
 
 -- Insert current movies
-INSERT INTO movie (name, duration, release_date, src_img, trailer)
+INSERT INTO movie (name, duration, release_date, image, trailer)
 VALUES
   ('Aladdin', 120, '2019-05-22', '/images/Movie/aladdin.jpg', 'https://www.youtube.com/embed/foyufD52aog'),
   ('Avengers: Endgame', 181, '2019-04-26', '/images/Movie/avenger-endgame.jpg', 'https://www.youtube.com/embed/TcMBFSGVi1c'),
@@ -108,7 +109,7 @@ VALUES
   ('Toy Story 4', 100, '2019-06-21','/images/Movie/toy-story-4.jpg', 'https://www.youtube.com/embed/wmiIUN-7qhE');
 
 -- Insert upcoming movies
-INSERT INTO movie (name, duration, release_date, src_img, trailer, status)
+INSERT INTO movie (name, duration, release_date, image, trailer, status)
 VALUES
   ('Joker', 122, '2019-10-04', '/images/Movie/joker.jpg', 'https://www.youtube.com/embed/zAGVQLHvwOY',0),
   ('The Lion King', 118, '2019-07-19', '/images/Movie/lion-king.jpg', 'https://www.youtube.com/embed/7TavVZMewpY',0),
@@ -204,4 +205,4 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (17, 1), (17, 5);
 -- The Suicide Squad
 INSERT INTO movie_category (movie_id, category_id) VALUES (18, 1), (18, 3), (18, 4);
 
-INSERT INTO user(name,email,phone,password,status) VALUES("admin","admin","1234567890","123456",0);
+INSERT INTO account(name,email,phone,password,status) VALUES("admin","admin","1234567890","123456",0);
