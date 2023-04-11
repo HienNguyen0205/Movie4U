@@ -3,68 +3,6 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config('../.env');
 const nodeMailer = require('nodemailer');
 
-async function register(user) {
-    const sql = `INSERT INTO account (email, password, name, phone, address, role_id) VALUES (?, ?, ?, ?, ?, ?)`;
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(user.password, salt);
-    const params = [user.email, hashPassword, user.name, user.phone, user.address, 2];
-    const result = await db.queryParams(sql, params);
-    return result;
-}
-
-async function login(req,res) {
-    // get data from a form request
-    const email = req.body.email;
-    const password = req.body.password;
-    // check if email exists
-    const user = await checkEmail(email);
-    if(!user) {
-        res.render('login', {message: 'Email is incorrect'})
-        return;
-    }
-    // get user info from database
-    const sql = `SELECT * FROM account WHERE email = ?`;
-    const result = await db.queryParams(sql, [email]);
-    // check if password is correct
-    const validPassword = await bcrypt.compare(password, user.password);
-    if(!validPassword) {
-        res.render('login', {message: 'Password is incorrect'})
-        return;
-    }
-    // create session
-    req.session.user = user;
-    // redirect to home page
-    res.redirect('/');
-}
-
-async function sendMail(subject, content) {
-    let transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        secure: false,
-        auth: {
-            user: process.env.EMAIL_NAME,
-            pass: process.env.EMAIL_PASS
-        },
-        tls:{
-            rejectUnauthorized: false,
-        }
-    })
-
-    let mailOptions = {
-        from: process.env.EMAIL_NAME,
-        to: receiverMail,
-        subject: subject,
-        text: content
-    }
-
-    transporter.sendMail(mailOptions, (err) => {
-        if(err) console.log('send email failed: ', err)
-        else
-            console.log('email sent')
-    })
-}
-
 async function checkEmail(email) {
     const sql = `SELECT * FROM account WHERE email = ?`;
     const result = await db.queryParams(sql, [email]);
@@ -73,10 +11,73 @@ async function checkEmail(email) {
     }
     return null;
 }
+const UserController = {
+    register: async (req, res) => {
+        const user = req.body;
+        const sql = `INSERT INTO account (email, password, name, phone, address, role_id) VALUES (?, ?, ?, ?, ?, ?)`;
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(user.password, salt);
+        const params = [user.email, hashPassword, user.name, user.phone, user.address, 2];
+        db.queryParams(sql, params)
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success',
+                    data: result
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+    login: async (req, res) => {
+        // get data from a form request
+        const email = req.body.email;
+        const password = req.body.password;
+        // check if email exists
+        const user = await checkEmail(email);
+        if(!checkEmail(email)) {
+            res.status(500).json({
+                code: 500,
+                message: 'Email not found'
+            });
+        }
+        // check if password is correct
+        const sql = `SELECT * FROM account WHERE email = ?`;
+    },
+    logout: (req, res) => {
+        req.session.destroy();
+        res.redirect('/');
+    },
+
+    sendMail: async (req, res) => {
+        const email = req.body.email;
+        const user = await checkEmail(email);
+        if(!user) {
+            res.status(500).json({
+                code: 500,
+                message: 'Email not found'
+            });
+        }
+        const subject = 'Reset password';
+        const content = 'Click here to reset password';
+        sendMail(subject, content);
+        res.status(200).json({
+            code: 200,
+            message: 'Success'
+        });
+    }
+};
+
+
 
 async function validate()
 
 
 module.exports = {
-    register, login, sendMail
+    UserController
 }

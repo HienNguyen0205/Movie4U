@@ -1,5 +1,5 @@
 const conn = require('../config/db');
-const MovieControllers = {
+const AdminControllers = {
     getAllUser: (req, res) => {
         $sql = 'SELECT * FROM user';
         conn.query($sql, (err, result) => {
@@ -8,4 +8,4 @@ const MovieControllers = {
         }
     )} 
 }
-module.exports = MovieControllers;
+module.exports = AdminControllers;
