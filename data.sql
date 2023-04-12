@@ -91,7 +91,7 @@ CREATE TABLE ticket (
 ) ENGINE=InnoDB;
 
 -- Insert categories
-INSERT INTO category (name) VALUES ('action'), ('comedy'), ('drama'), ('horror'), ('science-fiction');
+INSERT INTO category (name) VALUES ('action'), ('comedy'), ('drama'), ('horror'), ('fantasty'), ('romance');
 
 -- Insert current movies
 INSERT INTO movie (name, duration, release_date, src_img, trailer)

@@ -2,9 +2,11 @@
     <div class="body-header">
         <h4>Theatre List </h4>
         <div class="">
-            <button type="button" class="theatres_btn theatres_btn-add" data-bs-toggle="modal"
+            <button type="button" class="btn btn-success " data-bs-toggle="modal"
                 data-bs-target="#theatres_add-modal">Add</button>
-            <button id="delete_selected-theatres" type="button" class="theatres_btn theatres_btn-del" onclick="removeSelectedRow()">Delete Selected</button>
+            <button id="delete_selected-theatres" type="button" class="btn btn-danger " onclick="removeSelectedRow()">Delete Selected</button>
+        {{!-- theatres_btn theatres_btn-add --}}
+        {{!-- theatres_btn theatres_btn-del --}}
         </div>
     </div>
     <table id="table_theatres" class="table">
@@ -60,7 +62,7 @@
         <div class="modal-dialog">
             <div class="modal-content add_modal">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="theatres_add-label">Add Movie Theatre</h4>
+                    <h4 class="modal-title" id="theatres_add-label">Add Theatre</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -90,7 +92,7 @@
         <div class="modal-dialog">
             <div class="modal-content add_modal">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="theatres_edit-label">Edit Movie Theatre</h4>
+                    <h4 class="modal-title" id="theatres_edit-label">Edit Theatre</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

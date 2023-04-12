@@ -460,10 +460,10 @@ body {
     margin-right: 5px;
 }
 
-.theatres_btn-add:hover, .movies_btn-add:hover {
+/* .theatres_btn-add:hover, .movies_btn-add:hover {
     background-color: var(--white);
     color: green;
-}
+} */
 
 .theatres_btn-del, .movies_btn-del {
     border: 2px red solid;
@@ -472,10 +472,10 @@ body {
     margin-left: 5px;
 }
 
-.theatres_btn-del:hover, .movies_btn-del:hover{
+/* .theatres_btn-del:hover, .movies_btn-del:hover{
     background-color: var(--white);
     color: red;
-}
+} */
 
 .theatres_checkbox-outer, .movies_checkbox-outer {
     display: inline-block;
@@ -504,7 +504,9 @@ body {
     background: #eee;
     border-radius: 3px;
 }
-
+.checkmark_radio {
+    border-radius: 50%;
+}
 .theatres_checkbox-outer:hover .checkmark {
     background: #ccc;
 }
@@ -557,9 +559,10 @@ body {
     color: #000000 !important;
     text-align: center;
 }
-.add_modal input {
+.add_modal input, .add_modal textarea {
     border: 1px solid var(--pink);
 }
+
 .add_image-outer {
     margin-top: 10px;
 }
@@ -572,4 +575,25 @@ body {
 }
 .btn-outline-warning:hover {
     color: var(--white) !important;
+}
+
+.big_modal {
+    max-width: 700px !important;
+}
+.col_movie_checkbox {
+    display: flex;
+    justify-self: center;
+    margin-left: 30px;
+    margin-bottom: 20px;
+    color: var(--heavy-grey);
+}
+.col_movie_radio {
+    display: flex;
+    justify-self: center;
+    margin-left: 85px;
+    margin-bottom: 20px;
+    color: var(--heavy-grey);
+}
+.category_title {
+    margin-right: 10px;
 }

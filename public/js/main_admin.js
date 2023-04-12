@@ -223,3 +223,6 @@ function removeSelectedRow() {
    
   }
 }
+
+
+// Function add movie
