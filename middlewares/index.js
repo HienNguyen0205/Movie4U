@@ -18,5 +18,22 @@ const MiddleWares = {
             next();
         });
     },
+
+    authForUser: (req, res, next) => {
+        verifyJWT(req, res, next);
+        if(req.user.status === 1){
+            next();
+        }else{
+            res.status(403).json({message: 'You are not user'});
+        }
+    },
+
+    authForAdmin: (req, res, next) => {
+        if(req.user.status === 0){
+            next();
+        }else{
+            res.status(403).json({message: 'You are not admin'});
+        }
+    }
     
 }

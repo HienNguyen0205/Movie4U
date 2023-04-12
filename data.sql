@@ -35,6 +35,9 @@ CREATE TABLE movie (
   trailer VARCHAR(255) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
   description VARCHAR(21844) DEFAULT NULL,
+  age_restrict INT NOT NULL DEFAULT 0,
+  director VARCHAR(255) NOT NULL,
+  actors VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -92,38 +95,38 @@ CREATE TABLE ticket (
 ) ENGINE=InnoDB;
 
 -- Insert categories
-INSERT INTO category (name) VALUES ('action'), ('comedy'), ('drama'), ('horror'), ('fantasty'), ('romance');
+INSERT INTO category (name) VALUES ('Action'), ('Comedy'), ('Drama'), ('Horror'), ('Fantasty'), ('Romance');
 
 -- Insert current movies
-INSERT INTO movie (name, duration, release_date, image, trailer)
+INSERT INTO movie (name, duration, release_date, image, trailer, director, actors, age_restrict)
 VALUES
-  ('Aladdin', 120, '2019-05-22', '/images/Movie/aladdin.jpg', 'https://www.youtube.com/embed/foyufD52aog'),
-  ('Avengers: Endgame', 181, '2019-04-26', '/images/Movie/avenger-endgame.jpg', 'https://www.youtube.com/embed/TcMBFSGVi1c'),
-  ('Captain Marvel', 124, '2019-03-08', '/images/Movie/captain-marvel.jpg', 'https://www.youtube.com/embed/Z1BCujX3pw8'),
-  ('Cruella', 134, '2021-05-28', '/images/Movie/cruella.jpg', 'https://www.youtube.com/embed/gmRKv7n2If8'),
-  ('No Time To Die', 134, '2021-09-30', '/images/Movie/no-time-to-die.jpg', 'https://www.youtube.com/embed/BIhNsAtPbPI'),
-  ('Spider-Man: Far From Home', 129, '2019-07-02', '/images/Movie/spider-man-far-from-home.jpg', 'https://www.youtube.com/embed/Nt9L1jCKGnE'),
-  ('Star Wars: The Rise of Skywalker', 142, '2019-12-20', '/images/Movie/star-wars.jpg', 'https://www.youtube.com/embed/8Qn_spdM5Zg'),
-  ('Glass', 129, '2019-01-18', '/images/Movie/glass.jpg', 'https://www.youtube.com/embed/95ghQs5AmNk'),
-  ('Thor', 130, '2017-11-03', '/images/Movie/thor.jpg', 'https://www.youtube.com/embed/JOddp-nlNvQ'),
-  ('Toy Story 4', 100, '2019-06-21','/images/Movie/toy-story-4.jpg', 'https://www.youtube.com/embed/wmiIUN-7qhE');
+  ('Aladdin', 120, '2019-05-22', '/images/Movie/aladdin.jpg', 'https://www.youtube.com/embed/foyufD52aog', 'Guy Ritchie', 'Mena Massoud, Naomi Scott, Will Smith, Marwan Kenzari', 'PG-7'),
+  ('Avengers: Endgame', 181, '2019-04-26', '/images/Movie/avenger-endgame.jpg', 'https://www.youtube.com/embed/TcMBFSGVi1c', 'Anthony Russo, Joe Russo', 'Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth', 'PG-13'),
+  ('Captain Marvel', 124, '2019-03-08', '/images/Movie/captain-marvel.jpg', 'https://www.youtube.com/embed/Z1BCujX3pw8', 'Anna Boden, Ryan Fleck', 'Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Jude Law', 'PG-13'),
+  ('Cruella', 134, '2021-05-28', '/images/Movie/cruella.jpg', 'https://www.youtube.com/embed/gmRKv7n2If8', 'Craig Gillespie', 'Emma Stone, Emma Thompson, Joel Fry, Paul Walter Hauser', 'PG-13'),
+  ('No Time To Die', 134, '2021-09-30', '/images/Movie/no-time-to-die.jpg', 'https://www.youtube.com/embed/BIhNsAtPbPI', 'Cary Joji Fukunaga', 'Daniel Craig, Rami Malek, Léa Seydoux, Lashana Lynch', 'PG-13'),
+  ('Spider-Man: Far From Home', 129, '2019-07-02', '/images/Movie/spider-man-far-from-home.jpg', 'https://www.youtube.com/embed/Nt9L1jCKGnE', 'Jon Watts', 'Tom Holland, Samuel L. Jackson, Zendaya, Jake Gyllenhaal', 'PG-13'),
+  ('Star Wars: The Rise of Skywalker', 142, '2019-12-20', '/images/Movie/star-wars.jpg', 'https://www.youtube.com/embed/8Qn_spdM5Zg', 'J.J. Abrams', 'Daisy Ridley, Adam Driver, John Boyega, Oscar Isaac', 'PG-13'),
+  ('Glass', 129, '2019-01-18', '/images/Movie/glass.jpg', 'https://www.youtube.com/embed/95ghQs5AmNk', 'M. Night Shyamalan', 'James McAvoy, Bruce Willis, Samuel L. Jackson, Anya Taylor-Joy', 'PG-13'),
+  ('Thor', 130, '2017-11-03', '/images/Movie/thor.jpg', 'https://www.youtube.com/embed/JOddp-nlNvQ', 'Taika Waititi', 'Chris Hemsworth, Tom Hiddleston, Cate Blanchett, Mark Ruffalo', 'PG-13'),
+  ('Toy Story 4', 100, '2019-06-21','/images/Movie/toy-story-4.jpg', 'https://www.youtube.com/embed/wmiIUN-7qhE', 'Josh Cooley', 'Tom Hanks, Tim Allen, Annie Potts, Tony Hale', 'G');
 
 -- Insert upcoming movies
-INSERT INTO movie (name, duration, release_date, image, trailer, status)
+INSERT INTO movie (name, duration, release_date, image, trailer, status, actors, director, age_restrict)
 VALUES
-  ('Joker', 122, '2019-10-04', '/images/Movie/joker.jpg', 'https://www.youtube.com/embed/zAGVQLHvwOY',0),
-  ('The Lion King', 118, '2019-07-19', '/images/Movie/lion-king.jpg', 'https://www.youtube.com/embed/7TavVZMewpY',0),
-  ('Frozen 2', 103, '2019-11-22', '/images/Movie/frozen-2.jpg', 'https://www.youtube.com/embed/Zi4LMpSDccc',0),
-  ('Jumanji: The Next Level', 123, '2019-12-13', '/images/Movie/jumanji-next-level.jpg', 'https://www.youtube.com/embed/F6QaLsw8EWY',0),
-  ('Black Widow', 134, '2021-07-09', '/images/Movie/black-widow.jpg', 'https://www.youtube.com/embed/Fp9pNPdNwjI',0),
-  ('Fast & Furious 9', 143, '2021-06-25', '/images/Movie/fast-furious-9.jpg', 'https://www.youtube.com/embed/FUK2kdPsBws',0),
-  ('Godzilla vs. Kong', 113, '2021-03-31', '/images/Movie/godzilla-vs-kong.jpg', 'https://www.youtube.com/embed/odM92ap8_c0',0),
-  ('The Suicide Squad', 132, '2021-08-06', '/images/Movie/suicide-squad.jpg', 'https://www.youtube.com/embed/eg5ciqQzmK0',0);
+  ('Joker', 122, '2019-10-04', '/images/Movie/joker.jpg', 'https://www.youtube.com/embed/zAGVQLHvwOY', 0, 'Joaquin Phoenix, Robert De Niro, Zazie Beetz', 'Todd Phillips', 'R'),
+  ('The Lion King', 118, '2019-07-19', '/images/Movie/lion-king.jpg', 'https://www.youtube.com/embed/7TavVZMewpY', 0, 'Donald Glover, Beyoncé, James Earl Jones', 'Jon Favreau', 'PG'),
+  ('Frozen 2', 103, '2019-11-22', '/images/Movie/frozen-2.jpg', 'https://www.youtube.com/embed/Zi4LMpSDccc', 0, 'Kristen Bell, Idina Menzel, Josh Gad', 'Chris Buck, Jennifer Lee', 'PG'),
+  ('Jumanji: The Next Level', 123, '2019-12-13', '/images/Movie/jumanji-next-level.jpg', 'https://www.youtube.com/embed/F6QaLsw8EWY', 0, 'Dwayne Johnson, Kevin Hart, Jack Black', 'Jake Kasdan', 'PG-13'),
+  ('Black Widow', 134, '2021-07-09', '/images/Movie/black-widow.jpg', 'https://www.youtube.com/embed/Fp9pNPdNwjI', 0, 'Scarlett Johansson, Florence Pugh, David Harbour', 'Cate Shortland', 'PG-13'),
+  ('Fast & Furious 9', 143, '2021-06-25', '/images/Movie/fast-furious-9.jpg', 'https://www.youtube.com/embed/FUK2kdPsBws', 0, 'Vin Diesel, Michelle Rodriguez, John Cena', 'Justin Lin', 'PG-13'),
+  ('Godzilla vs. Kong', 113, '2021-03-31', '/images/Movie/godzilla-vs-kong.jpg', 'https://www.youtube.com/embed/odM92ap8_c0', 0, 'Alexander Skarsgård, Millie Bobby Brown, Rebecca Hall', 'Adam Wingard', 'PG-13'),
+  ('The Suicide Squad', 132, '2021-08-06', '/images/Movie/suicide-squad.jpg', 'https://www.youtube.com/embed/eg5ciqQzmK0', 0, 'Margot Robbie, Idris Elba, John Cena', 'James Gunn', 'R');
 
 INSERT INTO poster (image) VALUES 
 ('/image/PosterTrailer/ant_man_wasp_quantumania.jpg'),
 ('/image/PosterTrailer/Titanic.jpg'),
-('/image/PosterTrailer/Shazam-Fury-of-the-Gods.jpg'),
+('/image/PosterTrailer/Shazam-Fury-of-the-Gods.jpg');
 
 
 -- Aladdin

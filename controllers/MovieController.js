@@ -7,7 +7,8 @@ const MovieControllers = {
                     INNER JOIN movie_category ON movie.id = movie_category.movie_id
                     INNER JOIN category ON movie_category.category_id = category.id
                     WHERE movie.status = ?
-                    GROUP BY movie.id`;
+                    GROUP BY movie.id
+                    Order by movie.release_date DESC`;
         db.queryParams(sql, [status])
             .then((results) => {
                 res.status(200).json(
@@ -27,7 +28,7 @@ const MovieControllers = {
     },
     getMovieById: (req, res) => {
         const id = req.query.id;
-        const sql = `SELECT movie.id, movie.name, movie.duration, movie.release_date, movie.image, movie.trailer, GROUP_CONCAT(category.name) AS categories, movie.status
+        const sql = `SELECT movie.id, movie.name, movie.duration, movie.release_date, movie.image, movie.trailer, movie.director, movie.actors, movie.age_restrict, GROUP_CONCAT(category.name) AS categories, movie.status
                     FROM movie
                     INNER JOIN movie_category ON movie.id = movie_category.movie_id
                     INNER JOIN category ON movie_category.category_id = category.id
