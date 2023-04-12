@@ -35,7 +35,7 @@ CREATE TABLE movie (
   trailer VARCHAR(255) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
   description VARCHAR(21844) DEFAULT NULL,
-  age_restrict INT NOT NULL DEFAULT 0,
+  age_restrict VARCHAR(255) NOT NULL,
   director VARCHAR(255) NOT NULL,
   actors VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
