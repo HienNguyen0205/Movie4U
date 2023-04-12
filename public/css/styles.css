@@ -18,6 +18,7 @@
   --yellow: #ffff00;
   --border-orange: #FFB399;
   --seat-empty: #D4E5F6;
+  --header-color: #ffa500;
 }
 
 body {
@@ -59,6 +60,7 @@ label {
   margin: 12px 0 8px 0;
   font-size: 18px !important;
   font-weight: 400;
+  color: white !important;
 }
 
 .carousel-item img {
@@ -178,8 +180,8 @@ button {
     -1px 1px 4px var(--blur-dark-color);
 }
 
-.nav-active{
-  color: var(--selected-color);
+.nav-active, .payment-active{
+  color: var(--selected-color) !important;
 }
 
 .nav_item:hover {
@@ -440,11 +442,12 @@ footer > div > a:hover {
   width: 440px;
   height: fit-content;
   z-index: 20;
-  top: calc(50% - 264px);
+  top: calc(50% - 280px);
   left: calc(50% - 220px);
   background-color: var(--modal-bg);
   border-radius: 24px;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .modal_show {
@@ -496,7 +499,9 @@ footer > div > a:hover {
 }
 
 #sign_in_form p:not(.error_mess),
-#sign_up_form p:not(.error_mess) {
+#sign_up_form p:not(.error_mess),
+#sign_in_form label,
+#sign_up_form label {
   color: black !important;
 }
 
@@ -509,7 +514,7 @@ footer > div > a:hover {
 .input {
   border-radius: 6px;
   width: 100%;
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-color: black;
 }
 
@@ -879,4 +884,78 @@ footer > div > a:hover {
 
 .cancel_ticket_btn, .next_step_ticket_btn{
   width: 140px;
+}
+
+#food_container{
+  border: 1px solid var(--border-orange);
+  padding: 24px;
+  flex: 2.5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+}
+
+.food_quantity{
+  padding: 4px 8px;
+  border: 1px solid var(--border-orange);
+  border-radius: 4px;
+  margin: 0 12px;
+  color: white;
+}
+
+#food_container img{
+  object-fit: contain;
+  width: 40%;
+  margin-right: 12px;
+  border-radius: 4px;
+}
+
+.ticket_info_container{
+  border: 1px solid var(--border-orange);
+  margin-bottom: 24px;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.text-hightlight{
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--header-color);
+}
+
+#purchase_info_container, #purchase_method_container{
+  border: 1px solid var(--border-orange);
+  padding: 12px 18px;
+}
+
+#purchase_info_container{
+  flex: 1;
+}
+
+#purchase_method_container{
+  flex: 2;
+}
+
+.header_text{
+  padding: 6px 0;
+  color: var(--pri-btn-color) !important;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.payment_icon{
+  color: white;
+  font-size: 36px;
+}
+
+#payment_form{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column-gap: 8px;
+  grid-row-gap: 12px;
 }

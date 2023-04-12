@@ -17,8 +17,8 @@
                 genie's magic power to make himself a prince in order to marry her. He's also on a mission to stop the
                 powerful Jafar who plots to steal the magic lamp that could make his deepest wishes come true.
             </p>
-            <button id="trailer_btn" class="position-relative btn_config"
-                style="background-color: var(--pri-btn-color);">
+            <button id="trailer_btn" class="position-relative btn_config" data-bs-toggle="modal" data-bs-target="#trailer"
+                style="background-color: var(--pri-btn-color);" data-link="/https://www.youtube.com/embed/s3UD3qvJdao?enablejsapi=1">
                 <div class="custom_btn">
                     Watch trailer
                 </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="buy_ticket_step" data-index="2">
             <div class="step_num">3</div>
-            Choose Ticket/Food
+            Choose Food
         </div>
         <div class="buy_ticket_step" data-index="3">
             <div class="step_num">4</div>
@@ -113,13 +113,13 @@
                     <p id="total_ticket_item" class="text-secondary-emphasis fs-5 text-end mx-2">Total: <span
                             class="fs-4 fw-semibold">$280</span></p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <button class="position-relative btn_config cancel_ticket_btn"
+                        <button id="cancel_seat_btn" class="position-relative btn_config cancel_ticket_btn"
                             style="background-color: var(--red-color);">
                             <div class="custom_btn">
                                 Cancel
                             </div>
                         </button>
-                        <button class="position-relative btn_config next_step_ticket_btn"
+                        <button id="next_seat_btn" class="position-relative btn_config next_step_ticket_btn"
                             style="background-color: var(--pri-btn-color);">
                             <div class="custom_btn">
                                 Next
@@ -127,6 +127,276 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="movie_ticket_main d-none">
+        <div class="ticket_info_container">
+            <button id="prev_food_btn" class="position-relative btn_config"
+                style="background-color: var(--pri-btn-color); width: 120px; height: 60px;">
+                <div class="custom_btn">
+                    Previous
+                </div>
+            </button>
+            <div class="d-flex flex-column align-items-center flex-grow-1">
+                <h5 class="text-hightlight">Movie</h5>
+                <p>Aladdin</p>
+            </div>
+            <div class="d-flex flex-column align-items-center flex-grow-1">
+                <h5 class="text-hightlight">Theater</h5>
+                <p>Binh Thanh Theater</p>
+            </div>
+            <div class="d-flex flex-column align-items-center flex-grow-1">
+                <h5 class="text-hightlight">Seat</h5>
+                <p>A1</p>
+            </div>
+            <div class="d-flex flex-column align-items-center flex-grow-1">
+                <div class="d-flex">
+                    <h5 class="text-hightlight" style="width: 120px;">Ticket Price:</h5>
+                    <p>$200</p>
+                </div>
+                <div class="d-flex">
+                    <h5 class="text-hightlight" style="width: 120px;">Food Price:</h5>
+                    <p>$100</p>
+                </div>
+                <div class="d-flex">
+                    <h5 class="text-hightlight" style="width: 120px;">Total Price:</h5>
+                    <p>$300</p>
+                </div>
+            </div>
+            <button id="next_food_btn" class="position-relative btn_config"
+                style="background-color: var(--pri-btn-color); width: 120px; height: 60px;">
+                <div class="custom_btn">
+                    Next
+                </div>
+            </button>
+        </div>
+        <div id="food_container" class="mb-3">
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button style="border-radius: 4px;"><i class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button style="border-radius: 4px;"><i class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <img src="/images/UI/popcorn&cola.jpg" alt="">
+                <div class="d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 style="color: var(--header-color) !important;">Combo Popcorn & Cola 1</h5>
+                        <p>Include 1 Popcorn & 1 Cola</p>
+                        <p>Cost: <span>$5</span></p>
+                    </div>
+                    <div class="d-flex">
+                        <button class="decrease_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-left"></i></button>
+                        <div class="food_quantity">0</div>
+                        <button class="increase_quantity_food" style="border-radius: 4px;"><i
+                                class="fa-solid fa-caret-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="movie_ticket_main d-none">
+        <div class="d-flex mb-3">
+            <div id="purchase_method_container">
+                <h5 class="text-center header_text mb-4" style="font-size: 32px;">Choose Payment Method</h5>
+                <div class="d-flex justify-content-center my-4">
+                    <button class="bg-transparent mx-5"><i
+                            class="fa-brands fa-cc-visa payment_icon payment-active"></i></button>
+                    <button class="bg-transparent mx-5"><i
+                            class="fa-brands fa-cc-mastercard payment_icon"></i></i></button>
+                    <button class="bg-transparent mx-5"><i
+                            class="fa-brands fa-cc-discover payment_icon"></i></i></button>
+                    <button class="bg-transparent mx-5"><i class="fa-brands fa-cc-paypal payment_icon"></i></button>
+                </div>
+                <hr>
+                <div id="payment_form">
+                    <div style="grid-area: 1 / 1 / 2 / 3;">
+                        <label for="firstName_payment">First Name</label>
+                        <input id="firstName_payment" class="input" type="text">
+                    </div>
+                    <div style="grid-area: 1 / 3 / 2 / 5;">
+                        <label for="lastName_payment">Last Name</label>
+                        <input id="lastName_payment" class="input" type="text">
+                    </div>
+                    <div style="grid-area: 2 / 1 / 3 / 3;">
+                        <label for="cardNumber_payment">Card Number</label>
+                        <input id="cardNumber_payment" class="input" type="text" placeholder="XXXX XXXX XXXX XXXX">
+                    </div>
+                    <div style="grid-area: 2 / 3 / 3 / 4;">
+                        <label for="expiry_payment">Expiry Date</label>
+                        <input id="expiry_payment" class="input" type="month">
+                    </div>
+                    <div style="grid-area: 2 / 4 / 3 / 5;">
+                        <label for="cvv_payment">CVV</label>
+                        <input id="cvv_payment" class="input" type="text" placeholder="CVV">
+                    </div>
+                    <div style="grid-area: 3 / 1 / 4 / 4;">
+                        <label for="country_payment">Country</label>
+                        <select id="country_payment" class="form-select">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div style="grid-area: 3 / 4 / 4 / 5;">
+                        <label for="zip_payment">Postal/Zip</label>
+                        <input id="zip_payment" class="input" type="text" placeholder="Postal/Zip">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end my-4">
+                    <button id="purchase_btn" class="position-relative btn_config mx-0"
+                        style="background-color: var(--pri-btn-color); width: 160px; height: 60px;">
+                        <div class="custom_btn">
+                            Purchase
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div id="purchase_info_container">
+                <div class="d-flex justify-content-center mb-3">
+                    <img style="width: 180px;" src="/images/Movie/aladdin.jpg" alt="">
+                </div>
+                <h5 class="header_text">Ticket Infomation</h5>
+                <p><span class="text-hightlight w-25 d-inline-block">Name:</span><span>Aladdin</span></p>
+                <p><span class="text-hightlight w-25 d-inline-block">Theater:</span><span>Binh Thanh Theater</span></p>
+                <p><span class="text-hightlight w-25 d-inline-block">Seats:</span><span>A01</span></p>
+                <p><span class="text-hightlight w-25 d-inline-block">Food:</span><span>Combo Popcorn & Cola 1</span></p>
+                <h5 class="header_text">Price Detal</h5>
+                <p><span class="text-hightlight w-25 d-inline-block">Ticket price:</span><span>$25 x 4 = $100</span></p>
+                <p><span class="text-hightlight w-25 d-inline-block">Theater:</span><span>$5 x 5 = $25</span></p>
+                <hr>
+                <h4 class="header_text mt-2">Total: <span style="color: white;">$125</span></h4>
             </div>
         </div>
     </div>
