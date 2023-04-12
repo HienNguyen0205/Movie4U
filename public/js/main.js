@@ -4,8 +4,85 @@ const getLastPath = href => {
 
 const changePath = path => {
     const href = window.location.href
-    const currPath = href.slice(0, href.lastIndexOf('/'))
-    window.location.href = currPath + '/' + path
+    window.location.href = href.substring(0, href.lastIndexOf('/')) + '/' + path
+}
+
+const formatDateTime = datetime => {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' }
+    return new Date(datetime).toLocaleDateString('en-US', options)
+}
+
+let formatCategory = category => {
+    let words = category.split(',')
+    let formattedStr = ''
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i].trim()
+        formattedStr += word.charAt(0).toUpperCase() + word.slice(1) + ', '
+    }
+    formattedStr = formattedStr.slice(0, -2)
+    return formattedStr
+}
+
+const formatTrailerLink = link => {
+    return link + '?enablejsapi=1'
+}
+
+const handleBuyTicket = id => {
+    axios.get('/movie/getMovieById', {
+        params: {
+            id: id,
+        }
+    })
+    .then(res => {
+        localStorage.setItem('movieInfo', JSON.stringify(res.data.data[0]))
+        changePath('movieticket')
+    })
+}
+
+const openMovieContainer = document.querySelector('#open_movie')
+const renderOpenMovie = data => {
+    openMovieContainer.insertAdjacentHTML('beforeend', `
+        <div class="movie_wrap">
+            <div class="position-relative">
+                <img class="movie_poster" src="${data.image}" alt="movie">
+                <button onclick="handleBuyTicket(${data.id})" class="buy_ticket_btn btn_config" style="background-color: var(--pri-btn-color);">
+                    <div class="custom_btn">
+                        Buy ticket
+                    </div>
+                </button>
+            </div>
+            <div class="py-3">
+                <p class="movie_name">${data.name}</p>
+                <span class="movie_duration">${data.duration} min</span>
+                <span class="movie_split mx-1">|</span>
+                <span class="movie_category">${formatCategory(data.categories)}</span>
+            </div>
+        </div>
+    `)
+}
+
+const comingMovieContainer = document.querySelector('#coming_movie')
+const renderComingMovie = data => {
+    comingMovieContainer.insertAdjacentHTML('beforeend', `
+        <div class="movie_wrap position-relative">
+            <img class="movie_poster" src="${data.image}" alt="movie">
+            <div class="release_date"><i class="fa-solid fa-calendar-days"></i>${formatDateTime(data.release_date)}</div>
+            <div class="p-3">
+                <p class="movie_name">${data.name}</p>
+                <span class="movie_duration">${data.duration} min</span>
+                <span class="movie_split mx-1">|</span>
+                <span class="movie_category">${formatCategory(data.categories)}</span>
+            </div>
+        </div>
+    `)
+}
+
+const resetOpenMovie = () => {
+    openMovieContainer.innerHTML = ''
+}
+
+const resetComingMovie = () => {
+    comingMovieContainer.innerHTML = ''
 }
 
 /* Changing the background color of the header when the user scrolls down. */
@@ -214,56 +291,20 @@ window.addEventListener('load', () => {
     loader.addEventListener('transitionend', () => {
         loader.remove()
     })
-    localStorage.clear()
 })
 
 const navBtn = document.querySelectorAll('.nav_item')
-const activeNav = document.querySelector('.nav-active').classList.remove('nav-active')
-const navPaths = ['/Movie', '/Event', '/Support']
-const homePaths = ['/', '/user']
-if (homePaths.includes(window.location.pathname)) {
-    navBtn[0].classList.add('nav-active')
-} else {
-    navBtn[navPaths.indexOf(getLastPath(window.location.href)) + 1].classList.add('nav-active')
+const navPaths = ['/home','/movie', '/event', '/support']
+
+if(navPaths.includes(window.location.pathname.toLowerCase())){
+    document.querySelector('.nav-active').classList.remove('nav-active')
+    navBtn[navPaths.indexOf(window.location.pathname.toLowerCase())].classList.add('nav-active')
 }
 
 /* This code is used to change the page when the user clicks on the navigation bar. */
 navBtn.forEach(element => {
     element.addEventListener('click', () => {
-        const path = element.innerText
+        const path = element.innerText.toLowerCase()
         changePath(path)
-    })
-})
-
-const listMovie = document.querySelector('#list_movie')
-const movieTypeBtn = document.querySelectorAll('.movie_btn')
-const currMovieList = document.querySelector('#currMovie')
-const comingMovieList = document.querySelector('#comingMovie')
-
-if (getLastPath(window.location.href) === '/Movie') {
-    listMovie.innerHTML = currMovieList.innerHTML
-}
-
-movieTypeBtn.forEach((element, index) => {
-    element.addEventListener('click', () => {
-        const selectedMovieBtn = document.querySelector('.movie_btn-selected')
-        if (!element.isSameNode(selectedMovieBtn)) {
-            selectedMovieBtn.classList.remove('movie_btn-selected')
-            element.classList.add('movie_btn-selected')
-            listMovie.innerHTML = ''
-            if (index === 0) {
-                listMovie.innerHTML = currMovieList.innerHTML
-            } else {
-                listMovie.innerHTML = comingMovieList.innerHTML
-            }
-        }
-    })
-})
-
-const viewMovieBtn = document.querySelectorAll('.buy_ticket_btn')
-viewMovieBtn.forEach(element => {
-    element.addEventListener('click', () => {
-        const movie = element.parentNode.parentNode.getAttribute('data-movie')
-        changePath('MovieTicket/' + movie.replace(' ', '-'))
     })
 })

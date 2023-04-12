@@ -20,6 +20,17 @@ const changeTicketSection = (from, to) => {
     activeIndex = to
 }
 
+formatCategory = category => {
+    let words = category.split(',')
+    let formattedStr = ''
+    for (let i = 0; i < words.length; i++) {
+        let word = words[i].trim()
+        formattedStr += word + ' | '
+    }
+    formattedStr = formattedStr.slice(0, -3)
+    return formattedStr
+}
+
 buyTicketStep.forEach((element, index) => {
     element.addEventListener('click', () => {
         if (index < activeIndex) {
@@ -179,3 +190,38 @@ const nextFoodBtn = document.querySelector('#next_food_btn')
 nextFoodBtn.addEventListener('click', () => {
     changeTicketSection(2, 3)
 })
+
+const movieInfo = document.querySelector('#movie_info')
+
+const renderMovieInfo = () => {
+    const data = JSON.parse(localStorage.getItem('movieInfo'))
+    console.log(data)
+    movieInfo.insertAdjacentHTML('beforeend', `
+        <image id="movie_ticket_poster" src="${data.image}" alt="" />
+        <div class="flex-grow-1">
+            <div class="d-flex align-items-center">
+                <h1 id="movie_ticket_title">${data.name}</h1>
+                <div id="age_restrict">${data.age_restrict}</div>
+            </div>
+            <p class="py-1"><span class="text-hightlight">Director: </span>${data.director}</p>
+            <p class="py-1"><span class="text-hightlight">Main cast: </span>${data.actors}</p>
+            <p class="py-1"><span class="text-hightlight">Release day: </span>${formatDateTime(data.release_date)}</p>
+            <p class="py-1"><span class="text-hightlight">Duration: </span>${data.duration} min</p>
+            <p class="py-1"><span class="text-hightlight">Genres: </span>${formatCategory(data.categories)}</p>
+            <p class="py-1">
+                <span class="text-hightlight">Storyline: </span>A kind-hearted street urchin Aladdin vies for the love
+                of the beautiful princess Jasmine, the princess of Agrabah. When he finds a magic lamp, he uses the
+                genie's magic power to make himself a prince in order to marry her. He's also on a mission to stop the
+                powerful Jafar who plots to steal the magic lamp that could make his deepest wishes come true.8
+            </p>
+            <button id="trailer_btn" class="position-relative btn_config" data-bs-toggle="modal" data-bs-target="#trailer"
+                style="background-color: var(--pri-btn-color);" data-link="${formatTrailerLink(data.trailer)}">
+                <div class="custom_btn">
+                    Watch trailer
+                </div>
+            </button>
+        </div>
+    `)
+}
+
+renderMovieInfo()

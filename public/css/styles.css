@@ -309,10 +309,10 @@ button {
   align-items: center;
   justify-content: space-around;
   position: absolute;
-  bottom: 35%;
+  top: 240px;
   right: 0;
   height: 40px;
-  width: 132px;
+  width: 180px;
   background-color: var(--tag-color);
   font-weight: 500;
   opacity: 0.8;
@@ -322,7 +322,7 @@ button {
   filter: brightness(0.8);
 }
 
-.list_trailer {
+#list_trailer {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -674,7 +674,7 @@ footer > div > a:hover {
 
 #movie_ticket_container{
   min-height: 1000px;
-  padding-top: 100px;
+  padding-top: 64px;
 }
 
 #movie_ticket_poster{

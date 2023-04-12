@@ -1,0 +1,39 @@
+const express = require('express')
+const router = express.Router()
+
+router.get('/home', (req, res) => {
+    res.render('home', {
+        layout: 'mainLayout',
+        script: '/js/home.js',
+        carousel: [
+            {index: 0, src: '/images/Carousel/Babylon.jpg'},
+            {index: 1, src: '/images/Carousel/Knock-at-the-Cabin.jpg'},
+            {index: 2, src: '/images/Carousel/Missing.jpg'},
+            {index: 3, src: '/images/Carousel/Shazam_-Fury-of-the-Gods.jpg'},
+            {index: 4, src: '/images/Carousel/Titanic.jpg'},
+        ],
+    })
+})
+
+router.get('/movie', (req, res) => {
+    res.render('movie', {
+        layout: 'mainLayout',
+        script: '/js/movie.js',
+    })
+})
+
+router.get('/movieticket', (req, res) => {
+    res.render('MovieTicket', {
+        layout: 'mainLayout',
+        script: '/js/movie_ticket.js',
+    })
+})
+
+router.get('/event', (req, res) => {
+    res.render('Event', {
+        layout: 'mainLayout',
+        
+    })
+})
+
+module.exports = router

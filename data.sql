@@ -35,7 +35,7 @@ CREATE TABLE movie (
   trailer VARCHAR(255) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
   description VARCHAR(21844) DEFAULT NULL,
-  age_restrict INT NOT NULL DEFAULT 0,
+  age_restrict VARCHAR(255) NOT NULL,
   director VARCHAR(255) NOT NULL,
   actors VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
@@ -122,12 +122,6 @@ VALUES
   ('Fast & Furious 9', 143, '2021-06-25', '/images/Movie/fast-furious-9.jpg', 'https://www.youtube.com/embed/FUK2kdPsBws', 0, 'Vin Diesel, Michelle Rodriguez, John Cena', 'Justin Lin', 'PG-13'),
   ('Godzilla vs. Kong', 113, '2021-03-31', '/images/Movie/godzilla-vs-kong.jpg', 'https://www.youtube.com/embed/odM92ap8_c0', 0, 'Alexander Skarsgård, Millie Bobby Brown, Rebecca Hall', 'Adam Wingard', 'PG-13'),
   ('The Suicide Squad', 132, '2021-08-06', '/images/Movie/suicide-squad.jpg', 'https://www.youtube.com/embed/eg5ciqQzmK0', 0, 'Margot Robbie, Idris Elba, John Cena', 'James Gunn', 'R');
-
-INSERT INTO poster (image) VALUES 
-('/image/PosterTrailer/ant_man_wasp_quantumania.jpg'),
-('/image/PosterTrailer/Titanic.jpg'),
-('/image/PosterTrailer/Shazam-Fury-of-the-Gods.jpg');
-
 
 -- Aladdin
 INSERT INTO movie_category (movie_id, category_id) VALUES (1, 1), (1, 3), (1, 5);

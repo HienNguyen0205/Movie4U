@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const path = require('path')
 
-const userRouter = require('./routes/user')
+const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
 const movieRouter = require('./routes/movie')
 
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/user', userRouter)
+app.use('/', indexRouter)
 app.use('/admin', adminRouter)
 app.use('/movie', movieRouter)
 

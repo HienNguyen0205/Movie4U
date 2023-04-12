@@ -70,7 +70,7 @@ const MovieControllers = {
             });
     },
     getAllPoster: (req, res) => {
-        const sql = `SELECT poster.id, movie.image FROM poster`;
+        const sql = `SELECT poster.id, poster.image FROM poster`;
         db.query(sql)
             .then((results) => {
                 res.status(200).json({
