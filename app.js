@@ -41,6 +41,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/user', userRouter)
 app.use('/admin', adminRouter)
-// app.use('/movie', movieRouter)
+app.use('/movie', movieRouter)
 
 module.exports = app

@@ -120,36 +120,11 @@ VALUES
   ('Godzilla vs. Kong', 113, '2021-03-31', '/images/Movie/godzilla-vs-kong.jpg', 'https://www.youtube.com/embed/odM92ap8_c0',0),
   ('The Suicide Squad', 132, '2021-08-06', '/images/Movie/suicide-squad.jpg', 'https://www.youtube.com/embed/eg5ciqQzmK0',0);
 
--- Add categories to movies
-INSERT INTO movie_category (movie_id, category_id) VALUES
-(1, 2), -- Aladdin: comedy
-(2, 1), -- Avengers: Endgame: action
-(2, 5), -- Avengers: Endgame: science-fiction
-(3, 1), -- Captain Marvel: action
-(3, 5), -- Captain Marvel: science-fiction
-(4, 3), -- Cruella: drama
-(5, 1), -- No Time To Die: action
-(5, 5), -- No Time To Die: science-fiction
-(6, 1), -- Spider-Man: Far From Home: action
-(6, 5), -- Spider-Man: Far From Home: science-fiction
-(7, 5), -- Star Wars: The Rise of Skywalker: science-fiction
-(8, 3), -- Glass: drama
-(8, 4), -- Glass: horror
-(9, 1), -- Thor: Ragnarok: action
-(10, 2), -- Toy Story 4: comedy
-(11, 4), -- Joker: horror
-(12, 3), -- The Lion King: drama
-(13, 2), -- Frozen 2: comedy
-(14, 1), -- Jumanji: The Next Level: action
-(14, 2), -- Jumanji: The Next Level: comedy
-(15, 1), -- Black Widow: action
-(15, 3), -- Black Widow: drama
-(16, 1), -- Fast & Furious 9: action
-(16, 5), -- Fast & Furious 9: science-fiction
-(17, 5), -- Godzilla vs. Kong: science-fiction
-(18, 1), -- The Suicide Squad: action
-(18, 2), -- The Suicide Squad: comedy
-(18, 4); -- The Suicide Squad: horror
+INSERT INTO poster (image) VALUES 
+('/image/PosterTrailer/ant_man_wasp_quantumania.jpg'),
+('/image/PosterTrailer/Titanic.jpg'),
+('/image/PosterTrailer/Shazam-Fury-of-the-Gods.jpg'),
+
 
 -- Aladdin
 INSERT INTO movie_category (movie_id, category_id) VALUES (1, 1), (1, 3), (1, 5);
