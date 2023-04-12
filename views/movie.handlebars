@@ -1,50 +1,17 @@
-<div class="container">
+<div class="container pt-3">
     <div class="d-flex justify-content-between">
         <div class="movie_btn_group">
             <button class="movie_btn movie_btn-selected">Opening this week</button>
             <button class="movie_btn">Coming soon</button>
         </div>
         <div class="search_bar my-3">
-            <input class="search_input" type="search" placeholder="Search for movie">
-            <div class="search_icon_wrap">
+            <input id="movie_search_input" class="search_input" type="search" placeholder="Search for movie">
+            <div id="movie_search_btn" class="search_icon_wrap">
                 <i class="fa-solid fa-magnifying-glass search_icon"></i>
             </div>
         </div>
     </div>
     <hr class="mt-0">
-    <div id="list_movie" class="list_movie"></div>
-    <div id="currMovie" class="d-none">
-        {{#each movies}}
-        <div class="movie_wrap" data-movie="{{this.name}}">
-            <div class="position-relative">
-                <img class="movie_poster" src="{{this.src}}" alt="movie">
-                <button class="buy_ticket_btn btn_config" style="background-color: var(--pri-btn-color);">
-                    <div id="sign_in" class="custom_btn">
-                        Buy ticket
-                    </div>
-                </button>
-            </div>
-            <div class="py-3">
-                <p class="movie_name">{{this.name}}</p>
-                <span class="movie_duration">{{this.duration}}</span>
-                <span class="movie_split mx-1">|</span>
-                <span class="movie_category">{{this.category}}</span>
-            </div>
-        </div>
-        {{/each}}
-    </div>
-    <div id="comingMovie" class="d-none">
-        {{#each comingMovies}}
-        <div class="movie_wrap position-relative">
-            <img class="movie_poster" src="{{this.src}}" alt="movie">
-            <div class="release_date"><i class="fa-solid fa-calendar-days"></i> {{this.release}}</div>
-            <div class="p-3">
-                <p class="movie_name">{{this.name}}</p>
-                <span class="movie_duration">{{this.duration}}</span>
-                <span class="movie_split mx-1">|</span>
-                <span class="movie_category">{{this.category}}</span>
-            </div>
-        </div>
-        {{/each}}
-    </div>
+    <div id="open_movie" class="list_movie"></div>
+    <div id="coming_movie" class="list_movie"></div>
 </div>

@@ -14,68 +14,18 @@
     </div>
 </div>
 <div class="container py-5">
-    <div class="title_wrap">
-        <h3>Opening this week</h3>
-        <div class="search_bar">
-            <input class="search_input" type="search" placeholder="Search for movie">
-            <div class="search_icon_wrap">
-                <i class="fa-solid fa-magnifying-glass search_icon"></i>
-            </div>
-        </div>
-    </div>
+    <h3>Opening this week</h3>
     <hr>
     <div class="d-flex mb-4 align-items-center">
-        <a class="ms-auto me-1" href="/Movie">See more..</a>
+        <a class="ms-auto me-1" href="/user/movie">See more..</a>
     </div>
-    <div class="list_movie">
-        {{#each movies}}
-        <div class="movie_wrap" data-movie="{{this.name}}">
-            <div class="position-relative">
-                <img class="movie_poster" src="{{this.src}}" alt="movie">
-                <button class="buy_ticket_btn btn_config" style="background-color: var(--pri-btn-color);">
-                    <div id="sign_in" class="custom_btn">
-                        Buy ticket
-                    </div>
-                </button>
-            </div>
-            <div class="py-3">
-                <p class="movie_name">{{this.name}}</p>
-                <span class="movie_duration">{{this.duration}}</span>
-                <span class="movie_split mx-1">|</span>
-                <span class="movie_category">{{this.category}}</span>
-            </div>
-        </div>
-        {{/each}}
-    </div>
+    <div id="open_movie" class="list_movie"></div>
     <div class="title_wrap">
         <h3>Coming soon</h3>
     </div>
     <hr>
-    <div class="list_movie">
-        {{#each comingMovies}}
-        <div class="movie_wrap position-relative">
-            <img class="movie_poster" src="{{this.src}}" alt="movie">
-            <div class="release_date"><i class="fa-solid fa-calendar-days"></i> {{this.release}}</div>
-            <div class="p-3">
-                <p class="movie_name">{{this.name}}</p>
-                <span class="movie_duration">{{this.duration}}</span>
-                <span class="movie_split mx-1">|</span>
-                <span class="movie_category">{{this.category}}</span>
-            </div>
-        </div>
-        {{/each}}
-    </div>
+    <div id="coming_movie" class="list_movie"></div>
     <h3 class="text-center my-4">New Trailer</h3>
     <hr>
-    <div class="list_trailer">
-        {{#each trailers}}
-        <div class="trailer_item" data-bs-toggle="modal" data-bs-target="#trailer" data-src="{{this.src}}">
-            <div class="trailer_poster_wrap">
-                <img src="{{this.poster}}" alt="trailer">
-                <i class="fa-regular fa-circle-play"></i>
-            </div>
-            <h5>{{this.name}}</h5>
-        </div>
-        {{/each}}
-    </div>
+    <div id="list_trailer"></div>
 </div>
