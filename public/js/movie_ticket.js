@@ -195,7 +195,6 @@ const movieInfo = document.querySelector('#movie_info')
 
 const renderMovieInfo = () => {
     const data = JSON.parse(localStorage.getItem('movieInfo'))
-    console.log(data)
     movieInfo.insertAdjacentHTML('beforeend', `
         <image id="movie_ticket_poster" src="${data.image}" alt="" />
         <div class="flex-grow-1">
