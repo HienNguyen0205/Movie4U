@@ -959,3 +959,13 @@ footer > div > a:hover {
   grid-column-gap: 8px;
   grid-row-gap: 12px;
 }
+
+#support_form{
+  padding: 32px 24px;
+  border-radius: 18px;
+}
+
+#support_form input, #support_form textarea{
+  border-radius: 6px;
+  padding: 6px 12px;
+}

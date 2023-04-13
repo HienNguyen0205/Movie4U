@@ -34,5 +34,9 @@ const getLastedMovie = status => {
         })
 }
 
+renderTrailer({trailer: '', image: '/images/Carousel/Babylon.jpg', name: ''})
+renderTrailer({trailer: '', image: '/images/Carousel/Babylon.jpg', name: ''})
+renderTrailer({trailer: '', image: '/images/Carousel/Babylon.jpg', name: ''})
+
 getLastedMovie(0)
 getLastedMovie(1)

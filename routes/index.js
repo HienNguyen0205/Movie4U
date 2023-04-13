@@ -23,16 +23,16 @@ router.get('/movie', (req, res) => {
 })
 
 router.get('/movieticket', (req, res) => {
-    res.render('MovieTicket', {
+    res.render('movieTicket', {
         layout: 'mainLayout',
         script: '/js/movie_ticket.js',
     })
 })
 
-router.get('/event', (req, res) => {
-    res.render('Event', {
+router.get('/support', (req, res) => {
+    res.render('support', {
         layout: 'mainLayout',
-        
+        script: '/js/support.js',
     })
 })
 

@@ -30,30 +30,34 @@ movieTypeBtn.forEach((element, index) => {
 const searchInput = document.querySelector('#movie_search_input')
 const searchBtn = document.querySelector('#movie_search_btn')
 
-const getAllMovie = status => {
-    axios.get('/movie/getAllMovies', {
-        params: {
-            status: status
-        }
-    })
-        .then(res => {
-            if(status === 0){
-                res.data.data.forEach(item => {
-                    renderOpenMovie(item)
-                })        
-            }else if(status === 1){
-                resetComingMovie()
-                res.data.data.forEach(item => {
-                    renderComingMovie(item)
-                })
-            }
+const getOpenMovie = axios.get('/movie/getAllMovies', {
+    params: {
+        status: 0
+    }
+})
+
+const getComingMovie = axios.get('/movie/getAllMovies', {
+    params: {
+        status: 1
+    }
+})
+
+const getAllMovie = () => {
+    Promise.all([getOpenMovie, getComingMovie])
+        .then(([openMovie, comingMovie]) => {
+            openMovie.data.data.forEach(item => {
+                renderOpenMovie(item)
+            })
+            comingMovie.data.data.forEach(item => {
+                renderComingMovie(item)
+            })
         })
         .catch(err => {
             console.error(err)
         })
 }
-getAllMovie(0)
-getAllMovie(1)
+
+getAllMovie()
 
 const getMovieByKeyWord = keyword => {
     axios.get('/movie/getMovieByName?name=' + keyword)
@@ -70,6 +74,9 @@ const getMovieByKeyWord = keyword => {
                 renderComingMovie(item)
             })
         }
+    })
+    .catch(err => {
+        console.error(err)
     })
 }
 
