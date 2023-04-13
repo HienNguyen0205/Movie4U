@@ -61,6 +61,31 @@
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content add_modal">
+                <form enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="theatres_add-label">Add Theatre</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Theatre Name</p>
+                        <div class="input-group flex-nowrap">
+                            <input type="text" id="theatre_name" class="form-control" placeholder="Enter theatre name">
+                        </div>
+                        <p>Theatre Address</p>
+                        <div class="input-group flex-nowrap">
+                            <input type="text" id="theatre_address" class="form-control" placeholder="Enter theatre address">
+                        </div>
+                        <p>Add Theatre Image</p>
+                        <div class="mb-3 add_image-outer">
+                            <input class="form-control" type="file" id="theatre_img">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btn_add-theatre" onclick="addTheatresTableRow()" class="btn btn-primary"
+                            data-bs-dismiss="modal">Add Theatre</button>
+                    </div>
+                </form>
                 <div class="modal-header">
                     <h4 class="modal-title" id="theatres_add-label">Add Theatre</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -1,6 +1,6 @@
 const express = require('express')
 const router_admin = express.Router()
-
+const  adminControllers = require('../controllers/AdminController')
 router_admin.get('/Dashboard', (req, res) => {
     res.render('home_admin', {
         layout: 'mainLayout_admin',
@@ -21,4 +21,10 @@ router_admin.get('/Movies',(req, res) => {
         layout: 'mainLayout_admin'
     })
 })
+router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
+
+
+router_admin.post('/addTheatre', adminControllers.addTheatre)
+router_admin.post('/updateTheatre', adminControllers.updateTheatre)
+
 module.exports = router_admin
