@@ -22,9 +22,8 @@ router_admin.get('/Movies',(req, res) => {
     })
 })
 router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
-
-
 router_admin.post('/addTheatre', adminControllers.addTheatre)
 router_admin.post('/updateTheatre', adminControllers.updateTheatre)
+router_admin.delete('/deleteTheatre', adminControllers.deleteTheatre)
 
 module.exports = router_admin

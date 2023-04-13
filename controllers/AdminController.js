@@ -50,11 +50,12 @@ const AdminControllers = {
                     message: 'Internal server error'
                 });
             }
+            
             const name = fields.name[0];
             const address = fields.address[0];
             const fileImage = files.image[0];
-
-            // validata image
+                        
+            // validate image
             const errImage = validateImage(fileImage);
             if (errImage) {
                 res.status(500).json({
@@ -108,8 +109,8 @@ const AdminControllers = {
             const fileImage = files.image[0];
 
             const theatre = await getTheatreById(id);
-            
-            if(theatre !== null){
+
+            if (theatre !== null) {
                 removeFile(theatre[0].image);
             }
 
@@ -151,10 +152,10 @@ const AdminControllers = {
                 });
         });
     },
-    deleteTheatre(req, res) {
-        const id = req.params.id;
-        const theatre = getTheatreById(id);
-        if(theatre === 0){
+    async deleteTheatre(req, res) {
+        const id = req.query.id;
+        const theatre = await getTheatreById(id);
+        if (theatre === 0) {
             res.status(500).json({
                 code: 500,
                 message: 'Theatre not exist'
@@ -192,7 +193,7 @@ function moveFile(oldPath, fileName, destination) {
 function removeFile(filePath) {
     const oldPath = path.join(__dirname, `/../public` + `${filePath}`);
     console.log(oldPath);
-    if(!fs.existsSync(oldPath)){
+    if (!fs.existsSync(oldPath)) {
         console.log('File not exist');
         return null;
     }
@@ -216,7 +217,7 @@ async function getTheatreById(id) {
     const sql = `SELECT * FROM theatre WHERE id = ?`;
     const params = [id];
     const result = await db.queryParams(sql, params);
-    if(result.length === 0){
+    if (result.length === 0) {
         return null;
     }
     return result;
