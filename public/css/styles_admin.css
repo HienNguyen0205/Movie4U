@@ -557,7 +557,7 @@ body {
     background-color: var(--white) !important;
     border: 1px solid var(--pink) !important;
     color: #000000 !important;
-    text-align: center;
+    text-align: left;
 }
 .add_modal input, .add_modal textarea {
     border: 1px solid var(--pink);
@@ -595,5 +595,10 @@ body {
     color: var(--heavy-grey);
 }
 .category_title {
+    margin-right: 10px;
+    display: inline-block;
+    width: 70px;
+}
+.status_title {
     margin-right: 10px;
 }
