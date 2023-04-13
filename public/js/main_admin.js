@@ -84,7 +84,7 @@ function timeDashboardUnclick(x) {
   x.style.color = '#FFFFFF'
 }
 function timeDashboardClick(x) {
-  x.style.backgroundColor = '#485296'
+  x.style.backgroundColor = '#212121'
   x.style.color = '#cccccc'
 }
 
@@ -181,20 +181,20 @@ function addTheatresTableRow() {
             </tr>
   `
   theatresList.innerHTML += template
-  selectTheatreToInput()
+  // selectTheatreToInput()
 }
 
-function selectTheatreToInput() {
-  for (var i = 0; i < theatresList.rows.length; i++) {
-    theatresList.rows[i].onclick = function () {
-      rIndex = this.rowIndex
-      // console.log(rIndex)
-      document.getElementById('theatre_name-edit').value = this.cells[1].innerHTML
-      document.getElementById('theatre_address-edit').value = this.cells[3].innerHTML
-    }
-  }
-}
-selectTheatreToInput()
+// function selectTheatreToInput() {
+//   for (var i = 0; i < theatresList.rows.length; i++) {
+//     theatresList.rows[i].onclick = function () {
+//       rIndex = this.rowIndex
+//       // console.log(rIndex)
+//       document.getElementById('theatre_name-edit').value = this.cells[1].innerHTML
+//       document.getElementById('theatre_address-edit').value = this.cells[3].innerHTML
+//     }
+//   }
+// }
+// selectTheatreToInput()
 // Function edit theatre
 function editTheatreTableRow() {
   var name = document.getElementById('theatre_name-edit').value,
