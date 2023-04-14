@@ -23,8 +23,44 @@ const AdminControllers = {
             });
     },
     getAllTheatres: (req, res) => {
-        $sql = 'SELECT * FROM theatre';
+        $sql = `
+                SELECT t.id AS theatre_id, t.name AS theatre_name,
+                COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS '2D_3D',
+                COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS '4DX',
+                COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'IMAX'
+                FROM theatre t
+                LEFT JOIN room r ON t.id = r.theatre_id
+                GROUP BY t.id, t.name;
+                `;
         db.query($sql)
+            .then((results) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success',
+                    data: results
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+    getTheatreById: (req, res) => {
+        const theatre_id = req.query.theatre_id;
+        $sql = `
+                SELECT t.id AS theatre_id, t.name AS theatre_name, t.address AS theatre_address, t.image AS theatre_image,
+                COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS '2D_3D',
+                COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS '4DX',
+                COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'IMAX'
+                FROM theatre t
+                LEFT JOIN room r ON t.id = r.theatre_id
+                WHERE t.id = ?
+                GROUP BY t.id, t.name, t.address, t.image;
+                `;
+        db.queryParams($sql, [theatre_id])
             .then((results) => {
                 res.status(200).json({
                     code: 200,
@@ -50,11 +86,13 @@ const AdminControllers = {
                     message: 'Internal server error'
                 });
             }
-            
+
             const name = fields.name[0];
             const address = fields.address[0];
+            const roomList = [fields.room2D_3D[0], fields.room4DX[0], fields.roomIMAX[0]];
+            const roomListName = ['2D/3D', '4DX', 'IMAX'];
             const fileImage = files.image[0];
-                        
+
             // validate image
             const errImage = validateImage(fileImage);
             if (errImage) {
@@ -77,7 +115,9 @@ const AdminControllers = {
             const sql = `INSERT INTO theatre(name, address, image) VALUES(?, ?, ?)`;
             const params = [name, address, destination + fileImage.originalFilename];
             db.queryTransaction(sql, params)
-                .then((result) => {
+                .then(async (result) => {
+                    const theatreId = result.insertId;
+                    await addRoom(theatreId, roomList, roomListName)
                     res.status(200).json({
                         code: 200,
                         message: 'Success',
@@ -106,35 +146,45 @@ const AdminControllers = {
             const id = fields.id[0];
             const name = fields.name[0];
             const address = fields.address[0];
-            const fileImage = files.image[0];
 
             const theatre = await getTheatreById(id);
 
-            if (theatre !== null) {
-                removeFile(theatre[0].image);
+            if(files.image !== undefined) {
+                const fileImage = files.image[0];
+                if (theatre !== null) {
+                    removeFile(theatre[0].image);
+                }
+    
+                // validata image
+                const errImage = validateImage(fileImage);
+                if (errImage) {
+                    res.status(500).json({
+                        code: 500,
+                        message: errImage
+                    });
+                }
+                // move image to folder images/MovieTheatres
+                const oldPath = fileImage.path;
+                const destination = '/images/MovieTheatres/';
+                const fileName = fileImage.originalFilename;
+                const errMove = moveFile(oldPath, fileName, destination);
+                if (errMove) {
+                    res.status(500).json({
+                        code: 500,
+                        message: errMove
+                    });
+                }
             }
 
-            // validata image
-            const errImage = validateImage(fileImage);
-            if (errImage) {
-                res.status(500).json({
-                    code: 500,
-                    message: errImage
-                });
-            }
-            // move image to folder images/MovieTheatres
-            const oldPath = fileImage.path;
-            const destination = '/images/MovieTheatres/';
-            const fileName = fileImage.originalFilename;
-            const errMove = moveFile(oldPath, fileName, destination);
-            if (errMove) {
-                res.status(500).json({
-                    code: 500,
-                    message: errMove
-                });
-            }
+            let params = [];
             const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
-            const params = [name, address, destination + fileImage.originalFilename, id];
+
+            if(files.image === undefined) {
+                params = [name, address, theatre[0].image, id];
+            } else {
+                params = [name, address, destination + fileImage.originalFilename, id];
+            }
+
             db.queryTransaction(sql, params)
                 .then((result) => {
                     res.status(200).json({
@@ -166,7 +216,7 @@ const AdminControllers = {
 
         const sql = `DELETE FROM theatre WHERE id = ?`;
         const params = [id];
-        db.queryTransaction(sql, params)
+        await db.queryTransaction(sql, params)
             .then((result) => {
                 res.status(200).json({
                     code: 200,
@@ -223,5 +273,22 @@ async function getTheatreById(id) {
     return result;
 }
 
+async function addRoom(theatre_id, roomList, roomListName) {
+    let insertQueries = [];
+    let count = 0;
+    for (let i = 0; i < roomList.length; i++) {
+        for (let j = 0; j < roomList[i]; j++) {
+            insertQueries.push({
+                sql: 'INSERT INTO room (theatre_id,type, name) VALUES (?,?,?)',
+                values: [theatre_id, roomListName[i], `Room ${count}`]
+            });
+            count++;
+        }
+    }
+
+    insertQueries.forEach((query) => {
+        db.queryTransaction(query.sql, query.values);
+    });
+}
 
 module.exports = AdminControllers;

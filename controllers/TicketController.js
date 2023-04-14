@@ -49,8 +49,8 @@ const TicketControllers = {
             sch.theatre_id,
             sch.date,
             sch.price,
-            GROUP_CONCAT(st.start_time) AS start_times,
-            GROUP_CONCAT(st.end_time) AS end_times,
+            GROUP_CONCAT(DISTINCT  st.start_time) AS start_times,
+            GROUP_CONCAT(DISTINCT st.end_time) AS end_times,
             th.name AS theatre_name,
             th.address AS theatre_address,
             th.image AS theatre_image,
@@ -82,8 +82,7 @@ const TicketControllers = {
 };
 
 async function checkSeat(schedule_id, seat) {
-    const sql = `SELECT * FROM ticket
-                WHERE schedule_id = ? AND seat = ?`;
+    const sql = ``;
     const results = await db.queryParams(sql, [schedule_id, seat]);
     if (results.length > 0) {
         return false;

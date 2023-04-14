@@ -213,10 +213,10 @@ VALUES
   ("Room 2","2D/3D",1),
   ("Room 3","IMAX",1),
   ("Room 4","2D/3D",1),
-  ("Room 1","2D/3D",1),
-  ("Room 2","2D/3D",1),
-  ("Room 3","4DX",1),
-  ("Room 4","2D/3D",1);
+  ("Room 1","2D/3D",2),
+  ("Room 2","2D/3D",2),
+  ("Room 3","4DX",2),
+  ("Room 4","2D/3D",2);
 
 
 -- Add sample schedules for Theatre 1
@@ -231,6 +231,8 @@ VALUES
 INSERT INTO schedule_time (schedule_id, start_time, end_time)
 VALUES
   (1, '10:00:00', '12:00:00'),
+  (1, '14:00:00', '16:00:00'),
+  (1, '16:00:00', '18:00:00'),
   (2, '13:30:00', '15:31:00'),
   (3, '16:15:00', '18:30:00'),
   (4, '19:00:00', '21:00:00');

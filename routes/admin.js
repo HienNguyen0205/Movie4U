@@ -31,6 +31,7 @@ router_admin.get('/ShowTiming',(req, res) => {
     })
 })
 router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
+router_admin.get('/getTheatreById', adminControllers.getTheatreById)
 router_admin.post('/addTheatre', adminControllers.addTheatre)
 router_admin.post('/updateTheatre', adminControllers.updateTheatre)
 router_admin.delete('/deleteTheatre', adminControllers.deleteTheatre)
