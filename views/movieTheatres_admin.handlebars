@@ -1,18 +1,16 @@
 <div class="main-body">
     <div class="body-header">
         <h4>Theatre List </h4>
-        <div class="">
+        <div class="content_btn">
             <button type="button" class="btn btn-success " data-bs-toggle="modal"
                 data-bs-target="#theatres_add-modal">Add</button>
             <button id="delete_selected-theatres" type="button" class="btn btn-danger " onclick="removeSelectedRow()">Delete Selected</button>
-        {{!-- theatres_btn theatres_btn-add --}}
-        {{!-- theatres_btn theatres_btn-del --}}
         </div>
     </div>
     <table id="table_theatres" class="table">
-        <thead class="theatres_title">
+        <thead class="content_title">
             <tr>
-                <th scope="col">S.No.</th>
+                <th scope="col">Id</th>
                 <th scope="col">Theatre Name</th>
                 <th scope="col">Image</th>
                 <th scope="col">Address</th>
@@ -20,19 +18,19 @@
                 <th scope="col">Modify</th>
             </tr>
         </thead>
-        <tbody id="list_theatres" class="theatres_content">
-            {{!-- <tr>
+        <tbody id="list_theatres" class="content_list">
+            <tr>
                 <th scope="row">1</th>
                 <td>Ben Tre Cinema</td>
                 <td><img class="theatres_img" src="/images/Movie Theatres/govap_cinema.jpg" alt=""></td>
                 <td>Ben Tre Cinema</td>
-                <td><label class="theatres_checkbox-outer"><input type="checkbox" id="theatre1"
-                            class="theatres_checkbox" name="theatre1" value="Ben Tre Cinema"><span
+                <td><label class="content_checkbox-outer"><input type="checkbox" id="theatre1"
+                            class="content_checkbox" name="theatre1" value="Ben Tre Cinema"><span
                             class="checkmark"></span></label></td>
                 <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                 data-bs-target="#theatres_edit-modal" onclick="editTheatreTableRow()">Edit</button></td>
             </tr>
-            <tr>
+            {{!-- <tr>
                 <th scope="row">2</th>
                 <td>Go Vap Cinema</td>
                 <td><img class="theatres_img" src="/images/Movie Theatres/govap_cinema.jpg" alt=""></td>
@@ -86,7 +84,7 @@
                             data-bs-dismiss="modal">Add Theatre</button>
                     </div>
                 </form>
-                <div class="modal-header">
+                {{!-- <div class="modal-header">
                     <h4 class="modal-title" id="theatres_add-label">Add Theatre</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -108,7 +106,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" id="btn_add-theatre" onclick="addTheatresTableRow()" class="btn btn-primary"
                         data-bs-dismiss="modal">Add Theatre</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

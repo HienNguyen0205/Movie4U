@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 16px;
 }
 
 :root {
@@ -119,8 +120,7 @@ body {
 }
 
 .nav-opt li i {
-    width: 36px !important;
-    margin-right: 10px;
+    width: 40px !important;
     color: var(--ic-unhover);
 }
 
@@ -137,7 +137,7 @@ body {
 }
 
 .nav-opt li p {
-    margin-left: 10px !important;
+    width: 112px;
     margin: auto;
     white-space: nowrap;
 }
@@ -394,12 +394,12 @@ body {
 }
 
 .movie-name {
-    font-size: 20px;
+    font-size: 14px;
     color: var(--light-grey);
 }
 
 .movie-duration {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--grey);
 }
 
@@ -425,15 +425,14 @@ body {
     color: var(--white);
 }
 
-.theatres_title, .movies_title{
+.content_title{
     color: var(--grey);
     text-align: center;
-
 }
 
-.theatres_content, .movies_content {
+.content_list {
     color: var(--white);
-    text-align: center;
+    text-align: center !important;
 }
 
 .theatres_img {
@@ -444,14 +443,8 @@ body {
     width: 200px;
     height: 200px;
 }
-.theatres_btn, .movies_btn {
-    padding: 10px;
-    border-radius: 10px;
-}
-.theatres_btn:hover, .movies_btn:hover{
-    box-shadow: 0px 0px 8px var(--white);
-}
-.theatres_btn-add, .movies_btn-add{
+
+.theatres_btn-add, .movies_btn-add, .timing_btn-add{
     background-color: green;
     color: var(--white);
     border: 2px green solid;
@@ -460,34 +453,17 @@ body {
     margin-right: 5px;
 }
 
-/* .theatres_btn-add:hover, .movies_btn-add:hover {
-    background-color: var(--white);
-    color: green;
-} */
-
-.theatres_btn-del, .movies_btn-del {
-    border: 2px red solid;
-    background-color: red;
-    color: var(--white);
-    margin-left: 5px;
-}
-
-/* .theatres_btn-del:hover, .movies_btn-del:hover{
-    background-color: var(--white);
-    color: red;
-} */
-
-.theatres_checkbox-outer, .movies_checkbox-outer {
+.content_checkbox-outer {
     display: inline-block;
     position: relative;
     cursor: pointer;
     font-size: 30px;
     user-select: none;
-    padding-left: 40px;
-    margin-bottom: 10px;
+    padding-left: 30px !important;
+    margin-bottom: 15px !important;
 }
 
-.theatres_checkbox-outer input, .movies_checkbox-outer input{
+.content_checkbox-outer input{
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -507,10 +483,7 @@ body {
 .checkmark_radio {
     border-radius: 50%;
 }
-.theatres_checkbox-outer:hover .checkmark {
-    background: #ccc;
-}
-.movies_checkbox-outer:hover .checkmark {
+.content_checkbox-outer:hover .checkmark {
     background: #ccc;
 }
 .checkmark:after {
@@ -519,7 +492,7 @@ body {
     display:none;
 }
 
-.theatres_checkbox-outer .checkmark:after {
+.content_checkbox-outer .checkmark:after {
     top:50%;
     left:50%;
     width: 5px;
@@ -529,37 +502,20 @@ body {
     transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.theatres_checkbox-outer input:checked~.checkmark {
+.content_checkbox-outer input:checked~.checkmark {
     background: var(--pink);
 }
 
-.theatres_checkbox-outer input:checked~.checkmark:after {
-    display: block;
-}
-.movies_checkbox-outer .checkmark:after {
-    top:50%;
-    left:50%;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.movies_checkbox-outer input:checked~.checkmark {
-    background: var(--pink);
-}
-
-.movies_checkbox-outer input:checked~.checkmark:after {
+.content_checkbox-outer input:checked~.checkmark:after {
     display: block;
 }
 .add_modal {
     background-color: var(--white) !important;
     border: 1px solid var(--pink) !important;
     color: #000000 !important;
-    text-align: center;
+    text-align: left;
 }
-.add_modal input, .add_modal textarea {
+.add_modal input, .add_modal textarea,.add_modal select {
     border: 1px solid var(--pink);
 }
 
@@ -596,4 +552,37 @@ body {
 }
 .category_title {
     margin-right: 10px;
+    display: inline-block;
+    width: 90px;
 }
+.status_title {
+    margin-right: 10px;
+}
+
+.timing_date-outer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+.timing_time-outer {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    justify-content: space-between;
+    margin: auto;
+}
+.timing_date-large1, .timing_time-large1 {
+    width: 100%;
+    text-align: center;
+    margin-right: 10px;
+}
+/* .timing_time-large1,.timing_time-large2 {
+    width: 50% !important;
+} */
+.timing_date-large2, .timing_time-large2 {
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
+}
+
