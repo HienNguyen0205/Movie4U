@@ -48,32 +48,44 @@ CREATE TABLE movie_category (
   FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE poster (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  image VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB;
-
 CREATE TABLE room (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   type VARCHAR(255) NOT NULL,
-  capacity INT NOT NULL,
-  price DECIMAL(8,2) NOT NULL,
-  PRIMARY KEY (id)
+  capacity INT NOT NULL DEFAULT 184,
+  theatre_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (theatre_id) REFERENCES theatre(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE schedule (
   id INT NOT NULL AUTO_INCREMENT,
   movie_id INT NOT NULL,
   room_id INT NOT NULL,
-  start_time DATETIME NOT NULL,
-  end_time DATETIME NOT NULL,
+  theatre_id INT NOT NULL,
+  date DATE NOT NULL DEFAULT CURDATE(),
   price DECIMAL(8,2) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (theatre_id) REFERENCES theatre(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (room_id) REFERENCES room(id) ON DELETE CASCADE ON UPDATE CASCADE 
+) ENGINE=InnoDB;
+
+CREATE TABLE schedule_time(
+  id INT NOT NULL AUTO_INCREMENT,
+  schedule_id INT NOT NULL,
+  start_time TIME NOT NULL,
+  end_time TIME NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE seat (
+  id INT NOT NULL AUTO_INCREMENT,
+  schedule_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE food_combo (
@@ -82,8 +94,8 @@ CREATE TABLE food_combo (
   popcorn INT NOT NULL,
   drink INT NOT NULL,
   price DECIMAL(8,2) NOT NULL,
-  quantity INT NOT NULL,
   description VARCHAR(21844) DEFAULT NULL,
+  image VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -189,4 +201,53 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (17, 1), (17, 5);
 -- The Suicide Squad
 INSERT INTO movie_category (movie_id, category_id) VALUES (18, 1), (18, 3), (18, 4);
 
-INSERT INTO account(name,email,phone,password,status) VALUES("admin","admin","1234567890","123456",0);
+INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","123456",0);
+
+INSERT INTO theatre(name, address, image) VALUES("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatre/govap_cinema.jpg");
+
+INSERT INTO theatre(name, address, image) VALUES("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatre/govap_cinema.jpg");
+
+INSERT INTO room (name,type,theatre_id) 
+VALUES
+  ("Room 1","2D/3D",1),
+  ("Room 2","2D/3D",1),
+  ("Room 3","IMAX",1),
+  ("Room 4","2D/3D",1),
+  ("Room 1","2D/3D",1),
+  ("Room 2","2D/3D",1),
+  ("Room 3","4DX",1),
+  ("Room 4","2D/3D",1);
+
+
+-- Add sample schedules for Theatre 1
+INSERT INTO schedule (movie_id, room_id, theatre_id, price)
+VALUES
+  (1, 1, 1, 10.00),
+  (2, 2, 1, 12.50),
+  (3, 3, 1, 11.00),
+  (4, 4, 1, 9.00);
+
+-- Add sample schedule times for Theatre 1
+INSERT INTO schedule_time (schedule_id, start_time, end_time)
+VALUES
+  (1, '10:00:00', '12:00:00'),
+  (2, '13:30:00', '15:31:00'),
+  (3, '16:15:00', '18:30:00'),
+  (4, '19:00:00', '21:00:00');
+
+-- Add sample schedules for Theatre 2
+INSERT INTO schedule (movie_id, room_id, theatre_id, price)
+VALUES
+  (1, 1, 2, 8.50),
+  (2, 2, 2, 11.00),
+  (3, 3, 2, 10.00),
+  (4, 4, 2, 9.50);
+
+-- Add sample schedule times for Theatre 2
+INSERT INTO schedule_time (schedule_id, start_time, end_time)
+VALUES
+  (5, '12:30:00', '14:30:00'),
+  (6, '16:00:00', '18:01:00'),
+  (7, '18:45:00', '21:00:00'),
+  (8, '21:30:00', '23:30:00');
+

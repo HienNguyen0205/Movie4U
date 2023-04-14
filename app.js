@@ -11,6 +11,7 @@ const path = require('path')
 const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
 const movieRouter = require('./routes/movie')
+const ticketRouter = require('./routes/ticket')
 
 const app = express()
 
@@ -42,5 +43,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/admin', adminRouter)
 app.use('/movie', movieRouter)
+app.use('/ticket', ticketRouter)
 
 module.exports = app
