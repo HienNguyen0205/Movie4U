@@ -14,6 +14,9 @@ window.onload = function () {
   document.getElementById("movies_admin").addEventListener("click", () => {
     changeUrl("Movies")
   });
+  document.getElementById("showTiming_admin").addEventListener("click", () => {
+    changeUrl("ShowTiming")
+  });
 };
 
 // document.getElementById("movies_admin").onclick = changeUrl("Movies");

@@ -72,4 +72,7 @@
     .movie-poster {
         width: 30%;
     }
+    .category_title {
+        width: 70px !important;
+    }
 }

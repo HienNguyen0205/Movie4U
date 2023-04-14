@@ -20,7 +20,14 @@ router_admin.get('/MovieTheatres',(req, res) => {
 })
 router_admin.get('/Movies',(req, res) => {
     res.render('movies_admin', {
-        layout: 'mainLayout_admin'
+        layout: 'mainLayout_admin',
+        script: '/js/movies_admin.js',
+    })
+})
+router_admin.get('/ShowTiming',(req, res) => {
+    res.render('showTiming_admin', {
+        layout: 'mainLayout_admin',
+        script: '/js/showTiming_admin.js',
     })
 })
 router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
