@@ -24,10 +24,10 @@ const AdminControllers = {
     },
     getAllTheatres: (req, res) => {
         $sql = `
-                SELECT t.id AS theatre_id, t.name AS theatre_name,
-                COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS '2D_3D',
-                COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS '4DX',
-                COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'IMAX'
+                SELECT t.id, t.name, t.address, t.image,
+                COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
+                COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS 'R4DX',
+                COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'RIMAX'
                 FROM theatre t
                 LEFT JOIN room r ON t.id = r.theatre_id
                 GROUP BY t.id, t.name;
@@ -52,9 +52,9 @@ const AdminControllers = {
         const theatre_id = req.query.theatre_id;
         $sql = `
                 SELECT t.id AS theatre_id, t.name AS theatre_name, t.address AS theatre_address, t.image AS theatre_image,
-                COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS '2D_3D',
-                COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS '4DX',
-                COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'IMAX'
+                COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
+                COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS 'R4DX',
+                COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'RIMAX'
                 FROM theatre t
                 LEFT JOIN room r ON t.id = r.theatre_id
                 WHERE t.id = ?
@@ -149,6 +149,10 @@ const AdminControllers = {
 
             const theatre = await getTheatreById(id);
 
+            let params = [];
+            params = [name, address, theatre[0].image, id];
+            const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
+            
             if(files.image !== undefined) {
                 const fileImage = files.image[0];
                 if (theatre !== null) {
@@ -168,21 +172,14 @@ const AdminControllers = {
                 const destination = '/images/MovieTheatres/';
                 const fileName = fileImage.originalFilename;
                 const errMove = moveFile(oldPath, fileName, destination);
+                params = [name, address, destination + fileImage.originalFilename, id];
+
                 if (errMove) {
                     res.status(500).json({
                         code: 500,
                         message: errMove
                     });
                 }
-            }
-
-            let params = [];
-            const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
-
-            if(files.image === undefined) {
-                params = [name, address, theatre[0].image, id];
-            } else {
-                params = [name, address, destination + fileImage.originalFilename, id];
             }
 
             db.queryTransaction(sql, params)
@@ -253,7 +250,7 @@ function removeFile(filePath) {
 }
 
 function validateImage(fileImage) {
-    if (fileImage.size > 1024 * 1024) {
+    if (fileImage.size > 5000000) {
         return 'Image is too large';
     }
     let regex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i
