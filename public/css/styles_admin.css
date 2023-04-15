@@ -564,6 +564,7 @@ body {
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
+    margin-bottom: 1rem!important;
 }
 .timing_time-outer {
     display: flex;
@@ -571,6 +572,7 @@ body {
     width: 300px;
     justify-content: space-between;
     margin: auto;
+    margin-bottom: 1rem!important;
 }
 .timing_date-large1, .timing_time-large1 {
     width: 100%;
@@ -585,4 +587,27 @@ body {
     text-align: center;
     margin-left: 10px;
 }
+.timing_price-outer {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1rem!important;
+}
 
+.theatres_room-outer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1rem!important;
+}
+.theatres_room {
+    width: calc(100%/3);
+}
+.theatres_room:nth-child(2) {
+    margin: 0 10px;
+}
