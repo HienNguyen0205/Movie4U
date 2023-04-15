@@ -24,7 +24,7 @@ const AdminControllers = {
     },
     getAllTheatres: (req, res) => {
         $sql = `
-                SELECT t.id AS theatre_id, t.name AS theatre_name,
+                SELECT t.id, t.name, t.address, t.image,
                 COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS '2D_3D',
                 COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS '4DX',
                 COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'IMAX'

@@ -82,7 +82,7 @@ CREATE TABLE schedule_time(
 
 CREATE TABLE seat (
   id INT NOT NULL AUTO_INCREMENT,
-  schedule_id INT NOT NULL,
+  schedule_time INT NOT NULL,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE
