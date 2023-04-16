@@ -46,6 +46,28 @@ const MiddleWaresController = {
                 });
             }
         });
+    },
+
+    authForUserAndRedirect: (req, res, next) => {
+        if(req.user.status !== 1){
+            next();
+        }else{
+            req.session.flash = {
+                message: 'You are not user'                    
+            }
+            res.redirect(303,'/admin/Dashboard');
+        }
+    },
+
+    authForAdminAndRedirect: (req, res, next) => {
+        if(req.user.status !== 0){
+            next();
+        }else{
+            req.session.flash = {
+                message: 'You are not admin'                    
+            }
+            res.redirect(303,'/home');
+        }
     }
     
 }

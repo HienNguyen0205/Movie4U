@@ -50,6 +50,15 @@ const AdminControllers = {
     },
     getTheatreById: (req, res) => {
         const theatre_id = req.query.theatre_id;
+
+        if(!theatre_id) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
         $sql = `
                 SELECT t.id AS theatre_id, t.name AS theatre_name, t.address AS theatre_address, t.image AS theatre_image,
                 COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
@@ -93,6 +102,14 @@ const AdminControllers = {
             const roomList = [fields.R2D_3D[0], fields.R4DX[0], fields.RIMAX[0]];
             const roomListName = ['2D/3D', '4DX', 'IMAX'];
             const fileImage = files.image[0];
+
+            if(!name || !address || !roomList || !fileImage) {
+                res.status(400).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
 
             // validate image
             const errImage = validateImage(fileImage);
@@ -151,6 +168,14 @@ const AdminControllers = {
             const name = fields.name[0];
             const address = fields.address[0];
 
+            if(!id || !name || !address) {
+                res.status(400).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
             const theatre = await getTheatreById(id);
 
             let params = [];
@@ -207,6 +232,15 @@ const AdminControllers = {
     },
     async deleteTheatre(req, res) {
         const id = req.query.id;
+
+        if (!id) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
         const theatre = await getTheatreById(id);
         if (theatre === 0) {
             res.status(500).json({

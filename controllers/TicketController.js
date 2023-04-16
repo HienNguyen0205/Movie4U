@@ -128,16 +128,64 @@ const TicketControllers = {
         });
     },
     getSeat: async (req, res) => {
-        const { schedule_id, schedule_time_id } = req.body;
-        const sql = `SELECT seat FROM ticket WHERE schedule_id = ? AND schedule_time_id = ?`;
-        const results = await db.queryParams(sql, [schedule_id, schedule_time_id]);
+        const schedule_time_id = req.query.schedule_time_id;
+        const sql = 'SELECT * FROM seat WHERE schedule_time_id = ?';
+        const results = await db.queryParams(sql, [schedule_time_id]);
+        if(results.length == 0) {
+            res.status(400).json({
+                code: 201,
+                message: 'Bad request'
+            });
+            return;
+        }
+        res.status(200).json({
+            code: 200,
+            message: 'Success',
+            data: results
+        });
+    },
+    getTicketByAccountId: async (req, res) => {
+        if (req.user == null) {
+            res.status(401).json({ message: 'Unauthorized' });
+            return;
+        }
+        const account_id = req.user.id;
+        const sql = `SELECT
+        t.id AS ticket_id,
+        t.schedule_time_id,
+        t.account_id,
+        st.start_time,
+        st.end_time,
+        sch.date,
+        sch.price,
+        sch.movie_id,
+        m.name AS movie_name,
+        m.image AS movie_image,
+        m.duration AS movie_duration,
+        m.description AS movie_description,
+        m.trailer AS movie_trailer,
+        GROUP_CONCAT(DISTINCT s.name) AS seat_names
+        FROM 
+            ticket t
+        JOIN 
+            schedule_time st ON t.schedule_time_id = st.id
+        JOIN 
+            schedule sch ON st.schedule_id = sch.id
+        JOIN 
+            movie m ON sch.movie_id = m.id
+        JOIN 
+            seat s ON t.id = s.ticket_id
+        WHERE 
+            t.account_id = ?
+        GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;`;
+        const results = await db.queryParams(sql, [account_id]);
         res.status(200).json({
             code: 200,
             message: 'Success',
             data: results
         });
     }
-};
+};  
 
 async function checkSeat(schedule_time_id, seat) {
     for (let i = 0; i < seat.length; i++) {

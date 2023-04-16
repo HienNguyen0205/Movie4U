@@ -13,6 +13,14 @@ const UserController = {
     register: async (req, res) => {
         const user = req.body;
 
+        if(!user.email || !user.password || !user.name) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
         const isEmailExist = await checkEmail(user.email);
         //check Email 
         if (isEmailExist !== null) {
@@ -26,8 +34,8 @@ const UserController = {
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(user.password, salt);
 
-        const sql = `INSERT INTO account (email, password, name, phone, status) VALUES (?, ?, ?, ?, ?)`;
-        const params = [user.email, hashPassword, user.name, user.phone, 1];
+        const sql = `INSERT INTO account (email, password, name, status) VALUES (?, ?, ?, ?)`;
+        const params = [user.email, hashPassword, user.name, 1];
 
         db.queryParams(sql, params)
             .then(async (result) => {
@@ -87,7 +95,8 @@ const UserController = {
             code: 200,
             message: 'Success',
             data: user[0],
-            accessToken: accessToken
+            accessToken: accessToken,
+            status: user[0].status
         });
     },
 

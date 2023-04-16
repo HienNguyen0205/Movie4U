@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const UserControllers = require('../controllers/UserController')
+const middleware = require('../middlewares')
 
-router.get('/home', (req, res) => {
+router.get('/home', middleware.authForUserAndRedirect ,(req, res) => {
     res.render('home', {
         layout: 'mainLayout',
         script: '/js/home.js',
