@@ -10,12 +10,12 @@ const MiddleWaresController = {
 
         const accessToken = token.split(' ')[1];
 
-        jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
             if(err){
                 req.session.flash = {
                     message: 'Unauthorized'                    
                 }
-                return res.redirect(303,'/');
+                return res.redirect(303,'/home');
             }
             req.user = user;
             next();
@@ -27,7 +27,10 @@ const MiddleWaresController = {
             if(req.user.status === 1){
                 next();
             }else{
-                res.status(403).json({message: 'You are not user'});
+                res.status(403).json({
+                    code: 403,                    
+                    message: 'You are not user'
+                });
             }
         });
     },
@@ -37,7 +40,10 @@ const MiddleWaresController = {
             if(req.user.status !== 0){
                 next();
             }else{
-                res.status(403).json({message: 'You are not admin'});
+                res.status(403).json({
+                    code: 403,
+                    message: 'You are not admin'
+                });
             }
         });
     }

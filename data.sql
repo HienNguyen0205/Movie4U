@@ -80,16 +80,6 @@ CREATE TABLE schedule_time(
   FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE seat (
-  id INT NOT NULL AUTO_INCREMENT,
-  schedule_id INT NOT NULL,
-  schedule_time_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (schedule_time_id) REFERENCES schedule_time(id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
 CREATE TABLE food_combo (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
@@ -104,13 +94,22 @@ CREATE TABLE food_combo (
 CREATE TABLE ticket (
   id INT NOT NULL AUTO_INCREMENT,
   account_id INT NOT NULL,
-  schedule_id INT NOT NULL,
-  food_combo_id INT NOT NULL,
-  seat VARCHAR(255) NOT NULL,
+  food_combo_id INT DEFAULT 0,
+  schedule_time_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (food_combo_id) REFERENCES food_combo(id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (food_combo_id) REFERENCES food_combo(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (schedule_time_id) REFERENCES schedule_time(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE seat (
+  id INT NOT NULL AUTO_INCREMENT,
+  ticket_id INT DEFAULT NULL,
+  schedule_time_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (ticket_id) REFERENCES ticket(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (schedule_time_id) REFERENCES schedule_time(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE poster (
@@ -203,7 +202,7 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (17, 1), (17, 5);
 -- The Suicide Squad
 INSERT INTO movie_category (movie_id, category_id) VALUES (18, 1), (18, 3), (18, 4);
 
-INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","123456",0);
+INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$X3J7jf7EB4mAylqYJDzJiuj2ApXC0xL1b0kdP3FOK580odhTJatn2",0);
 
 INSERT INTO theatre(name, address, image) VALUES("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatre/govap_cinema.jpg");
 
@@ -254,4 +253,6 @@ VALUES
   (6, '16:00:00', '18:01:00'),
   (7, '18:45:00', '21:00:00'),
   (8, '21:30:00', '23:30:00');
+
+INSERT INTO food_combo(id,name,price,image) VALUES (0,"Combo 1",100,"/images/Combo/combo1.jpg");
 

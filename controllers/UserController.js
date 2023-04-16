@@ -72,8 +72,8 @@ const UserController = {
             return;
         }
 
-        const accessToken = UserController.generateJWT(user[0].email, user[0].status);
-        const refreshToken = UserController.generateRefreshJWT(user[0].email, user[0].status);
+        const accessToken = UserController.generateJWT(user[0].id, user[0].email, user[0].status);
+        const refreshToken = UserController.generateRefreshJWT(user[0].id, user[0].email, user[0].status);
         refreshTokens.push(refreshToken);
 
         res.cookie('refreshToken', refreshToken, {
@@ -102,8 +102,9 @@ const UserController = {
         res.redirect('/');
     },
 
-    generateJWT: (email, status) => {
+    generateJWT: (id, email, status) => {
         const payload = {
+            id,
             email,
             status
         };
@@ -115,8 +116,9 @@ const UserController = {
         return token;
     },
 
-    generateRefreshJWT: (email, status) => {
+    generateRefreshJWT: (id, email, status) => {
         const payload = {
+            id,
             email,
             status
         };
