@@ -3,24 +3,19 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv').config('../.env');
 const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const MailService = require('../services/MailService');
 let refreshTokens = [];
 
-async function checkEmail(email) {
-    const sql = `SELECT * FROM account WHERE email = ?`;
-    const result = await db.queryParams(sql, [email]);
-    if (result.length > 0) {
-        return result;
-    }
-    return null;
-}
+
 
 const UserController = {
+    
     register: async (req, res) => {
         const user = req.body;
 
+        const isEmailExist = await checkEmail(user.email);
         //check Email 
-        const checkEmail = await checkEmail(user.email);
-        if (checkEmail) {
+        if (isEmailExist !== null) {
             res.status(500).json({
                 code: 500,
                 message: 'Email already exists'
@@ -31,11 +26,14 @@ const UserController = {
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(user.password, salt);
 
-        const sql = `INSERT INTO account (email, password, name, phone, address, role_id) VALUES (?, ?, ?, ?, ?, ?)`;
-        const params = [user.email, hashPassword, user.name, user.phone, user.address, 1];
+        const sql = `INSERT INTO account (email, password, name, phone, status) VALUES (?, ?, ?, ?, ?)`;
+        const params = [user.email, hashPassword, user.name, user.phone, 1];
 
         db.queryParams(sql, params)
-            .then((result) => {
+            .then(async (result) => {
+                // send email
+                const content = `<h1>Welcome to Movie4U</h1><h2>Your account</h2><h3>Email: ${user.email}</h3><h3>Password: ${user.password}</h3>`;
+                await MailService.sendMail(user.email, 'Welcome to Movie4U', content);
                 res.status(200).json({
                     code: 200,
                     message: 'Success',
@@ -104,27 +102,6 @@ const UserController = {
         res.redirect('/');
     },
 
-    sendMail: async (req, res) => {
-        const email = req.body.email;
-        const user = await checkEmail(email);
-        if(!user) {
-            res.status(500).json({
-                code: 500,
-                message: 'Email not found'
-            });
-            return;
-        }
-
-        const subject = 'Reset password';
-        const content = 'Click here to reset password';
-
-        sendMail(subject, content);
-        res.status(200).json({
-            code: 200,
-            message: 'Success'
-        });
-    },
-
     generateJWT: (email, status) => {
         const payload = {
             email,
@@ -150,19 +127,17 @@ const UserController = {
         const token = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, options);
         return token;
     },
-
 };
 
-
-
-async function checkEmail(email){
+async function checkEmail(email) {
     const sql = `SELECT * FROM account WHERE email = ?`;
-    const result = await db.queryParams(sql, [email]);
-    if (result.length > 0) {
-        return result;
+    const params = [email];
+    const result = await db.queryParams(sql, params);
+    console.log(result.length);
+    if(result.length == 0) {
+        return null;
     }
-    return null;
+    return result;
 }
-
 
 module.exports = UserController;
