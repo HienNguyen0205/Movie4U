@@ -19,46 +19,7 @@
             Confirm & Purchase
         </div>
     </nav>
-    <div class="movie_ticket_main">
-        <div class="theater_wrap" data-theater="abc">
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-            <div class="theater_item" data-time="11:00">11:00</div>
-        </div>
-        <div class="theater_wrap">
-            <div class="theater_item">11:00</div>
-            <div class="theater_item">11:00</div>
-        </div>
-        <div class="theater_wrap">
-            <div class="theater_item">11:00</div>
-            <div class="theater_item">11:00</div>
-        </div>
-        <div class="theater_wrap">
-            <div class="theater_item">11:00</div>
-            <div class="theater_item">11:00</div>
-        </div>
-        <div class="theater_wrap">
-            <div class="theater_item">11:00</div>
-            <div class="theater_item">11:00</div>
-        </div>
-        <div class="theater_wrap">
-            <div class="theater_item">11:00</div>
-            <div class="theater_item">11:00</div>
-        </div>
-    </div>
+    <div id="theater_container" class="movie_ticket_main"></div>
     <div class="movie_ticket_main d-none">
         <div class="d-flex">
             <div id="seat_display">
@@ -72,21 +33,21 @@
                 <div id="ticket_header-info" class="d-flex justify-content-around align-items-center">
                     <div class="d-flex flex-column align-items-center">
                         <h5 class="text-info">Date</h5>
-                        <p id="ticket_date">14 Dec</p>
+                        <p class="ticket_date"></p>
                     </div>
                     <div class="d-flex flex-column align-items-center">
                         <h5 class="text-info">Time</h5>
-                        <p id="ticket_time">9:40 pm</p>
+                        <p class="ticket_time"></p>
                     </div>
                     <div class="d-flex flex-column align-items-center">
                         <h5 class="text-info">Type</h5>
-                        <p id="ticket_type">3D</p>
+                        <p class="ticket_type"></p>
                     </div>
                 </div>
                 <div id="ticket-content" class="mb-3">
                     <div id="ticket_wrap"></div>
                     <p id="total_ticket_item" class="text-secondary-emphasis fs-5 text-end mx-2">Total: <span
-                            class="fs-4 fw-semibold">$280</span></p>
+                            class="fs-4 fw-semibold total_ticket_price"></span></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <button id="cancel_seat_btn" class="position-relative btn_config cancel_ticket_btn"
                             style="background-color: var(--red-color);">
@@ -115,20 +76,20 @@
             </button>
             <div class="d-flex flex-column align-items-center flex-grow-1">
                 <h5 class="text-hightlight">Movie</h5>
-                <p>Aladdin</p>
+                <p class="ticket_name"></p>
             </div>
             <div class="d-flex flex-column align-items-center flex-grow-1">
                 <h5 class="text-hightlight">Theater</h5>
-                <p>Binh Thanh Theater</p>
+                <p class="ticket_theater"></p>
             </div>
             <div class="d-flex flex-column align-items-center flex-grow-1">
                 <h5 class="text-hightlight">Seat</h5>
-                <p>A1</p>
+                <p class="ticket_seat"></p>
             </div>
             <div class="d-flex flex-column align-items-center flex-grow-1">
                 <div class="d-flex">
                     <h5 class="text-hightlight" style="width: 120px;">Ticket Price:</h5>
-                    <p>$200</p>
+                    <p class="total_ticket_price"></p>
                 </div>
                 <div class="d-flex">
                     <h5 class="text-hightlight" style="width: 120px;">Food Price:</h5>
@@ -136,7 +97,7 @@
                 </div>
                 <div class="d-flex">
                     <h5 class="text-hightlight" style="width: 120px;">Total Price:</h5>
-                    <p>$300</p>
+                    <p class="total_ticket_price"></p>
                 </div>
             </div>
             <button id="next_food_btn" class="position-relative btn_config"
@@ -380,13 +341,16 @@
                     <img style="width: 180px;" src="/images/Movie/aladdin.jpg" alt="">
                 </div>
                 <h5 class="header_text">Ticket Infomation</h5>
-                <p><span class="text-hightlight w-25 d-inline-block">Name:</span><span>Aladdin</span></p>
-                <p><span class="text-hightlight w-25 d-inline-block">Theater:</span><span>Binh Thanh Theater</span></p>
-                <p><span class="text-hightlight w-25 d-inline-block">Seats:</span><span>A01</span></p>
-                <p><span class="text-hightlight w-25 d-inline-block">Food:</span><span>Combo Popcorn & Cola 1</span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Name:</span><span class="ticket_name"></span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Theater:</span><span class="ticket_theater"></span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Date & Time:</span><span class="ticket_date me-2"></span><span class="ticket_time"></span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Room:</span><span id="ticket_room"></span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Ticket Type:</span><span class="ticket_type"></span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Seats:</span><span class="ticket_seat"></span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Food:</span><span>Combo Popcorn & Cola 1</span></p>
                 <h5 class="header_text">Price Detal</h5>
-                <p><span class="text-hightlight w-25 d-inline-block">Ticket price:</span><span>$25 x 4 = $100</span></p>
-                <p><span class="text-hightlight w-25 d-inline-block">Theater:</span><span>$5 x 5 = $25</span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Ticket price:</span><span>$25 x 4 = $100</span></p>
+                <p><span class="text-hightlight w-30 d-inline-block">Food price:</span><span>$5 x 5 = $25</span></p>
                 <hr>
                 <h4 class="header_text mt-2">Total: <span style="color: white;">$125</span></h4>
             </div>

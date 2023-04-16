@@ -32,13 +32,13 @@ const searchBtn = document.querySelector('#movie_search_btn')
 
 const getOpenMovie = axios.get('/movie/getAllMovies', {
     params: {
-        status: 0
+        status: 1
     }
 })
 
 const getComingMovie = axios.get('/movie/getAllMovies', {
     params: {
-        status: 1
+        status: 0
     }
 })
 
@@ -60,7 +60,11 @@ const getAllMovie = () => {
 getAllMovie()
 
 const getMovieByKeyWord = keyword => {
-    axios.get('/movie/getMovieByName?name=' + keyword)
+    axios.get('/movie/getMovieByName', {
+        params: {
+            name: keyword,
+        }
+    })
     .then(res => {
         const filter = res.data.data.filter(item => item.status == indexType)
         if(indexType == 0){

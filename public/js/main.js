@@ -37,6 +37,9 @@ const handleBuyTicket = id => {
         localStorage.setItem('movieInfo', JSON.stringify(res.data.data[0]))
         changePath('movieticket')
     })
+    .catch(err => {
+        console.error(err)
+    })
 }
 
 const openMovieContainer = document.querySelector('#open_movie')
@@ -83,6 +86,13 @@ const resetOpenMovie = () => {
 
 const resetComingMovie = () => {
     comingMovieContainer.innerHTML = ''
+}
+
+const removeTicketInfo = () => {
+    const label = ['ticketSelected','theater','time','price']
+    label.forEach(item => {
+        localStorage.removeItem(item)
+    })
 }
 
 /* Changing the background color of the header when the user scrolls down. */
@@ -308,3 +318,8 @@ navBtn.forEach(element => {
         changePath(path)
     })
 })
+
+if(window.location.pathname.toLowerCase() !== '/movieticket'){
+    removeTicketInfo()
+    window.removeEventListener('load', removeTicketInfo)
+}

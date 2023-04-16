@@ -21,9 +21,9 @@ const getLastedMovie = status => {
         .then(res => {
             res.data.data.forEach((item, index) => {
                 if (index < 5) {
-                    if (status == 0) {
+                    if (status == 1) {
                         renderOpenMovie(item)
-                    }else if (status == 1) {
+                    }else if (status == 0) {
                         renderComingMovie(item)
                     }
                 }
