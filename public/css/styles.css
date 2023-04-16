@@ -442,12 +442,16 @@ footer > div > a:hover {
   width: 440px;
   height: fit-content;
   z-index: 20;
-  top: calc(50% - 280px);
+  top: calc(50% - 240px);
   left: calc(50% - 220px);
   background-color: var(--modal-bg);
   border-radius: 24px;
   overflow: hidden;
   z-index: 1000;
+}
+
+#sign_up_modal{
+  top: calc(50% - 320px);
 }
 
 .modal_show {
@@ -759,8 +763,7 @@ footer > div > a:hover {
   margin-bottom: 64px;
 }
 
-.theater_wrap::before{
-  content: "ABC";
+.theater_title{
   position: absolute;
   min-width: 260px;
   width: fit-content;
@@ -968,4 +971,41 @@ footer > div > a:hover {
 #support_form input, #support_form textarea{
   border-radius: 6px;
   padding: 6px 12px;
+}
+
+#avatar{
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border: 2px solid white;
+}
+
+#user_opt_container:hover #user_opt{
+  display: block !important;
+}
+
+#user_opt{
+  position: absolute;
+  top: 52px;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  color: black;
+}
+
+#user_opt_container::before{
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 60px;
+  top: 24px;
+  right: -18px;
+}
+
+.dropdown-divider{
+  border-top: 1px solid black !important;
+}
+
+.w-30{
+  width: 30%;
 }

@@ -31,7 +31,7 @@
                     <li class="nav_item">Support</li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    <button id="sign_in_btn" class="position-relative btn_config"
+                    {{!-- <button id="sign_in_btn" class="position-relative btn_config"
                         style="background-color: var(--pri-btn-color);">
                         <div id="sign_in" class="custom_btn">
                             Sign In
@@ -42,7 +42,23 @@
                         <div id="sign_up" class="custom_btn">
                             Sign Up
                         </div>
-                    </button>
+                    </button> --}}
+                    <div id="user_opt_container" class="dropdown">
+                        <img id="avatar" src="/images/UserImg/unknowUser.jpg" alt="avatar">
+                        <ul id="user_opt" class="d-none">
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user my-2"
+                                        style="color: #000000;"></i>
+                                    Account Infomation</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clock-rotate-left my-2"
+                                        style="color: #000000;"></i>
+                                    Movie History</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#"><i
+                                        class="fa-solid fa-arrow-right-from-bracket my-2"></i>Log Out</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>
@@ -128,20 +144,20 @@
             </form>
         </div>
         <div id="trailer" class="modal fade" tabindex="-1" aria-modal="true" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: none; width: fit-content;">
-            <div class="modal-content">
-                <div class="modal-header justify-content-end">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <iframe id="trailer_iframe" width="712px" height="400px" src="" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+            <div class="modal-dialog modal-dialog-centered" style="max-width: none; width: fit-content;">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-end">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <iframe id="trailer_iframe" width="712px" height="400px" src="" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/main.js"></script>
