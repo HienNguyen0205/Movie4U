@@ -15,7 +15,7 @@ const MiddleWaresController = {
                 req.session.flash = {
                     message: 'Unauthorized'                    
                 }
-                return res.redirect(303,'/home');
+                return res.redirect(303,'/');
             }
             req.user = user;
             next();
@@ -49,13 +49,14 @@ const MiddleWaresController = {
     },
 
     authForUserAndRedirect: (req, res, next) => {
+        console.log(req.user);
         if(req.user.status !== 1){
             next();
         }else{
             req.session.flash = {
                 message: 'You are not user'                    
             }
-            res.redirect(303,'/admin/Dashboard');
+            res.redirect(303,'/admin');
         }
     },
 
@@ -66,7 +67,7 @@ const MiddleWaresController = {
             req.session.flash = {
                 message: 'You are not admin'                    
             }
-            res.redirect(303,'/home');
+            res.redirect(303,'/');
         }
     }
     
