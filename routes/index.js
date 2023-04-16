@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const UserControllers = require('../controllers/UserController')
 
 router.get('/home', (req, res) => {
     res.render('home', {
@@ -35,5 +36,10 @@ router.get('/support', (req, res) => {
         script: '/js/support.js',
     })
 })
+
+router.post('/login', UserControllers.login)
+
+router.post('/register', UserControllers.register)
+
 
 module.exports = router

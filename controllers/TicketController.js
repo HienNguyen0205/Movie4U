@@ -51,6 +51,7 @@ const TicketControllers = {
             sch.price,
             GROUP_CONCAT(DISTINCT  st.start_time) AS start_times,
             GROUP_CONCAT(DISTINCT st.end_time) AS end_times,
+            GROUP_CONCAT(DISTINCT st.id) AS schedule_time_ids,
             th.name AS theatre_name,
             th.address AS theatre_address,
             th.image AS theatre_image,
@@ -76,8 +77,9 @@ const TicketControllers = {
                 console.log(err);
                 res.status(500).json({ message: 'Internal server error' });
             });
+    },
+    addTicket: async (req, res) => {
     }
-
 
 };
 

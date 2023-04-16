@@ -82,10 +82,12 @@ CREATE TABLE schedule_time(
 
 CREATE TABLE seat (
   id INT NOT NULL AUTO_INCREMENT,
-  schedule_time INT NOT NULL,
+  schedule_id INT NOT NULL,
+  schedule_time_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (schedule_id) REFERENCES schedule(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (schedule_time_id) REFERENCES schedule_time(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE food_combo (

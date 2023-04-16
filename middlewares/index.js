@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const MiddleWares = {
+const MiddleWaresController = {
     verifyJWT: (req, res, next) => {
         const token = req.headers.authorization;
 
@@ -12,7 +12,10 @@ const MiddleWares = {
 
         jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
-                return res.status(403).json({message: 'Invalid token'});
+                req.session.flash = {
+                    message: 'Unauthorized'                    
+                }
+                return res.redirect(303,'/');
             }
             req.user = user;
             next();
@@ -20,20 +23,25 @@ const MiddleWares = {
     },
 
     authForUser: (req, res, next) => {
-        verifyJWT(req, res, next);
-        if(req.user.status === 1){
-            next();
-        }else{
-            res.status(403).json({message: 'You are not user'});
-        }
+        MiddleWaresController.verifyJWT(req, res, () => {
+            if(req.user.status === 1){
+                next();
+            }else{
+                res.status(403).json({message: 'You are not user'});
+            }
+        });
     },
 
     authForAdmin: (req, res, next) => {
-        if(req.user.status === 0){
-            next();
-        }else{
-            res.status(403).json({message: 'You are not admin'});
-        }
+        MiddleWaresController.verifyJWT(req, res, () => {
+            if(req.user.status !== 0){
+                next();
+            }else{
+                res.status(403).json({message: 'You are not admin'});
+            }
+        });
     }
     
 }
+
+module.exports = MiddleWaresController;

@@ -85,11 +85,12 @@ const AdminControllers = {
                     code: 500,
                     message: 'Internal server error'
                 });
+                return;
             }
 
             const name = fields.name[0];
             const address = fields.address[0];
-            const roomList = [fields.room2D_3D[0], fields.room4DX[0], fields.roomIMAX[0]];
+            const roomList = [fields.R2D_3D[0], fields.R4DX[0], fields.RIMAX[0]];
             const roomListName = ['2D/3D', '4DX', 'IMAX'];
             const fileImage = files.image[0];
 
@@ -100,6 +101,7 @@ const AdminControllers = {
                     code: 500,
                     message: errImage
                 });
+                return;
             }
             // move image to folder images/MovieTheatres
             const oldPath = fileImage.path;
@@ -111,6 +113,7 @@ const AdminControllers = {
                     code: 500,
                     message: errMove
                 });
+                return;
             }
             const sql = `INSERT INTO theatre(name, address, image) VALUES(?, ?, ?)`;
             const params = [name, address, destination + fileImage.originalFilename];
@@ -142,6 +145,7 @@ const AdminControllers = {
                     code: 500,
                     message: 'Internal server error'
                 });
+                return;
             }
             const id = fields.id[0];
             const name = fields.name[0];
@@ -166,6 +170,7 @@ const AdminControllers = {
                         code: 500,
                         message: errImage
                     });
+                    return;
                 }
                 // move image to folder images/MovieTheatres
                 const oldPath = fileImage.path;
@@ -179,6 +184,7 @@ const AdminControllers = {
                         code: 500,
                         message: errMove
                     });
+                    return;
                 }
             }
 
@@ -207,6 +213,7 @@ const AdminControllers = {
                 code: 500,
                 message: 'Theatre not exist'
             });
+            return;
         }
 
         removeFile(theatre[0].image);
