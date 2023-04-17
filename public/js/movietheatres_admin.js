@@ -1,4 +1,4 @@
-    // Function add movie theatre
+// Function add movie theatre
 let btnAddTheatre = document.getElementById('btn_add-theatre')
 let btnEditTheatre = document.getElementById('btn_edit-theatre')
 let btnDelTheatre = document.getElementById('btn_delete-theatre')
@@ -15,8 +15,6 @@ const addRoom2D3D = document.getElementById('2d3d_add')
 const addRoomIMAX = document.getElementById('imax_add')
 const addRoom4DX = document.getElementById('4dx_add')
 
-
-
 const editTheatresLabel = document.getElementById('theatres_edit-label')
 const editTheatresName = document.getElementById('theatre_name-edit')
 const editTheatresAddress = document.getElementById('theatre_address-edit')
@@ -31,9 +29,9 @@ addTheatresBtn.addEventListener('submit', function (event) {
   formData.append('name', addTheatresName.value);
   formData.append('address', addTheatresAddress.value);
   formData.append('image', addTheatresImg.files[0]);
-  formData.append('room2D_3D', addRoom2D3D.value);
-  formData.append('roomIMAX', addRoomIMAX.value);
-  formData.append('room4DX', addRoom4DX.value);
+  formData.append('R2D_3D', addRoom2D3D.value);
+  formData.append('RIMAX', addRoomIMAX.value);
+  formData.append('R4DX', addRoom4DX.value);
   axios.post('/admin/addTheatre', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -46,13 +44,12 @@ addTheatresBtn.addEventListener('submit', function (event) {
   window.location.reload();
 })
 
-
 editTheatresBtn.addEventListener('submit', function (event) {
   event.preventDefault();
   formData.append('id', editTheatresLabel.getAttribute('theatre_id'));
   formData.append('name', editTheatresName.value);
   formData.append('address', editTheatresAddress.value);
-  if(editTheatresImg.value === '') {
+  if (editTheatresImg.value === '') {
     console.log('File is empty')
   }
   else {
@@ -60,7 +57,8 @@ editTheatresBtn.addEventListener('submit', function (event) {
   }
   axios.post('/admin/updateTheatre', formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
   }).then(response => {
     console.log(response);
@@ -71,7 +69,11 @@ editTheatresBtn.addEventListener('submit', function (event) {
 })
 
 function getAllMovieTheatres() {
-  axios.get('/admin/getAllTheatres')
+  axios.get('/admin/getAllTheatres', {
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  })
     .then(res => {
       renderMovieTheatres(res.data.data)
     })
@@ -100,7 +102,11 @@ function renderMovieTheatres(data) {
 }
 
 function selectTheatreToEdit(id) {
-  axios.get('/admin/getTheatreById?theatre_id=' + id)
+  axios.get('/admin/getTheatreById?theatre_id=' + id, {
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  })
     .then(res => {
       const data = res.data.data[0]
       editTheatresLabel.innerHTML = "Edit Theatre Id: " + data.theatre_id
@@ -129,49 +135,25 @@ function getDeleteTheatreCheckboxSelected() {
   return listTheatreCheckboxSelected
 }
 function deleteTheatreSelected(id) {
-  axios.delete('/admin/deleteTheatre?id=' + id)
-  .then(response => {
-    console.log(response.data); // log the response data
+  axios.delete('/admin/deleteTheatre?id=' + id, {
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
   })
-  .catch(error => {
-    console.log(error); // log any errors
-  });
+    .then(response => {
+      console.log(response.data); // log the response data
+    })
+    .catch(error => {
+      console.log(error); // log any errors
+    });
 }
 btnDelTheatre.addEventListener('click', () => {
   Promise.all(getDeleteTheatreCheckboxSelected())
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => {
-            console.error(err)
-        })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.error(err)
+    })
   window.location.reload()
 })
-// // Function edit theatre
-// function editTheatreTableRow() {
-//   var name = document.getElementById('theatre_name-edit').value,
-//     address = document.getElementById('theatre_address-edit').value
-//   theatresList.rows[rIndex - 1].cells[1].innerHTML = name
-//   theatresList.rows[rIndex - 1].cells[3].innerHTML = address
-// }
-// // Function delete selected theatres
-// function checkSelectDelTheatre() {
-
-//   for (var i = 0; i < checkboxTheatres.length; i++) {
-//     if (checkboxTheatres[i].checked == true) {
-//       theatresList.rows[i].classList.add('selected')
-//     }
-//     else {
-//       theatresList.rows[i].classList.remove('selected')
-//     }
-//   }
-// }
-// function removeSelectedRow() {
-//   checkSelectDelTheatre()
-//   for (var i = 0; i < theatresList.rows.length; i++) {
-//     if (theatresList.rows[i].classList.contains('selected')) {
-//       theatresList.deleteRow(i)
-//     }
-
-//   }
-// }
