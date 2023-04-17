@@ -47,6 +47,14 @@ const TicketControllers = {
     },
     getMovieSchedule(req, res) {
         const moive_id = req.query.movie_id;
+        const date = req.query.date;
+        if(!moive_id || !date) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
         const sql = `SELECT
         sch.id AS schedule_id,
         sch.movie_id,
@@ -73,10 +81,10 @@ const TicketControllers = {
             schedule_time st ON sch.id = st.schedule_id
         WHERE 
             sch.movie_id = ? 
-            AND DATE(sch.date) = CURDATE()
+            AND DATE(sch.date) = ?
         GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;   
         `;
-        db.queryParams(sql, [moive_id])
+        db.queryParams(sql, [moive_id, date])
             .then((results) => {
                 res.status(200).json({
                     code: 200,
