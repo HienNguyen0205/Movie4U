@@ -1,4 +1,21 @@
-// // Chart Dashboard
+// Dashboard Title
+var time = new Date().getHours()
+var dashboardTitle = document.getElementById('dashboard_title')
+if(time < 12) {
+  dashboardTitle.innerHTML = 'Good Morning, Admin'
+}
+else if(time < 17)
+{
+  dashboardTitle.innerHTML = 'Good Afternoon, Admin'
+}
+else if(time < 21)
+{
+  dashboardTitle.innerHTML = 'Good Evening, Admin'
+}
+else {
+  dashboardTitle.innerHTML = 'Good Night, Admin'
+}
+// Chart Dashboard
 const ctx = document.getElementById('dashboard-chart');
 let currChart = [];
 const chartToday = [20000, 40000, 55000, 35000, 10000, 14000, 14000, 24000, 34000, 26000, 13000, 44000];
@@ -84,7 +101,7 @@ function timeDashboardUnclick(x) {
   x.style.color = '#FFFFFF'
 }
 function timeDashboardClick(x) {
-  x.style.backgroundColor = '#212121'
+  x.style.backgroundColor = '#485296'
   x.style.color = '#cccccc'
 }
 

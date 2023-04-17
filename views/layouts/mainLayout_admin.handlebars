@@ -22,36 +22,57 @@
 
 <body>
     <div class="side-nav">
-            <div class="admin">
-                <div class="admin-img"><i class="fa-solid fa-user fa-xl"></i></div>
-                <div class="admin-title_name">
-                    <h2 class="admin-name">Zuykorean</h2>
-                    <p>Beta 1.1</p>
-                </div>
+        <div class="admin">
+            <div class="admin-img"><i class="fa-solid fa-user fa-xl"></i></div>
+            <div class="admin-title_name">
+                <h2 class="admin-name">Zuykorean</h2>
+                <p>Beta 1.1</p>
             </div>
-            {{!-- <div class="light-line"></div> --}}
+        </div>
+        {{!-- <div class="light-line"></div> --}}
+        <div class="admin_nav-outer">
             <ul class="nav-opt">
-                <li id="dashboard_admin"><i class="fa-solid fa-chart-line fa-xl"></i><p>Dashboard</p></li>
-                <li id="movieTheatres_admin"><i class="fa-solid fa-film fa-xl"></i><p>Movie Theatres</p></li>
-                <li id="movies_admin"><i class="fa-solid fa-video fa-xl"></i><p>Movies</p></li>
-                <li id="showTiming_admin"><i class="fa-solid fa-calendar fa-xl"></i><p>Show Timings</p></li>
-                <li id="homePage_admin"><i class="fa-solid fa-house fa-xl"></i><p>Home Page</p></li>
-                <li id="users_admin"><i class="fa-solid fa-users fa-xl"></i><p>Users</p></li>
-                <li id="booking_admin" ><i class="fa-solid fa-ticket fa-xl"></i><p>Booking</p></li>
-                <li id="expense_admin"><i class="fa-solid fa-money-bill-1-wave fa-xl"></i><p>Expense</p></li>
+                <li id="dashboard_admin"><i class="fa-solid fa-chart-line fa-xl"></i>
+                    <p>Dashboard</p>
+                </li>
+                <li id="movieTheatres_admin"><i class="fa-solid fa-film fa-xl"></i>
+                    <p>Movie Theatres</p>
+                </li>
+                <li id="movies_admin"><i class="fa-solid fa-video fa-xl"></i>
+                    <p>Movies</p>
+                </li>
+                <li id="showTiming_admin"><i class="fa-solid fa-calendar fa-xl"></i>
+                    <p>Show Timings</p>
+                </li>
+                <li id="combo_admin"><i class="fa-solid fa-utensils fa-xl"></i>
+                    <p>Food & Drink Combo</p>
+                </li>
+                <li id="users_admin"><i class="fa-solid fa-users fa-xl"></i>
+                    <p>Users</p>
+                </li>
+                <li id="booking_admin"><i class="fa-solid fa-ticket fa-xl"></i>
+                    <p>Booking</p>
+                </li>
+                {{!-- <li id="expense_admin"><i class="fa-solid fa-money-bill-1-wave fa-xl"></i>
+                    <p>Expense</p>
+                </li> --}}
             </ul>
             <ul class="nav-opt outer_logout">
-                <li><i class="fa-solid fa-arrow-right-from-bracket fa-xl"></i><p>Logout</p></li>
+                <li><i class="fa-solid fa-arrow-right-from-bracket fa-xl"></i>
+                    <p>Logout</p>
+                </li>
             </ul>
         </div>
+    </div>
     {{{body}}}
-    
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"></script>
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/js/main_admin.js"></script>
 <script src="{{script}}"></script>
+
 </html>

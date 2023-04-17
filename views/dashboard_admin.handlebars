@@ -1,6 +1,6 @@
 <div class="main-body">
     <div class="body-header">
-        <h4>Hello, Zuykorean</h4>
+        <h4 id="dashboard_title"></h4>
         <ul class="dashboard-date_opt">
             <li id="today" onclick="todayClick()">Today</li>
             <li id="week" onclick="weekClick()">Week</li>
@@ -56,7 +56,7 @@
                     <div class="dashboard-footer_title dashboard-most-outer">
                         <div class="most-title">
                             <i class="fa-regular fa-circle"></i>
-                            <h6>Most popular</h6>
+                            <h6>Most popular movie</h6>
                         </div>
                         {{#each most_popular}}
                         <div class="list-popular" data-movie="{{this.name}}">

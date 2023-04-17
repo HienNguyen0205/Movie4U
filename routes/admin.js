@@ -1,8 +1,8 @@
 const express = require('express')
 const router_admin = express.Router()
 const  adminControllers = require('../controllers/AdminController')
-router_admin.get('/Dashboard', (req, res) => {
-    res.render('home_admin', {
+router_admin.get('/', (req, res) => {
+    res.render('dashboard_admin', {
         layout: 'mainLayout_admin',
         script: '/js/dashboard_admin.js',
         most_popular: [
@@ -28,6 +28,24 @@ router_admin.get('/ShowTiming',(req, res) => {
     res.render('showTiming_admin', {
         layout: 'mainLayout_admin',
         script: '/js/showTiming_admin.js',
+    })
+})
+router_admin.get('/Combo',(req, res) => {
+    res.render('combo_admin', {
+        layout: 'mainLayout_admin',
+        script: '/js/combo_admin.js',
+    })
+})
+router_admin.get('/Users',(req, res) => {
+    res.render('users_admin', {
+        layout: 'mainLayout_admin',
+        script: '/js/users_admin.js',
+    })
+})
+router_admin.get('/Booking',(req, res) => {
+    res.render('booking_admin', {
+        layout: 'mainLayout_admin',
+        script: '/js/booking_admin.js',
     })
 })
 router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)

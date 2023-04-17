@@ -5,7 +5,7 @@
 // Change URL 
 window.onload = function () {
   document.getElementById("dashboard_admin").addEventListener("click", () => {
-    changeUrl("Dashboard")
+    changeUrl("")
   });
 
   document.getElementById("movieTheatres_admin").addEventListener("click", () => {
@@ -16,6 +16,15 @@ window.onload = function () {
   });
   document.getElementById("showTiming_admin").addEventListener("click", () => {
     changeUrl("ShowTiming")
+  });
+  document.getElementById("combo_admin").addEventListener("click", () => {
+    changeUrl("Combo")
+  });
+  document.getElementById("users_admin").addEventListener("click", () => {
+    changeUrl("Users")
+  });
+  document.getElementById("booking_admin").addEventListener("click", () => {
+    changeUrl("Booking")
   });
 };
 
