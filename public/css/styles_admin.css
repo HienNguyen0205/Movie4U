@@ -584,9 +584,7 @@ body {
     text-align: center;
     margin-right: 10px;
 }
-/* .timing_time-large1,.timing_time-large2 {
-    width: 50% !important;
-} */
+
 .timing_date-large2, .timing_time-large2, .combo_amount-large2 {
     width: 100%;
     text-align: center;
@@ -615,4 +613,55 @@ body {
 }
 .theatres_room:nth-child(2) {
     margin: 0 10px;
+}
+
+/* Flash Message */
+#snackbar-container{
+    position: fixed;
+    top:2%;
+    right: 2%;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.snackbar{
+    padding: 1.5rem 1rem;
+    margin: 0.5rem;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0, 0.3);
+    color:white;
+    animation: fade-in 3s ease ;
+}
+.snackbar span{
+    float: right;
+    cursor: pointer;
+}
+.error{
+    background-color: rgb(214, 91, 91);
+}
+
+.success{
+    background-color: rgb(5, 182, 5);
+}
+
+.fadeout{
+    animation: fade-out 1s ease 2s forwards;
+}
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }

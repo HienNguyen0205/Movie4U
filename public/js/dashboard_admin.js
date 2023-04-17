@@ -23,7 +23,6 @@ const chartWeek = [10000, 55000, 40000, 25000, 35000, 36000, 33000, 24000, 26000
 const chartMonth = [57000, 24000, 12000, 45000, 10000, 34000, 28000, 35000, 43000, 13000, 30000, 29000];
 const chartYear = [45000, 56000, 34000, 57000, 23000, 45000, 23000, 12000, 18000, 55000, 34000, 48000];
 currChart = [...chartToday];
-console.log(currChart)
 const MONTHS = [
   'January',
   'February',
