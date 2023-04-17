@@ -42,7 +42,7 @@ router.post('/login', UserControllers.login)
 
 router.post('/register', UserControllers.register)
 
-router.get('/logout', middleware.verifyJWT, middleware.authForUserAndRedirect, UserControllers.logout)
+router.get('/logout', UserControllers.logout)
 
 
 module.exports = router

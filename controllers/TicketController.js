@@ -139,17 +139,10 @@ const TicketControllers = {
                     WHERE schedule_time_id = ?;
                     `;
         const results = await db.queryParams(sql, [schedule_time_id]);
-        if(results.length == 0) {
-            res.status(400).json({
-                code: 201,
-                message: 'Bad request'
-            });
-            return;
-        }
         res.status(200).json({
             code: 200,
             message: 'Success',
-            data: results[0]
+            data: results[0].seat_names == null ? [] : results[0]
         });
     },
     getTicketByAccountId: async (req, res) => {
@@ -183,7 +176,8 @@ const TicketControllers = {
         GROUP_CONCAT(DISTINCT s.name) AS seat_names,
         GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
         GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
-        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images
+        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
+        t.total
         FROM
             ticket t
         JOIN
@@ -220,6 +214,53 @@ const TicketControllers = {
             data: results
         });
     },
+    getAllTicket: async (req, res) => {
+        const sql = `SELECT
+        t.account_id,
+        t.id AS ticket_id,
+        t.schedule_time_id,
+        t.account_id,
+        st.start_time,
+        st.end_time,
+        sch.date,
+        sch.price,
+        sch.movie_id,
+        m.name AS movie_name,
+        m.image AS movie_image,
+        m.duration AS movie_duration,
+        m.description AS movie_description,
+        m.trailer AS movie_trailer,
+        GROUP_CONCAT(DISTINCT s.name) AS seat_names,
+        GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
+        GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
+        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
+        t.total
+        FROM
+            ticket t
+        JOIN
+            schedule_time st ON t.schedule_time_id = st.id
+        JOIN
+            schedule sch ON st.schedule_id = sch.id
+        JOIN
+            movie m ON sch.movie_id = m.id
+        JOIN
+            seat s ON t.id = s.ticket_id
+        JOIN
+            food_combo_ticket ft ON t.id = ft.ticket_id
+        JOIN
+            food_combo f ON ft.food_combo_id = f.id
+        GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
+        `;
+
+        const results = await db.query(sql);
+        res.status(200).json({
+            code: 200,
+            message: 'Success',
+            data: results
+        });
+    },
+
+
 };  
 
 async function checkSeat(schedule_time_id, seat) {

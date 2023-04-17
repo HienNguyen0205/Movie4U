@@ -6,9 +6,12 @@ CREATE TABLE account (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
-  phone VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) DEFAULT NULL,
+  address VARCHAR(255) DEFAULT NULL,
+  birthday DATE DEFAULT NULL,
   password VARCHAR(255) NOT NULL,
   status TINYINT NOT NULL DEFAULT 1,
+  createAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -95,6 +98,8 @@ CREATE TABLE ticket (
   id INT NOT NULL AUTO_INCREMENT,
   account_id INT NOT NULL,
   schedule_time_id INT NOT NULL,
+  createAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  total DECIMAL(8,2) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (schedule_time_id) REFERENCES schedule_time(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -129,6 +134,8 @@ CREATE TABLE poster (
   trailer VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
+
+
 
 -- Insert categories
 INSERT INTO category (name) VALUES ('Action'), ('Comedy'), ('Drama'), ('Horror'), ('Fantasty'), ('Romance');
@@ -265,5 +272,7 @@ VALUES
   (7, '18:45:00', '21:00:00'),
   (8, '21:30:00', '23:30:00');
 
-INSERT INTO food_combo(id,name,price,image) VALUES (1,"No combo",100,"/images/Combo/combo1.jpg");
-
+INSERT INTO food_combo(name,price,popcorn,drink,image) VALUES 
+("Combo 1",100,1,2,"/images/Combo/combo1.jpg"),
+("Combo 2",110,1,2,"/images/Combo/combo2.jpg"),
+("Combo 3",120,1,2,"/images/Combo/combo3.jpg");
