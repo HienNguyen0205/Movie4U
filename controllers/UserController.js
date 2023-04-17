@@ -164,6 +164,24 @@ const UserController = {
         const updateInfo = req.body;
         const sql = `UPDATE account SET name = ?, phone = ?, birthday = ?, address = ? WHERE id = ?`;
         const params = [updateInfo.name, updateInfo.phone, updateInfo.birthday, updateInfo.address, user.id];
+        
+        if(!updateInfo.name || !updateInfo.phone || !updateInfo.birthday || !updateInfo.address) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
+        if(!checkEmail(user.email)) {
+            res.status(500).json({
+                code: 201,
+                message: 'Email already exists'
+            });
+            return;
+        }
+
+
         db.queryParams(sql, params)
             .then((result) => {
                 res.status(200).json({

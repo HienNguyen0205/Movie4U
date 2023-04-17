@@ -90,7 +90,7 @@ CREATE TABLE food_combo (
   drink INT NOT NULL,
   price DECIMAL(8,2) NOT NULL,
   description VARCHAR(21844) DEFAULT NULL,
-  image VARCHAR(255) NOT NULL,
+  image VARCHAR(255) DEFAULT '/images/UI/popcorn&cola.jpg',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -272,7 +272,8 @@ VALUES
   (7, '18:45:00', '21:00:00'),
   (8, '21:30:00', '23:30:00');
 
-INSERT INTO food_combo(name,price,popcorn,drink,image) VALUES 
-("Combo 1",100,1,2,"/images/Combo/combo1.jpg"),
-("Combo 2",110,1,2,"/images/Combo/combo2.jpg"),
-("Combo 3",120,1,2,"/images/Combo/combo3.jpg");
+INSERT INTO food_combo(name,price,popcorn,drink,description) VALUES 
+("1 Popcorn And 2 Drink",10,1,2,'Include 1 popcorn + 2 drink'),
+("2 PopcornS And 3 Drink",20,2,3,'Include popcorn + 3 drink'),
+("3 PopcornS And 5 Drink",30,3,5,'Include popcorn + 5 drink'),
+("4 PopcornS And 7 Drink",50,4,7,'Include popcorn + 7 drink');

@@ -142,7 +142,7 @@ const TicketControllers = {
         res.status(200).json({
             code: 200,
             message: 'Success',
-            data: results[0].seat_names == null ? [] : results[0]
+            data: results[0].seat_names == null ? { seat_names : [] } : results[0]
         });
     },
     getTicketByAccountId: async (req, res) => {
