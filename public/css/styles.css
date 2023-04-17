@@ -980,6 +980,10 @@ footer > div > a:hover {
   border: 2px solid white;
 }
 
+.d-n{
+  display: none;
+}
+
 #user_opt_container:hover #user_opt{
   display: block !important;
 }
@@ -991,6 +995,7 @@ footer > div > a:hover {
   background-color: white;
   border-radius: 8px;
   color: black;
+  z-index: 100;
 }
 
 #user_opt_container::before{
@@ -1008,4 +1013,25 @@ footer > div > a:hover {
 
 .w-30{
   width: 30%;
+}
+
+.toast.show {
+  animation: rightToLeft .3s ease-in;
+}
+
+.toast:not(.show){
+  opacity: 0;
+  transition: 0.3s;
+  display: block !important;
+}
+
+@keyframes rightToLeft {
+  from{
+    opacity: 0.5;
+    transform: translateX(24px);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

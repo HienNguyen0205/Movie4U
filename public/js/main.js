@@ -89,10 +89,28 @@ const resetComingMovie = () => {
 }
 
 const removeTicketInfo = () => {
-    const label = ['ticketSelected','theater','time','price']
+    const label = ['ticketSelected','theaterInfo','time','price','foodDetail']
     label.forEach(item => {
         localStorage.removeItem(item)
     })
+}
+
+const myToastEl = document.querySelector('#toast_mes_container')
+const toastMes = document.querySelector('#toast_mes')
+
+const showToastMes = (mes, status) => {
+    toastMes.innerHTML = mes
+    myToastEl.classList.add('show')
+    if(status === 'success'){
+        myToastEl.classList.remove('text-bg-danger')
+        myToastEl.classList.add('text-bg-success')
+    }else{
+        myToastEl.classList.remove('text-bg-success')
+        myToastEl.classList.add('text-bg-danger')
+    }
+    setTimeout(() => {
+        myToastEl.classList.remove('show')
+    }, 3000)
 }
 
 /* Changing the background color of the header when the user scrolls down. */
@@ -174,6 +192,11 @@ const toggleSwitchForm = e => {
     resetInput()
 }
 
+const openSignIn = () => {
+    signInModal.classList.add('modal_show')
+    signUpModal.classList.remove('modal_show')
+}
+
 blurBG.addEventListener('click', closeSignHandle)
 closeSignBtn.forEach(element => {
     element.addEventListener('click', closeSignHandle)
@@ -200,6 +223,8 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
 const emailSignInErrMess = document.getElementById('email_sign_in_error')
 const passSignInErrMess = document.getElementById('password_sign_in_error')
+const logGroup = document.querySelector('#log_group')
+const avatar = document.querySelector('#user_opt_container')
 
 /**
  * If the email and password are valid, submit the form. Otherwise, display an error message.
@@ -208,18 +233,39 @@ const signInSubmitHandle = () => {
     const email = signInForm.elements['email_sign_in'].value.trim()
     const password = signInForm.elements['password_sign_in'].value.trim()
     if (emailRegex.test(email) && passwordRegex.test(password)) {
-        signInForm.submit()
+        axios.post('/login', {
+            email: email,
+            password: password
+        })
+        .then(res => {
+            let status = 'fail'
+            if(res.data.code == 200){
+                status = 'success'
+                if(res.data.status == 0){
+                    changePath('admin/DashBoard')
+                }else if(res.data.status == 1){
+                    logGroup.style.display = 'none'
+                    avatar.style.display = 'block'
+                }
+                closeSignHandle()
+                localStorage.setItem('token', res.data.accessToken)
+            }
+            showToastMes(res.data.message, status)
+        })
+        .catch(err => {
+            console.error(err)
+        })
     } else {
         if (email === '') {
             emailSignInErrMess.innerText = 'Please enter your email'
-        } else if (emailRegex.test(email)) {
+        } else if (!emailRegex.test(email)) {
             emailSignInErrMess.innerText = 'Email is not valid'
         } else {
             emailSignInErrMess.innerText = ''
         }
         if (password === '') {
             passSignInErrMess.innerText = 'Please enter your password'
-        } else if (passwordRegex.test(password)) {
+        } else if (!passwordRegex.test(password)) {
             passSignInErrMess.innerText = 'Password need at least eight characters, one letter and one number'
         } else {
             passSignInErrMess.innerText = ''
@@ -238,7 +284,22 @@ const signUpSubmitHandle = () => {
     const pass = signUpForm.elements['password_sign_up'].value.trim()
     const confirmPass = signUpForm.elements['confirm_password'].value.trim()
     if (emailRegex.test(email) && passwordRegex.test(pass) && name !== '' && pass === confirmPass) {
-        signUpForm.submit()
+        axios.post('/register', {
+            name: name,
+            email: email,
+            password: pass
+        })
+        .then(res => {
+            let status = 'fail'
+            if(res.data.code == 200){
+                status = 'success'
+                openSignIn()
+            }
+            showToastMes(res.data.message, status)
+        })
+        .catch(err => {
+            console.error(err)
+        })
     } else {
         if (name === '') {
             nameErrorMess.innerText = 'Please enter your name'
@@ -247,14 +308,14 @@ const signUpSubmitHandle = () => {
         }
         if (email === '') {
             emailSignUpErrMess.innerText = 'Please enter your email'
-        } else if (emailRegex.test(email)) {
+        } else if (!emailRegex.test(email)) {
             emailSignUpErrMess.innerText = 'Email is not valid'
         } else {
             emailSignUpErrMess.innerText = ''
         }
         if (pass === '') {
             passSignUpErrMess.innerText = 'Please enter your password'
-        } else if (passwordRegex.test(pass)) {
+        } else if (!passwordRegex.test(pass)) {
             passSignUpErrMess.innerText = 'Password need at least eight characters, one letter and one number'
         } else {
             passSignUpErrMess.innerText = ''
@@ -304,7 +365,7 @@ window.addEventListener('load', () => {
 })
 
 const navBtn = document.querySelectorAll('.nav_item')
-const navPaths = ['/home','/movie', '/event', '/support']
+const navPaths = ['/','/movie', '/event', '/support']
 
 if(navPaths.includes(window.location.pathname.toLowerCase())){
     document.querySelector('.nav-active').classList.remove('nav-active')
@@ -314,7 +375,7 @@ if(navPaths.includes(window.location.pathname.toLowerCase())){
 /* This code is used to change the page when the user clicks on the navigation bar. */
 navBtn.forEach(element => {
     element.addEventListener('click', () => {
-        const path = element.innerText.toLowerCase()
+        const path = element.getAttribute('data-path')
         changePath(path)
     })
 })
@@ -322,4 +383,12 @@ navBtn.forEach(element => {
 if(window.location.pathname.toLowerCase() !== '/movieticket'){
     removeTicketInfo()
     window.removeEventListener('load', removeTicketInfo)
+}
+
+if(localStorage.getItem('token') !== null){
+    logGroup.style.display = 'none'
+    avatar.style.display = 'block'
+}else{
+    logGroup.style.display = 'block'
+    avatar.style.display = 'none'
 }

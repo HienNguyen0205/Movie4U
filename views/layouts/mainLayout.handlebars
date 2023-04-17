@@ -25,25 +25,27 @@
             <div class="container d-flex justify-content-between align-items-center">
                 <img class="logo" src="/images/UI/logo.png" alt="logo">
                 <ul class="d-flex h-100">
-                    <li class="nav_item nav-active">Home</li>
-                    <li class="nav_item">Movie</li>
-                    <li class="nav_item">Event</li>
-                    <li class="nav_item">Support</li>
+                    <li class="nav_item nav-active" data-path="">Home</li>
+                    <li class="nav_item" data-path="movie">Movie</li>
+                    <li class="nav_item" data-path="event">Event</li>
+                    <li class="nav_item" data-path="support">Support</li>
                 </ul>
                 <div class="d-flex align-items-center">
-                    {{!-- <button id="sign_in_btn" class="position-relative btn_config"
-                        style="background-color: var(--pri-btn-color);">
-                        <div id="sign_in" class="custom_btn">
-                            Sign In
-                        </div>
-                    </button>
-                    <button id="sign_up_btn" class="position-relative btn_config"
-                        style="background-color: var(--sed-btn-color);">
-                        <div id="sign_up" class="custom_btn">
-                            Sign Up
-                        </div>
-                    </button> --}}
-                    <div id="user_opt_container" class="dropdown">
+                    <div id="log_group">
+                        <button id="sign_in_btn" class="position-relative btn_config"
+                            style="background-color: var(--pri-btn-color);">
+                            <div id="sign_in" class="custom_btn">
+                                Sign In
+                            </div>
+                        </button>
+                        <button id="sign_up_btn" class="position-relative btn_config"
+                            style="background-color: var(--sed-btn-color);">
+                            <div id="sign_up" class="custom_btn">
+                                Sign Up
+                            </div>
+                        </button>
+                    </div>
+                    <div id="user_opt_container" class="dropdown d-n">
                         <img id="avatar" src="/images/UserImg/unknowUser.jpg" alt="avatar">
                         <ul id="user_opt" class="d-none">
                             <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user my-2"
@@ -158,13 +160,19 @@
                 </div>
             </div>
         </div>
+        <div id="toast_mes_container" class="toast align-items-center text-bg-success border-0 position-fixed" role="alert" aria-live="assertive"
+            aria-atomic="true" style="top: 100px; right: 32px; width: fit-content;">
+            <div class="d-flex">
+                <div id="toast_mes" class="toast-body"></div>
+            </div>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="{{script}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="{{script}}"></script>
 </body>
 
 </html>
