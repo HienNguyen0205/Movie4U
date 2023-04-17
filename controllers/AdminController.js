@@ -49,8 +49,27 @@ const AdminControllers = {
             });
     },
 
+    getAllMovie(req, res) {
+        const sql = `SELECT * FROM movie`;
+        db.query(sql)
+            .then((results) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success',
+                    data: results
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+
     getAllTheatres: (req, res) => {
-        $sql = `
+        const sql = `
                 SELECT t.id, t.name, t.address, t.image,
                 COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
                 COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS 'R4DX',
@@ -60,7 +79,7 @@ const AdminControllers = {
                 LEFT JOIN room r ON t.id = r.theatre_id
                 GROUP BY t.id, t.name;
                 `;
-        db.query($sql)
+        db.query(sql)
             .then((results) => {
                 res.status(200).json({
                     code: 200,

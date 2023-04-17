@@ -225,9 +225,11 @@ const TicketControllers = {
     getAllTicket: async (req, res) => {
         const sql = `SELECT
         t.account_id,
+        a.email,
         t.id AS ticket_id,
         t.schedule_time_id,
         t.account_id,
+        t.createAt,
         st.start_time,
         st.end_time,
         sch.date,
@@ -239,6 +241,7 @@ const TicketControllers = {
         m.description AS movie_description,
         m.trailer AS movie_trailer,
         GROUP_CONCAT(DISTINCT s.name) AS seat_names,
+        GROUP_CONCAT(DISTINCT f.id) AS food_combo_ids,
         GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
         GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
         GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
@@ -257,6 +260,8 @@ const TicketControllers = {
             food_combo_ticket ft ON t.id = ft.ticket_id
         JOIN
             food_combo f ON ft.food_combo_id = f.id
+        JOIN
+            account a ON t.account_id = a.id
         GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
         `;
 
