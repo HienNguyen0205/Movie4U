@@ -47,6 +47,14 @@ const TicketControllers = {
     },
     getMovieSchedule(req, res) {
         const moive_id = req.query.movie_id;
+        const date = req.query.date;
+        if(!moive_id || !date) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
         const sql = `SELECT
         sch.id AS schedule_id,
         sch.movie_id,
@@ -73,10 +81,10 @@ const TicketControllers = {
             schedule_time st ON sch.id = st.schedule_id
         WHERE 
             sch.movie_id = ? 
-            AND DATE(sch.date) = CURDATE()
+            AND DATE(sch.date) = ?
         GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;   
         `;
-        db.queryParams(sql, [moive_id])
+        db.queryParams(sql, [moive_id, date])
             .then((results) => {
                 res.status(200).json({
                     code: 200,
@@ -125,7 +133,7 @@ const TicketControllers = {
             return;
         }
 
-        await addTicketAndSeatAndFoodComboList(seatList, schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
+        await addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
 
         res.status(200).json({
             code: 200,
@@ -142,7 +150,7 @@ const TicketControllers = {
         res.status(200).json({
             code: 200,
             message: 'Success',
-            data: results[0].seat_names == null ? [] : results[0]
+            data: results[0].seat_names == null ? { seat_names : [] } : results[0]
         });
     },
     getTicketByAccountId: async (req, res) => {
@@ -274,9 +282,28 @@ async function checkSeat(schedule_time_id, seat) {
     return true;
 }
 
-async function addTicketAndSeatAndFoodComboList(seatList, schedule_time_id, account_id, food_combo_list = [], food_combo_quantity_list = []) {
-    const sql = 'Insert into ticket (schedule_time_id, account_id) values (?,?)';
-    const results = await db.queryTransaction(sql, [schedule_time_id, account_id]);
+async function addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_time_id, account_id, food_combo_list = [], food_combo_quantity_list = []) {
+    //Cal total price of ticket
+    const moviePriceSql = 'SELECT price FROM schedule WHERE id = ?';
+    const moviePriceResult = await db.queryParams(moviePriceSql, [schedule_id]);
+    let moviePrice = Number(moviePriceResult[0].price);
+    
+    const foodComboPriceSql = 'SELECT price FROM food_combo WHERE id = ?';
+    let foodComboPrice = 0;
+    for (let i = 0; i < food_combo_list.length; i++) {
+        const foodComboPriceResult = await db.queryParams(foodComboPriceSql, [food_combo_list[i]]);
+        foodComboPrice += Number(foodComboPriceResult[0].price)  * food_combo_quantity_list[i];
+    }
+
+    console.log(foodComboPrice);
+    console.log(moviePrice);
+
+    const total = Number(moviePrice)  + Number(foodComboPrice);
+
+    console.log(total);
+
+    const sql = 'Insert into ticket (schedule_time_id, account_id, total) values (?,?,?)';
+    const results = await db.queryTransaction(sql, [schedule_time_id, account_id, total]);
     const ticket_id = results.insertId;
     for (let i = 0; i < seatList.length; i++) {
         const sql = 'Insert into seat (ticket_id,schedule_time_id,name) values (?,?,?)';

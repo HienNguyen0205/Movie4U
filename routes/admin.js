@@ -3,6 +3,7 @@ const router_admin = express.Router()
 const  adminControllers = require('../controllers/AdminController')
 const ticketControllers = require('../controllers/TicketController')
 const middleware = require('../middlewares')
+
 router_admin.get('/', (req, res) => {
     res.render('dashboard_admin', {
         layout: 'mainLayout_admin',

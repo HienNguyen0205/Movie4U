@@ -49,7 +49,7 @@ const AdminControllers = {
             });
     },
 
-    
+
 
     getAllTheatres: (req, res) => {
         $sql = `
@@ -330,6 +330,18 @@ const AdminControllers = {
             }
         });
     },
+    addScheduleMovie: async (req, res) => {
+        const { movie_id, theatre_id, room_id, date, start_time, end_time } = req.body;
+        if (!movie_id || !theatre_id || !room_id || !date || !start_time || !end_time) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
+
+    },
 }
 
 function moveFile(oldPath, fileName, destination) {
@@ -387,6 +399,17 @@ async function addRoom(theatre_id, roomList, roomListName) {
     insertQueries.forEach((query) => {
         db.queryTransaction(query.sql, query.values);
     });
+}
+
+async function checkScheduleTime(start_time, end_time, date, room_id) {
+    // schedulue"_time store start_time and end_time and have a foreign key shedule_id have date and room_id, check it to make sure that during the start to end time have no schedule is not exist
+    const sql = `SELECT * FROM schedule_time WHERE start_time >= ? AND end_time <= ? AND schedule_id IN (SELECT id FROM schedule WHERE date = ? AND room_id = ?)`;
+    const params = [start_time, start_time, date, room_id];
+    const result = await db.queryParams(sql, params);
+    if (result.length === 0) {
+        return null;
+    }
+    return result;
 }
 
 module.exports = AdminControllers;

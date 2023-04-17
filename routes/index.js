@@ -44,5 +44,7 @@ router.post('/register', UserControllers.register)
 
 router.get('/logout', UserControllers.logout)
 
+router.post('/updateUserInfo', middleware.verifyJWT , UserControllers.updateUserInfo)
+
 
 module.exports = router
