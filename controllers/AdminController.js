@@ -379,6 +379,51 @@ const AdminControllers = {
                     });
             })
     },
+
+    getAllSchedule: async (req, res) => {
+        const sql = `SELECT
+        sch.id AS schedule_id,
+        sch.movie_id,
+        sch.room_id,
+        sch.theatre_id,
+        sch.date,
+        sch.price,
+        GROUP_CONCAT(DISTINCT st.start_time) AS start_times,
+        GROUP_CONCAT(DISTINCT st.end_time) AS end_times,
+        GROUP_CONCAT(DISTINCT st.id) AS schedule_time_ids,
+        th.name AS theatre_name,
+        th.address AS theatre_address,
+        th.image AS theatre_image,
+        r.name AS room_name,
+        r.type AS room_type,
+        r.capacity AS room_capacity
+        FROM 
+            schedule sch
+        JOIN 
+            theatre th ON sch.theatre_id = th.id
+        JOIN 
+            room r ON sch.room_id = r.id
+        JOIN 
+            schedule_time st ON sch.id = st.schedule_id
+        GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;   
+        `;
+        db.query(sql)   
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success',
+                    data: result
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },        
+
 }
 
 function moveFile(oldPath, fileName, destination) {

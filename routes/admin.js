@@ -60,6 +60,7 @@ router_admin.delete('/deleteTheatre', adminControllers.deleteTheatre)
 router_admin.get('/getRevenue', adminControllers.getRevenue)
 router_admin.get('/getAllTicket', ticketControllers.getAllTicket)
 router_admin.post('/addSchedule', adminControllers.addScheduleMovie)
+router_admin.get('/getAllSchedule', adminControllers.getAllSchedule)
 
 
 module.exports = router_admin
