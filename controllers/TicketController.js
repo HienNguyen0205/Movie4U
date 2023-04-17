@@ -98,9 +98,11 @@ const TicketControllers = {
             return;
         }
 
-        const { schedule_id, schedule_time_id, seat } = req.body;
+        const { schedule_id, schedule_time_id, seat, food_combo_id, food_combo_quantity} = req.body;
+    
 
         if (!schedule_id || !schedule_time_id || !seat) {
+            console.log('Bad request');
             res.status(400).json({ 
                 code: 201,
                 message: 'Bad request' 
@@ -108,7 +110,10 @@ const TicketControllers = {
             return;
         }
 
-        seatList = seat.split(',');
+        const food_combo_idList = food_combo_id.split(',');
+        const food_combo_quantityList = food_combo_quantity.split(',');
+
+        const seatList = seat.split(',');
 
         const check = await checkSeat(schedule_time_id, seatList);
 
@@ -120,7 +125,7 @@ const TicketControllers = {
             return;
         }
 
-        await addTicketAndSeat(seatList, schedule_time_id, req.user.id);
+        await addTicketAndSeatAndFoodComboList(seatList, schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
 
         res.status(200).json({
             code: 200,
@@ -129,27 +134,31 @@ const TicketControllers = {
     },
     getSeat: async (req, res) => {
         const schedule_time_id = req.query.schedule_time_id;
-        const sql = 'SELECT * FROM seat WHERE schedule_time_id = ?';
+        const sql = `SELECT GROUP_CONCAT(name) AS seat_names
+                    FROM seat
+                    WHERE schedule_time_id = ?;
+                    `;
         const results = await db.queryParams(sql, [schedule_time_id]);
-        if(results.length == 0) {
+        res.status(200).json({
+            code: 200,
+            message: 'Success',
+            data: results[0].seat_names == null ? [] : results[0]
+        });
+    },
+    getTicketByAccountId: async (req, res) => {
+        if (req.user === null) {
+            res.status(401).json({ message: 'Unauthorized' });
+            return;
+        }
+        const account_id = req.user.id;
+        if(account_id == null) {
             res.status(400).json({
                 code: 201,
                 message: 'Bad request'
             });
             return;
         }
-        res.status(200).json({
-            code: 200,
-            message: 'Success',
-            data: results
-        });
-    },
-    getTicketByAccountId: async (req, res) => {
-        if (req.user == null) {
-            res.status(401).json({ message: 'Unauthorized' });
-            return;
-        }
-        const account_id = req.user.id;
+
         const sql = `SELECT
         t.id AS ticket_id,
         t.schedule_time_id,
@@ -164,27 +173,94 @@ const TicketControllers = {
         m.duration AS movie_duration,
         m.description AS movie_description,
         m.trailer AS movie_trailer,
-        GROUP_CONCAT(DISTINCT s.name) AS seat_names
-        FROM 
+        GROUP_CONCAT(DISTINCT s.name) AS seat_names,
+        GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
+        GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
+        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
+        t.total
+        FROM
             ticket t
-        JOIN 
+        JOIN
             schedule_time st ON t.schedule_time_id = st.id
-        JOIN 
+        JOIN
             schedule sch ON st.schedule_id = sch.id
-        JOIN 
+        JOIN
             movie m ON sch.movie_id = m.id
-        JOIN 
+        JOIN
             seat s ON t.id = s.ticket_id
-        WHERE 
+        JOIN
+            food_combo_ticket ft ON t.id = ft.ticket_id
+        JOIN
+            food_combo f ON ft.food_combo_id = f.id
+        WHERE
             t.account_id = ?
-        GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;`;
+        GROUP BY
+            t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
+        
+    `;
         const results = await db.queryParams(sql, [account_id]);
         res.status(200).json({
             code: 200,
             message: 'Success',
             data: results
         });
-    }
+    },
+    getFoodCombo: async (req, res) => {
+        const sql = `SELECT * FROM food_combo`;
+        const results = await db.query(sql);
+        res.status(200).json({
+            code: 200,
+            message: 'Success',
+            data: results
+        });
+    },
+    getAllTicket: async (req, res) => {
+        const sql = `SELECT
+        t.account_id,
+        t.id AS ticket_id,
+        t.schedule_time_id,
+        t.account_id,
+        st.start_time,
+        st.end_time,
+        sch.date,
+        sch.price,
+        sch.movie_id,
+        m.name AS movie_name,
+        m.image AS movie_image,
+        m.duration AS movie_duration,
+        m.description AS movie_description,
+        m.trailer AS movie_trailer,
+        GROUP_CONCAT(DISTINCT s.name) AS seat_names,
+        GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
+        GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
+        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
+        t.total
+        FROM
+            ticket t
+        JOIN
+            schedule_time st ON t.schedule_time_id = st.id
+        JOIN
+            schedule sch ON st.schedule_id = sch.id
+        JOIN
+            movie m ON sch.movie_id = m.id
+        JOIN
+            seat s ON t.id = s.ticket_id
+        JOIN
+            food_combo_ticket ft ON t.id = ft.ticket_id
+        JOIN
+            food_combo f ON ft.food_combo_id = f.id
+        GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
+        `;
+
+        const results = await db.query(sql);
+        res.status(200).json({
+            code: 200,
+            message: 'Success',
+            data: results
+        });
+    },
+
+
 };  
 
 async function checkSeat(schedule_time_id, seat) {
@@ -198,13 +274,17 @@ async function checkSeat(schedule_time_id, seat) {
     return true;
 }
 
-async function addTicketAndSeat(seatList, schedule_time_id, account_id) {
+async function addTicketAndSeatAndFoodComboList(seatList, schedule_time_id, account_id, food_combo_list = [], food_combo_quantity_list = []) {
     const sql = 'Insert into ticket (schedule_time_id, account_id) values (?,?)';
     const results = await db.queryTransaction(sql, [schedule_time_id, account_id]);
     const ticket_id = results.insertId;
     for (let i = 0; i < seatList.length; i++) {
         const sql = 'Insert into seat (ticket_id,schedule_time_id,name) values (?,?,?)';
         await db.queryTransaction(sql, [ticket_id,schedule_time_id, seatList[i]]);
+    }
+    for (let i = 0; i < food_combo_list.length; i++) {
+        const sql = 'Insert into food_combo_ticket (ticket_id,food_combo_id,quantity,account_id) values (?,?,?,?)';
+        await db.queryTransaction(sql, [ticket_id, food_combo_list[i], food_combo_quantity_list[i], account_id]);
     }
 }
 

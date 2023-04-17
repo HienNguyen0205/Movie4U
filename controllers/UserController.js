@@ -44,7 +44,7 @@ const UserController = {
                 await MailService.sendMail(user.email, 'Welcome to Movie4U', content);
                 res.status(200).json({
                     code: 200,
-                    message: 'Success',
+                    message: 'User registered successfully',
                     data: result
                 });
             })
@@ -90,10 +90,9 @@ const UserController = {
             path: "/",
             sameSite: "strict",
         });
-        // save user to session
         res.status(200).json({
             code: 200,
-            message: 'Success',
+            message: 'User logged in successfully',
             data: user[0],
             accessToken: accessToken,
             status: user[0].status
@@ -137,6 +136,49 @@ const UserController = {
 
         const token = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, options);
         return token;
+    },
+
+    getUserInfo: async (req, res) => {
+        const user = req.user;
+        const sql = `SELECT * FROM account WHERE id = ?`;
+        const params = [user.id];
+        db.queryParams(sql, params)
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success',
+                    data: result[0]
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+
+    updateUserInfo: async (req, res) => {
+        const user = req.user;
+        const updateInfo = req.body;
+        const sql = `UPDATE account SET name = ?, phone = ?, birthday = ?, address = ? WHERE id = ?`;
+        const params = [updateInfo.name, updateInfo.phone, updateInfo.birthday, updateInfo.address, user.id];
+        db.queryParams(sql, params)
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Update account successfully',
+                    data: result[0]
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
     },
 };
 

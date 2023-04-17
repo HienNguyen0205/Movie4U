@@ -5,7 +5,7 @@ const path = require('path');
 
 const AdminControllers = {
     getAllUser: (req, res) => {
-        $sql = 'SELECT * FROM user';
+        $sql = 'SELECT * FROM account WHERE status = 1';
         db.query($sql)
             .then((results) => {
                 res.status(200).json({
@@ -22,6 +22,35 @@ const AdminControllers = {
                 });
             });
     },
+
+    deleteUser: (req, res) => {
+        const id = req.query.id;
+        if(!id) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+        $sql = 'DELETE FROM account WHERE id = ?';
+        db.queryParams($sql, [id])
+            .then((results) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success'
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+
+    
+
     getAllTheatres: (req, res) => {
         $sql = `
                 SELECT t.id, t.name, t.address, t.image,
@@ -269,7 +298,38 @@ const AdminControllers = {
                     message: 'Internal server error'
                 });
             });
-    }
+    },
+    getRevenue(req, res) {
+        $sql = `SELECT SUM(total) as total FROM ticket`;
+        let revenue = 0;
+        db.query($sql)
+            .then((result) => {
+                revenue = result[0].total;
+            });
+        $sql = `SELECT COUNT(*) as total FROM ticket`;
+        let totalTicket = 0;
+        db.query($sql)
+            .then((result) => {
+                totalTicket = result[0].total;
+            }
+        );
+        let toltalView = 0;
+        $sql = `SELECT COUNT(*) as total FROM seat`;
+        db.query($sql)
+            .then((result) => {
+                toltalView = result[0].total;
+            });
+
+        res.status(200).json({
+            code: 200,
+            message: 'Success',
+            data: {
+                revenue: revenue,
+                totalTicket: totalTicket,
+                toltalView: toltalView
+            }
+        });
+    },
 }
 
 function moveFile(oldPath, fileName, destination) {

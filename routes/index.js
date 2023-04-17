@@ -3,7 +3,7 @@ const router = express.Router()
 const UserControllers = require('../controllers/UserController')
 const middleware = require('../middlewares')
 
-router.get('/home', middleware.authForUserAndRedirect ,(req, res) => {
+router.get('/',(req, res) => {
     res.render('home', {
         layout: 'mainLayout',
         script: '/js/home.js',
@@ -41,6 +41,8 @@ router.get('/support', (req, res) => {
 router.post('/login', UserControllers.login)
 
 router.post('/register', UserControllers.register)
+
+router.get('/logout', UserControllers.logout)
 
 
 module.exports = router

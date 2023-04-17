@@ -1,6 +1,8 @@
 const express = require('express')
 const router_admin = express.Router()
 const  adminControllers = require('../controllers/AdminController')
+const ticketControllers = require('../controllers/TicketController')
+const middleware = require('../middlewares')
 router_admin.get('/', (req, res) => {
     res.render('dashboard_admin', {
         layout: 'mainLayout_admin',
@@ -48,10 +50,13 @@ router_admin.get('/Booking',(req, res) => {
         script: '/js/booking_admin.js',
     })
 })
+router_admin.get('/getAllUser', adminControllers.getAllUser)
 router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
 router_admin.get('/getTheatreById', adminControllers.getTheatreById)
 router_admin.post('/addTheatre', adminControllers.addTheatre)
 router_admin.post('/updateTheatre', adminControllers.updateTheatre)
 router_admin.delete('/deleteTheatre', adminControllers.deleteTheatre)
+router_admin.get('/getRevenue', adminControllers.getRevenue)
+router_admin.get('/getAllTicket', ticketControllers.getAllTicket)
 
 module.exports = router_admin
