@@ -125,7 +125,7 @@ const TicketControllers = {
             return;
         }
 
-        await addTicketAndSeatAndFoodComboList(seatList, schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
+        await addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
 
         res.status(200).json({
             code: 200,
@@ -274,9 +274,28 @@ async function checkSeat(schedule_time_id, seat) {
     return true;
 }
 
-async function addTicketAndSeatAndFoodComboList(seatList, schedule_time_id, account_id, food_combo_list = [], food_combo_quantity_list = []) {
-    const sql = 'Insert into ticket (schedule_time_id, account_id) values (?,?)';
-    const results = await db.queryTransaction(sql, [schedule_time_id, account_id]);
+async function addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_time_id, account_id, food_combo_list = [], food_combo_quantity_list = []) {
+    //Cal total price of ticket
+    const moviePriceSql = 'SELECT price FROM schedule WHERE id = ?';
+    const moviePriceResult = await db.queryParams(moviePriceSql, [schedule_id]);
+    let moviePrice = Number(moviePriceResult[0].price);
+    
+    const foodComboPriceSql = 'SELECT price FROM food_combo WHERE id = ?';
+    let foodComboPrice = 0;
+    for (let i = 0; i < food_combo_list.length; i++) {
+        const foodComboPriceResult = await db.queryParams(foodComboPriceSql, [food_combo_list[i]]);
+        foodComboPrice += Number(foodComboPriceResult[0].price)  * food_combo_quantity_list[i];
+    }
+
+    console.log(foodComboPrice);
+    console.log(moviePrice);
+
+    const total = Number(moviePrice)  + Number(foodComboPrice);
+
+    console.log(total);
+
+    const sql = 'Insert into ticket (schedule_time_id, account_id, total) values (?,?,?)';
+    const results = await db.queryTransaction(sql, [schedule_time_id, account_id, total]);
     const ticket_id = results.insertId;
     for (let i = 0; i < seatList.length; i++) {
         const sql = 'Insert into seat (ticket_id,schedule_time_id,name) values (?,?,?)';
