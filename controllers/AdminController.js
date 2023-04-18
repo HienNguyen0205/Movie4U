@@ -487,6 +487,27 @@ const AdminControllers = {
             });
     },
 
+    getFoodComboById: async (req, res) => {
+        const id = req.query.id;
+        const sql = `SELECT * FROM food_combo WHERE id = ?`;
+        const params = [id];
+        db.queryParams(sql, params)
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Success',
+                    data: result
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+
     addFoodCombo: async (req, res) => {
         //form
         const form = new multiparty.Form();
@@ -729,13 +750,13 @@ const AdminControllers = {
             const oldPath = imageFile.path;
             moveFile(oldPath, fileName, 'images/Movie');
 
-            const sql = `INSERT INTO movie (name, description, duration, releaseDate, director, actors, trailer, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            const sql = `INSERT INTO movie (name, description, duration, release_date, director, actors, trailer, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
             const params = [name, description, duration, releaseDate, director, actors, trailer, filePath, status];
 
             db.queryTransaction(sql, params)
                 .then(async (result) => {
                     const insertId = result.insertId;
-                    await addMovieToCinema(insertId, categoryList);
+                    await addCategoryForMovie(insertId, categoryList);
                     res.status(200).json({
                         code: 200,
                         message: 'Add movie successfully',
@@ -1014,4 +1035,7 @@ async function addCategoryForMovie(movie_id, categoryList) {
     });
 }
 
+async function updateCategoryForMovie(id) {
+
+}
 module.exports = AdminControllers;

@@ -66,6 +66,7 @@ router_admin.get('/getAllTicket', ticketControllers.getAllTicket)
 router_admin.get('/getAllSchedule', adminControllers.getAllSchedule)
 router_admin.post('/addSchedule', adminControllers.addScheduleMovie)
 
+router_admin.get('/getFoodComboById', adminControllers.getFoodComboById)
 router_admin.post('/addFoodCombo', adminControllers.addFoodCombo)
 router_admin.post('/updateFoodCombo', adminControllers.updateFoodCombo)
 router_admin.delete('/deleteFoodCombo', adminControllers.deleteFoodCombo)

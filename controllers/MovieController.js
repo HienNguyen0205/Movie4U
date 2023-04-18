@@ -37,7 +37,7 @@ const MovieControllers = {
             });
             return;
         }
-        const sql = `SELECT movie.id, movie.name, movie.duration, movie.release_date, movie.image, movie.trailer, movie.director, movie.actors, movie.age_restrict, movie.description, GROUP_CONCAT(category.name) AS categories, movie.status
+        const sql = `SELECT movie.id, movie.name, movie.duration, movie.release_date, movie.image, movie.trailer, movie.director, movie.actors, movie.age_restrict, movie.description, GROUP_CONCAT(category.id) as category_id ,GROUP_CONCAT(category.name) AS categories, movie.status
                     FROM movie
                     INNER JOIN movie_category ON movie.id = movie_category.movie_id
                     INNER JOIN category ON movie_category.category_id = category.id
