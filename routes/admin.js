@@ -65,4 +65,5 @@ router_admin.get('/getAllMovie', adminControllers.getAllMovie)
 router_admin.post('/addMovie', adminControllers.addMovie)
 router_admin.post('/addFoodCombo', adminControllers.addFoodCombo)
 router_admin.post('/updateFoodCombo', adminControllers.updateFoodCombo)
+router_admin.delete('/deleteFoodCombo', adminControllers.deleteFoodCombo)
 module.exports = router_admin

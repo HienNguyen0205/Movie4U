@@ -639,7 +639,16 @@ const AdminControllers = {
     },
 
     deleteFoodCombo: async (req, res) => {
-        const { id } = req.params;
+        const  id  = req.query.id;
+
+        if(!id) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+    
         const food_combo = await getFoodComboById(id);
 
         if(food_combo.length === 0) {
