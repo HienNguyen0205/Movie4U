@@ -163,16 +163,14 @@ const UserController = {
     updateUserInfo: async (req, res) => {
         const user = req.user;
         const updateInfo = req.body;
+
+        const name = updateInfo.name ? updateInfo.name : '';
+        const phone = updateInfo.phone ? updateInfo.phone : '';
+        const birthday = updateInfo.birthday ? updateInfo.birthday : '';
+        const address = updateInfo.address ? updateInfo.address : '';
+
         const sql = `UPDATE account SET name = ?, phone = ?, birthday = ?, address = ? WHERE id = ?`;
-        const params = [updateInfo.name, updateInfo.phone, updateInfo.birthday, updateInfo.address, user.id];
-        
-        if(!updateInfo.name || !updateInfo.phone || !updateInfo.birthday || !updateInfo.address) {
-            res.status(400).json({
-                code: 400,
-                message: 'Bad request'
-            });
-            return;
-        }
+        const params = [name, phone, birthday, address, user.id];
 
         if(!checkEmail(user.email)) {
             res.status(500).json({

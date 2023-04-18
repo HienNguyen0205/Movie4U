@@ -240,7 +240,7 @@ const AdminControllers = {
             params = [name, address, theatre[0].image, id];
             const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
 
-            if (files.image !== undefined) {
+            if (files?.image !== undefined) {
                 const fileImage = files.image[0];
 
                 await removeFile(theatre[0].image, 'theatre');
@@ -611,7 +611,7 @@ const AdminControllers = {
             }
             let params = [name, price, description, food_combo[0].image, popcorn, drink, id];
             const sql = `UPDATE food_combo SET name = ?, price = ?, description = ?, image = ?, popcorn = ?, drink = ? WHERE id = ?`;
-            if (files.image[0] !== undefined) {
+            if (files?.image !== undefined) {
                 const imageFile = files.image[0];
                 const check = await validateImage(imageFile);
                 if (check !== null) {
@@ -817,7 +817,7 @@ const AdminControllers = {
                 return;
             }
 
-            if (files.image[0] !== undefined) {
+            if (files?.image !== undefined) {
                 const imageFile = files.image[0];
                 const check = await validateImage(imageFile);
                 if (check !== null) {
@@ -832,10 +832,11 @@ const AdminControllers = {
                 const oldPath = imageFile.path;
                 moveFile(oldPath, fileName, 'images/Movie');
                 removeFile(movie[0].image, 'movie');
+                const sql = `UPDATE movie SET name = ?, description = ?, duration = ?, release_date = ?, director = ?, actors = ?, trailer = ?, image = ?, status = ? WHERE id = ?`;
                 params = [name, description, duration, releaseDate, director, actors, trailer, filePath, status, id];
                 db.queryParams(sql, params)
                     .then(async (result) => {
-                        await updateMovieToCinema(id, categoryList);
+                        await updateCategoryForMovie(id, categoryList);
                         res.status(200).json({
                             code: 200,
                             message: 'Update movie successfully',
@@ -853,7 +854,7 @@ const AdminControllers = {
                 params = [name, description, duration, releaseDate, director, actors, trailer, status, id];
                 db.queryParams(sql, params)
                     .then(async (result) => {
-                        await updateMovieToCinema(id, categoryList);
+                        await updateCategoryForMovie(id, categoryList);
                         res.status(200).json({
                             code: 200,
                             message: 'Update movie successfully',
@@ -1035,7 +1036,22 @@ async function addCategoryForMovie(movie_id, categoryList) {
     });
 }
 
-async function updateCategoryForMovie(id) {
+async function updateCategoryForMovie(movie_id, categoryList) {
+    const sql = `DELETE FROM movie_category WHERE movie_id = ?`;
+    const params = [movie_id];
+    await db.queryTransaction(sql, params);
 
+    await addCategoryForMovie(movie_id, categoryList);
 }
+
+async function getMovieById(id) {
+    const sql = `SELECT * FROM movie WHERE id = ?`;
+    const params = [id];
+    const result = await db.queryParams(sql, params);
+    if (result.length === 0) {
+        return null;
+    }
+    return result;
+}
+
 module.exports = AdminControllers;
