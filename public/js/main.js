@@ -246,8 +246,10 @@ const signInSubmitHandle = () => {
                 }else if(res.data.status == 1){
                     logGroup.style.display = 'none'
                     avatar.style.display = 'block'
+                    localStorage.setItem('userInfo', JSON.stringify(res.data.data))
                 }
                 closeSignHandle()
+                // axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
                 localStorage.setItem('token', res.data.accessToken)
             }
             showToastMes(res.data.message, status)
@@ -322,7 +324,7 @@ const signUpSubmitHandle = () => {
         }
         if (confirmPass === '') {
             confirmPassSignUpErrMess.innerText = 'Please enter confirm password'
-        } else if (confirmPass !== password) {
+        } else if (confirmPass !== pass) {
             confirmPassSignUpErrMess.innerText = 'Wrong confirm password'
         } else {
             confirmPassSignUpErrMess.innerText = ''
@@ -385,10 +387,28 @@ if(window.location.pathname.toLowerCase() !== '/movieticket'){
     window.removeEventListener('load', removeTicketInfo)
 }
 
-if(localStorage.getItem('token') !== null){
-    logGroup.style.display = 'none'
-    avatar.style.display = 'block'
-}else{
-    logGroup.style.display = 'block'
-    avatar.style.display = 'none'
+const checkAccessToken = () => {
+    if(localStorage.getItem('token') !== null){
+        logGroup.style.display = 'none'
+        avatar.style.display = 'block'
+    }else{
+        logGroup.style.display = 'block'
+        avatar.style.display = 'none'
+    }
 }
+
+checkAccessToken()
+
+const handleLogOut = () => {
+    axios.get('/logout')
+    .then(() => {
+        localStorage.removeItem('token')
+        checkAccessToken()
+    })
+}
+
+const profileBtn = document.querySelector('#profile-btn')
+
+profileBtn.addEventListener('click', () => {
+    changePath('profile')
+})

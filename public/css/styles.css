@@ -19,6 +19,7 @@
   --border-orange: #FFB399;
   --seat-empty: #D4E5F6;
   --header-color: #ffa500;
+  --blue-color: #2caee2;
 }
 
 body {
@@ -37,6 +38,7 @@ ul {
 a {
   display: block;
   text-decoration: none !important;
+  cursor: pointer;
 }
 
 p {
@@ -1034,4 +1036,39 @@ footer > div > a:hover {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+.date_item {
+  border: 1px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .3s;
+  user-select: none;
+}
+
+.date_item.active{
+  border-color: var(--border-orange) !important;
+}
+
+.date_item.active p, .date_item.active h3{
+  color: var(--border-orange) !important;
+}
+
+.date_item:hover{
+  transform: scale(1.2);
+  border-color: var(--blue-color) !important;
+}
+
+.date_item:hover p, .date_item:hover h3{
+  color: var(--blue-color) !important;
+}
+
+#profile_avatar {
+  width: 30%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }

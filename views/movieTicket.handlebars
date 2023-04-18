@@ -1,7 +1,7 @@
 <div id="movie_ticket_container" class="container">
     <div id="movie_info" class="d-flex"></div>
     <hr>
-    <nav class="d-flex">
+    <nav class="d-flex justify-content-between">
         <div class="buy_ticket_step buy_ticket_step-active" data-index="0">
             <div class="step_num">1</div>
             Choose Theater
@@ -19,7 +19,10 @@
             Confirm & Purchase
         </div>
     </nav>
-    <div id="theater_container" class="movie_ticket_main"></div>
+    <div class="movie_ticket_main">
+        <div id="time_select" class="d-flex justify-content-around" style="margin-bottom: 5rem;"></div>
+        <div id="theater_container"></div>
+    </div>
     <div class="movie_ticket_main d-none">
         <div class="d-flex">
             <div id="seat_display">

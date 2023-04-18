@@ -6,6 +6,30 @@ const data = JSON.parse(localStorage.getItem('movieInfo'))
 
 window.addEventListener('load', removeTicketInfo)
 
+const date = new Date()
+const dateList = []
+for(let i = 0; i < 7; i++) {
+    const newDate = new Date()
+    newDate.setDate(date.getDate() + i)
+    dateList.push(newDate)
+}
+
+const formatDate = date => {
+    const year = date.getFullYear()
+    const month = (date.getMonth() + 1).toString().padStart(2, "0")
+    const day = date.getDate().toString().padStart(2, "0")
+    return `${year}-${month}-${day}`
+}
+
+const formatDateSelect = date => {
+    const options = { weekday: 'long' , day: 'numeric', month: 'numeric'}
+    const arr = date.toLocaleDateString('en-US', options).split(', ')
+    return {
+        weekday: arr[0].slice(0,3),
+        dateMonth: arr[1]
+    }
+}
+
 /* The above code is adding an event listener to each element with the class name buy_ticket_step. When
 the element is clicked, the code checks if the index of the clicked element is less than the index
 of the element with the class name buy_ticket_step-active. If it is, the code adds the class name
@@ -379,6 +403,7 @@ const formatTime = time => {
 }
 
 const renderTheater = data => {
+    theaterContainer.innerHTML = ''
     data.forEach(item => {
         const schedule = document.createElement('div')
         schedule.className = 'theater_wrap'
@@ -464,16 +489,46 @@ const setTimeMovieEvent = () => {
     })
 }
 
-const getMovieTheaterInfo = () => {
+const timeSelect = document.querySelector('#time_select')
+
+const renderDateSelect = () => {
+    dateList.forEach(item => {
+        const { weekday, dateMonth } = formatDateSelect(item)
+        timeSelect.insertAdjacentHTML('beforeend', `
+            <div class="d-flex flex-1 align-items-end p-2 date_item">
+                <p class="p-1 mb-0">${weekday}</p>
+                <h3 class="p-1 mb-0">${dateMonth}</h3>
+            </div>
+        `)
+    })
+}
+
+renderDateSelect()
+
+const getMovieTheaterInfo = (date , order) => {
+    console.log(date , order)
     axios.get('/ticket/getMovieSchedule', {
         params: {
-            movie_id: data.id
+            movie_id: data.id,
+            date: formatDate(date)
         },
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     })
     .then(res => {
+        const dateItem = document.querySelectorAll('.date_item')
+        dateItem.forEach((item,index) => {
+            item.addEventListener('click', () => {
+                getMovieTheaterInfo(dateList[index], index)
+            })
+            if(item.classList.contains('active') && index != order){
+                item.classList.remove('active')
+            }
+            if(index == order){
+                item.classList.add('active')
+            }
+        })
         localStorage.setItem('theatersInfo', JSON.stringify(res.data.data))
         renderTheater(res.data.data)
     })
@@ -485,28 +540,29 @@ const getMovieTheaterInfo = () => {
     })
 }
 
-getMovieTheaterInfo()
+getMovieTheaterInfo(dateList[0], 0)
 
 const purchaseBtn = document.querySelector('#purchase_btn')
-const purchaseInfo = document.querySelector('.purchase_info')
+const purchaseInfo = document.querySelectorAll('.purchase_info')
 
 purchaseBtn.addEventListener('click', () => {
     let flag = false
     purchaseInfo.forEach((item,index) => {
+        console.log(index, item)
         const value = item.value
-        if((index === 1 || index === 2 || index === 4 || index === 6) && value == ''){
+        if((index === 0 || index === 1 || index === 3 || index === 5) && value == ''){
             flag = true
-        }else if(index === 3 && (value == '' || value.length != 12)){
+        }else if(index === 2 && (value == '' || value.length != 16)){
             flag = true
-        }else if(index === 5 && (value == '' || value.length != 3)){
+        }else if(index === 4 && (value == '' || value.length != 3)){
             flag = true
-        }else if(index === 7 && (value == '' || value.length != 5)){
+        }else if(index === 6 && (value == '' || value.length != 5)){
             flag = true
         }
     })
     if(!flag){
         const theaterInfo = JSON.parse(localStorage.getItem('theaterInfo'))
-        const scheduleTimeId = localStorage.getItem('schedule_time_id')
+        const scheduleTimeId = localStorage.getItem('scheduleTimeId')
         const seats = JSON.parse(localStorage.getItem('ticketSelected'))
         const foods = JSON.parse(localStorage.getItem('foodDetail'))
         const foodId = []
@@ -521,6 +577,10 @@ purchaseBtn.addEventListener('click', () => {
             seat: seats.join(','),
             food_combo_id: foodId.join(','),
             food_combo_quantity: foodQuantity.join(','),
+        }, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
         })
     }
 })

@@ -38,6 +38,13 @@ router.get('/support', (req, res) => {
     })
 })
 
+router.get('/profile', (req, res) => {
+    res.render('profile', {
+        layout: 'mainLayout',
+        script: '/js/profile.js',
+    })
+})
+
 router.post('/login', UserControllers.login)
 
 router.post('/register', UserControllers.register)
