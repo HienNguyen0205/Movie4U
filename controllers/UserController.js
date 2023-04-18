@@ -164,22 +164,13 @@ const UserController = {
         const user = req.user;
         const updateInfo = req.body;
 
-        const name = updateInfo.name ? updateInfo.name : '';
-        const phone = updateInfo.phone ? updateInfo.phone : '';
-        const birthday = updateInfo.birthday ? updateInfo.birthday : '';
-        const address = updateInfo.address ? updateInfo.address : '';
+        const name = updateInfo.name ? updateInfo.name : null;
+        const phone = updateInfo.phone ? updateInfo.phone : null;
+        const birthday = updateInfo.birthday ? updateInfo.birthday : null;
+        const address = updateInfo.address ? updateInfo.address : null;
 
         const sql = `UPDATE account SET name = ?, phone = ?, birthday = ?, address = ? WHERE id = ?`;
         const params = [name, phone, birthday, address, user.id];
-
-        if(!checkEmail(user.email)) {
-            res.status(500).json({
-                code: 201,
-                message: 'Email already exists'
-            });
-            return;
-        }
-
 
         db.queryParams(sql, params)
             .then((result) => {

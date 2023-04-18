@@ -6,7 +6,7 @@ SET time_zone = '+07:00';
 -- Create tables
 CREATE TABLE account (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
+  name VARCHAR(255) DEFAULT NULL,
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(255) DEFAULT NULL,
   address VARCHAR(255) DEFAULT NULL,
