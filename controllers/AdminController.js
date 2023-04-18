@@ -26,7 +26,7 @@ const AdminControllers = {
 
     deleteUser: (req, res) => {
         const id = req.query.id;
-        if(!id) {
+        if (!id) {
             res.status(400).json({
                 code: 400,
                 message: 'Bad request'
@@ -99,7 +99,7 @@ const AdminControllers = {
     getTheatreById: (req, res) => {
         const theatre_id = req.query.theatre_id;
 
-        if(!theatre_id) {
+        if (!theatre_id) {
             res.status(400).json({
                 code: 400,
                 message: 'Bad request'
@@ -152,7 +152,7 @@ const AdminControllers = {
             const roomListName = ['2D/3D', '4DX', 'IMAX'];
             const fileImage = files.image[0];
 
-            if(!name || !address || !roomList || !fileImage) {
+            if (!name || !address || !roomList || !fileImage) {
                 res.status(400).json({
                     code: 400,
                     message: 'Bad request'
@@ -218,7 +218,7 @@ const AdminControllers = {
             const name = fields.name[0];
             const address = fields.address[0];
 
-            if(!id || !name || !address) {
+            if (!id || !name || !address) {
                 res.status(400).json({
                     code: 400,
                     message: 'Bad request'
@@ -231,13 +231,13 @@ const AdminControllers = {
             let params = [];
             params = [name, address, theatre[0].image, id];
             const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
-            
-            if(files.image !== undefined) {
+
+            if (files.image !== undefined) {
                 const fileImage = files.image[0];
                 if (theatre !== null) {
                     removeFile(theatre[0].image);
                 }
-    
+
                 // validata image
                 const errImage = validateImage(fileImage);
                 if (errImage) {
@@ -333,7 +333,7 @@ const AdminControllers = {
             .then((result) => {
                 totalTicket = result[0].total;
             }
-        );
+            );
         let toltalView = 0;
         $sql = `SELECT COUNT(*) as total FROM seat`;
         db.query($sql)
@@ -364,7 +364,7 @@ const AdminControllers = {
         start_time = helper.convertTime(start_time);
         end_time = helper.convertTime(end_time);
 
-        const checkSchedule = await checkScheduleTime(start_time, end_time ,date ,room_id);
+        let checkSchedule = await checkScheduleTime(start_time, end_time, date, room_id);
 
         if (checkSchedule !== null) {
             res.status(500).json({
@@ -376,30 +376,57 @@ const AdminControllers = {
 
         // schedule time store start and end time as start_time and end_time and also link to schedule table so need to insert to schedule table first
         // schedule table has movie_id, theatre_id, room_id, date
-        const sql = `INSERT INTO schedule (movie_id, theatre_id, room_id, date, price) VALUES (?, ?, ?, ?, ?)`;
-        const params = [movie_id, theatre_id, room_id, date, price];
 
-        db.queryTransaction(sql, params)
-            .then(async (result) => {
-                const schedule_id = result.insertId;
-                const sql = `INSERT INTO schedule_time (schedule_id, start_time, end_time) VALUES (?, ?, ?)`;
-                const params = [schedule_id, start_time, end_time];
-                await db.queryTransaction(sql, params)
-                    .then((result) => {
-                        res.status(200).json({
-                            code: 200,
-                            message: 'Add schedule successfully',
-                            data: result
-                        });
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        res.status(500).json({
-                            code: 500,
-                            message: 'Internal server error'
-                        });
+        checkSchedule = await checkScheduleExist(movie_id, theatre_id, room_id, date);
+
+        if (checkSchedule !== null) {
+            const schedule_id = checkSchedule[0].id;
+            const sql = `INSERT INTO schedule_time (schedule_id, start_time, end_time) VALUES (?, ?, ?)`;
+            const params = [schedule_id, start_time, end_time];
+            await db.queryTransaction(sql, params)
+                .then((result) => {
+                    res.status(200).json({
+                        code: 200,
+                        message: 'Add schedule successfully',
+                        data: result
                     });
-            })
+                    return;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({
+                        code: 500,
+                        message: 'Internal server error'
+                    });
+                    return;
+                });
+        } else {
+            const sql = `INSERT INTO schedule (movie_id, theatre_id, room_id, date, price) VALUES (?, ?, ?, ?, ?)`;
+            const params = [movie_id, theatre_id, room_id, date, price];
+
+            db.queryTransaction(sql, params)
+                .then(async (result) => {
+                    const schedule_id = result.insertId;
+                    const sql = `INSERT INTO schedule_time (schedule_id, start_time, end_time) VALUES (?, ?, ?)`;
+                    const params = [schedule_id, start_time, end_time];
+                    await db.queryTransaction(sql, params)
+                        .then((result) => {
+                            res.status(200).json({
+                                code: 200,
+                                message: 'Add schedule successfully',
+                                data: result
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            res.status(500).json({
+                                code: 500,
+                                message: 'Internal server error'
+                            });
+                        });
+                })
+        }
+
     },
 
     getAllSchedule: async (req, res) => {
@@ -433,7 +460,7 @@ const AdminControllers = {
         GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;
      
         `;
-        db.query(sql)   
+        db.query(sql)
             .then((result) => {
                 res.status(200).json({
                     code: 200,
@@ -448,7 +475,7 @@ const AdminControllers = {
                     message: 'Internal server error'
                 });
             });
-    },        
+    },
 
 }
 
@@ -516,20 +543,31 @@ async function checkScheduleTime(start_time, end_time, date, room_id) {
     FROM schedule_time
     WHERE (
         (start_time <= ? AND end_time >= ?) OR
-        (start_time <= ? + INTERVAL 1 HOUR AND end_time >= ? + INTERVAL 1 HOUR) OR
-        (start_time <= ? - INTERVAL 1 HOUR AND end_time >= ? - INTERVAL 1 HOUR)
+        (start_time < ? + INTERVAL 1 HOUR AND end_time > ? + INTERVAL 1 HOUR) OR
+        (start_time < ? - INTERVAL 1 HOUR AND end_time > ? - INTERVAL 1 HOUR) OR
+        (start_time < ? AND end_time > ?)
     )
     AND schedule_id IN (SELECT id FROM schedule WHERE date = ? AND room_id = ?)
     `;
-    
-    const params = [start_time, end_time, start_time, end_time, start_time, end_time, date, room_id];
+
+    const params = [start_time, end_time, start_time, end_time, start_time, end_time,start_time,start_time ,date, room_id];
 
     const result = await db.queryParams(sql, params);
-    
+
     if (result.length > 0) {
         return result;
     }
-    
+
+    return null;
+}
+
+async function checkScheduleExist(movie_id, theatre_id, room_id, date) {
+    const sql = `SELECT * FROM schedule WHERE movie_id = ? AND theatre_id = ? AND room_id = ? AND date = ?`;
+    const params = [movie_id, theatre_id, room_id, date];
+    const result = await db.queryParams(sql, params);
+    if (result.length > 0) {
+        return result;
+    }
     return null;
 }
 
