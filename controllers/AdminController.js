@@ -407,6 +407,7 @@ const AdminControllers = {
         const sql = `SELECT
         sch.id AS schedule_id,
         sch.movie_id,
+        m.name AS movie_name,
         sch.room_id,
         sch.theatre_id,
         sch.date,
@@ -428,6 +429,8 @@ const AdminControllers = {
             room r ON sch.room_id = r.id
         JOIN 
             schedule_time st ON sch.id = st.schedule_id
+        JOIN
+            movie m ON sch.movie_id = m.id
         GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;   
         `;
         db.query(sql)   
