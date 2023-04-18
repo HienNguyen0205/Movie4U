@@ -1,6 +1,8 @@
 Create database cinema_management;
 use cinema_management;
 
+SET time_zone = '+07:00';
+
 -- Create tables
 CREATE TABLE account (
   id INT NOT NULL AUTO_INCREMENT,

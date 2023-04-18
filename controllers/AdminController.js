@@ -366,8 +366,6 @@ const AdminControllers = {
 
         const checkSchedule = await checkScheduleTime(start_time, end_time ,date ,room_id);
 
-        console.log(checkSchedule);
-
         if (checkSchedule !== null) {
             res.status(500).json({
                 code: 500,
@@ -380,6 +378,7 @@ const AdminControllers = {
         // schedule table has movie_id, theatre_id, room_id, date
         const sql = `INSERT INTO schedule (movie_id, theatre_id, room_id, date, price) VALUES (?, ?, ?, ?, ?)`;
         const params = [movie_id, theatre_id, room_id, date, price];
+
         db.queryTransaction(sql, params)
             .then(async (result) => {
                 const schedule_id = result.insertId;
@@ -410,7 +409,7 @@ const AdminControllers = {
         m.name AS movie_name,
         sch.room_id,
         sch.theatre_id,
-        sch.date,
+        CONVERT_TZ(sch.date, '-07:00', '+07:00') as date,
         sch.price,
         GROUP_CONCAT(DISTINCT st.start_time) AS start_times,
         GROUP_CONCAT(DISTINCT st.end_time) AS end_times,
@@ -423,15 +422,16 @@ const AdminControllers = {
         r.capacity AS room_capacity
         FROM 
             schedule sch
-        JOIN 
+        LEFT JOIN 
             theatre th ON sch.theatre_id = th.id
-        JOIN 
+        LEFT JOIN 
             room r ON sch.room_id = r.id
-        JOIN 
+        LEFT JOIN 
             schedule_time st ON sch.id = st.schedule_id
-        JOIN
+        JOIN 
             movie m ON sch.movie_id = m.id
-        GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;   
+        GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;
+     
         `;
         db.query(sql)   
             .then((result) => {
@@ -523,9 +523,8 @@ async function checkScheduleTime(start_time, end_time, date, room_id) {
     `;
     
     const params = [start_time, end_time, start_time, end_time, start_time, end_time, date, room_id];
-    
+
     const result = await db.queryParams(sql, params);
-    console.log(result);
     
     if (result.length > 0) {
         return result;
