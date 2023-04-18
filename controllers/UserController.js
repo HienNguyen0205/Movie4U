@@ -56,6 +56,7 @@ const UserController = {
                 });
             });
     },
+
     login: async (req, res) => {
         // get data from a form request
         const email = req.body.email;
@@ -198,6 +199,62 @@ const UserController = {
                 });
             });
     },
+
+    changePassword: async (req, res) => {
+        const user = req.user;
+        const password = req.body.password;
+        const newPassword = req.body.newPassword;
+        const confirmPassword = req.body.confirmPassword;
+
+        if(!password || !newPassword || !confirmPassword) {
+            res.status(400).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
+        if(newPassword !== confirmPassword) {
+            res.status(400).json({
+                code: 400,
+                message: 'New password and confirm password are not the same'
+            });
+            return;
+        }
+
+        const check = await checkPassword(user.id, password);
+        if(!check) {
+            res.status(500).json({
+                code: 500,
+                message: 'Password is not correct'
+            });
+            return;
+        }
+
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(newPassword, salt);
+
+        const sql = `UPDATE account SET password = ? WHERE id = ?`;
+        const params = [hashPassword, user.id];
+
+        db.queryParams(sql, params)
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Change password successfully',
+                    data: result[0]
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+
+        
 };
 
 async function checkEmail(email) {
@@ -209,6 +266,19 @@ async function checkEmail(email) {
         return null;
     }
     return result;
+}
+
+async function checkPassword(id, password) { 
+    const sql = `SELECT * FROM account WHERE id = ?`;
+    const params = [id];
+    const result = await db.queryParams(sql, params);
+    
+    if(result.length == 0) {
+        return null;
+    }
+
+    const checkPassword = bcrypt.compareSync(password, result[0].password);
+    return checkPassword;
 }
 
 module.exports = UserController;

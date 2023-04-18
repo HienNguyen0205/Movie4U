@@ -224,9 +224,9 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (18, 1), (18, 3), (18,
 
 INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$X3J7jf7EB4mAylqYJDzJiuj2ApXC0xL1b0kdP3FOK580odhTJatn2",0);
 
-INSERT INTO theatre(name, address, image) VALUES("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatre/govap_cinema.jpg");
+INSERT INTO theatre(name, address, image) VALUES("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg");
 
-INSERT INTO theatre(name, address, image) VALUES("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatre/govap_cinema.jpg");
+INSERT INTO theatre(name, address, image) VALUES("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/govap_cinema.jpg");
 
 INSERT INTO room (name,type,theatre_id) 
 VALUES

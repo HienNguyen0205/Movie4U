@@ -51,19 +51,28 @@ router_admin.get('/Booking',(req, res) => {
         script: '/js/booking_admin.js',
     })
 })
+
 router_admin.get('/getAllUser', adminControllers.getAllUser)
+router_admin.get('/getRevenue', adminControllers.getRevenue)
+
 router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
 router_admin.get('/getTheatreById', adminControllers.getTheatreById)
 router_admin.post('/addTheatre', adminControllers.addTheatre)
 router_admin.post('/updateTheatre', adminControllers.updateTheatre)
 router_admin.delete('/deleteTheatre', adminControllers.deleteTheatre)
-router_admin.get('/getRevenue', adminControllers.getRevenue)
+
 router_admin.get('/getAllTicket', ticketControllers.getAllTicket)
-router_admin.post('/addSchedule', adminControllers.addScheduleMovie)
+
 router_admin.get('/getAllSchedule', adminControllers.getAllSchedule)
-router_admin.get('/getAllMovie', adminControllers.getAllMovie)
-router_admin.post('/addMovie', adminControllers.addMovie)
+router_admin.post('/addSchedule', adminControllers.addScheduleMovie)
+
 router_admin.post('/addFoodCombo', adminControllers.addFoodCombo)
 router_admin.post('/updateFoodCombo', adminControllers.updateFoodCombo)
 router_admin.delete('/deleteFoodCombo', adminControllers.deleteFoodCombo)
+
+router_admin.get('/getAllMovie', adminControllers.getAllMovie)
+router_admin.post('/addMovie', adminControllers.addMovie)
+router_admin.post('/updateMovie', adminControllers.updateMovie)
+router_admin.delete('/deleteMovie', adminControllers.deleteMovie)
+
 module.exports = router_admin
