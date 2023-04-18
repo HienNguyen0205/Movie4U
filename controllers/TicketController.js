@@ -226,6 +226,7 @@ const TicketControllers = {
         const sql = `SELECT
         t.account_id,
         a.email,
+        th.id AS theatre_id,
         t.id AS ticket_id,
         t.schedule_time_id,
         t.account_id,
@@ -262,6 +263,8 @@ const TicketControllers = {
             food_combo f ON ft.food_combo_id = f.id
         JOIN
             account a ON t.account_id = a.id
+        JOIN
+            theatre th ON sch.theatre_id = th.id
         GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
         `;
 

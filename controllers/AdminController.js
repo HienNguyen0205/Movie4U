@@ -2,6 +2,7 @@ const db = require('../database');
 const multiparty = require('multiparty')
 const fs = require('fs');
 const path = require('path');
+const helper = require('../helper');
 
 const AdminControllers = {
     getAllUser: (req, res) => {
@@ -351,7 +352,7 @@ const AdminControllers = {
         });
     },
     addScheduleMovie: async (req, res) => {
-        const { movie_id, theatre_id, room_id, date, start_time, end_time, price } = req.body;
+        let { movie_id, theatre_id, room_id, date, start_time, end_time, price } = req.body;
         if (!movie_id || !theatre_id || !room_id || !date || !start_time || !end_time || !price) {
             res.status(400).json({
                 code: 400,
@@ -359,6 +360,9 @@ const AdminControllers = {
             });
             return;
         }
+
+        start_time = helper.convertTime(start_time);
+        end_time = helper.convertTime(end_time);
 
         const checkSchedule = await checkScheduleTime(date, start_time, end_time, room_id);
 
