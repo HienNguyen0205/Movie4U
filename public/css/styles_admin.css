@@ -577,6 +577,7 @@ body {
     width: 300px;
     justify-content: space-between;
     margin: auto;
+    margin-top: 1rem!important;
     margin-bottom: 1rem!important;
 }
 .timing_date-large1, .timing_time-large1, .combo_amount-large1 {
@@ -619,7 +620,7 @@ body {
 #snackbar-container{
     position: fixed;
     top:2%;
-    right: 2%;
+    left: calc(50% - 150px) !important;
     width: 300px;
     display: flex;
     flex-direction: column;

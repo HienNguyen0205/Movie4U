@@ -20,14 +20,14 @@
         </thead>
         <tbody id="list_combo" class="content_list">
             <tr>
-                <th scope="row">1</th>
+                {{!-- <th scope="row">1</th>
                 <td>Mua Đi Làm Ơn</td>
                 <td><img class="theatres_img" src="/images/UI/popcorn&cola.jpg" alt=""></td>
                 <td>10$</td>
                 <td><label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
                             name="theatre1" value=""><span class="checkmark"></span></label></td>
                 <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                        data-bs-target="#combo_edit-modal">Edit</button></td>
+                        data-bs-target="#combo_edit-modal">Edit</button></td> --}}
             </tr>
         </tbody>
     </table>
@@ -48,6 +48,11 @@
                         <div class="mb-3 add_image-outer">
                             <input class="form-control" type="file" id="combo_img">
                         </div>
+                        <p>Combo Description</p>
+                        <div class="input-group flex-nowrap">
+                            <textarea class="form-control" id="combo_description" rows="3"
+                                placeholder="Enter combo description"></textarea>
+                        </div>
                         <div class="combo_amount-outer">
                             <div class="combo_amount-large1">
                                 <p>Popcorns</p>
@@ -65,7 +70,7 @@
                         <div class="combo_price-outer">
                             <p>Price</p>
                             <div class="input-group flex-nowrap">
-                                <input type="number" id="price_combo" class="form-control">
+                                <input type="number" id="combo_price" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -96,6 +101,11 @@
                         <div class="mb-3 add_image-outer">
                             <input class="form-control" type="file" id="combo_img-edit">
                         </div>
+                        <p>Combo Description</p>
+                        <div class="input-group flex-nowrap">
+                            <textarea class="form-control" id="combo_description-edit" rows="3"
+                                placeholder="Enter combo description"></textarea>
+                        </div>
                         <div class="combo_amount-outer">
                             <div class="combo_amount-large1">
                                 <p>Popcorns</p>
@@ -113,7 +123,7 @@
                         <div class="combo_price-outer">
                             <p>Price</p>
                             <div class="input-group flex-nowrap">
-                                <input type="number" id="price_combo-edit" class="form-control">
+                                <input type="number" id="combo_price-edit" class="form-control">
                             </div>
                         </div>
 

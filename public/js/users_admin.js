@@ -15,12 +15,13 @@ function getAllUsers() {
         })
 }
 function renderAllUsers(data) {
+    listUsers.innerHTML = ''
     data.forEach(element => {
         listUsers.insertAdjacentHTML('beforeend',
         `
         <tr>
                 <th scope="row">${element.id}</th>
-                <th>${element.name}</th>
+                <td>${element.name}</td>
                 <td>${element.email}</td>
                 <td>${element.phone}</td>
                 <td>${element.address}</td>

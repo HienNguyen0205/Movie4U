@@ -1,15 +1,13 @@
 // Dashboard Title
 var time = new Date().getHours()
 var dashboardTitle = document.getElementById('dashboard_title')
-if(time < 12) {
+if (time < 12) {
   dashboardTitle.innerHTML = 'Good Morning, Admin'
 }
-else if(time < 17)
-{
+else if (time < 17) {
   dashboardTitle.innerHTML = 'Good Afternoon, Admin'
 }
-else if(time < 21)
-{
+else if (time < 21) {
   dashboardTitle.innerHTML = 'Good Evening, Admin'
 }
 else {
@@ -141,3 +139,25 @@ function yearClick() {
   timeDashboardClick(document.getElementById("today"))
   timeDashboardClick(document.getElementById("month"))
 };
+
+// Render Dashboard
+const viewsValue = document.getElementById('views-info_value')
+const orderValue = document.getElementById('order-info_value')
+const revenueValue = document.getElementById('revenue-info_value')
+
+function getAllDashboard() {
+  axios.get('/admin/getRevenue', {
+    headers: {
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    }
+  })
+    .then(res => {
+      viewsValue.innerHTML = res.data.data.toltalView
+      orderValue.innerHTML = res.data.data.totalTicket
+      revenueValue.innerHTML = res.data.data.revenue
+    })
+    .catch(err => {
+      console.error(err)
+    })
+}
+getAllDashboard()

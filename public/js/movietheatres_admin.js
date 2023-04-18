@@ -2,10 +2,8 @@
 let btnAddTheatre = document.getElementById('btn_add-theatre')
 let btnEditTheatre = document.getElementById('btn_edit-theatre')
 let btnDelTheatre = document.getElementById('btn_delete-theatre')
-var rIndex, theatresList = document.getElementById('list_theatres')
 let checkboxTheatres = document.getElementsByName('checkboxTheatres')
 let listTheatres = document.getElementById('list_theatres')
-const formData = new FormData()
 
 const addTheatresName = document.getElementById('theatre_name')
 const addTheatresAddress = document.getElementById('theatre_address')
@@ -23,9 +21,10 @@ const editTheatresBtn = document.getElementById('form_edit-theatres')
 const editRoom2D3D = document.getElementById('2d3d_edit')
 const editRoomIMAX = document.getElementById('imax_edit')
 const editRoom4DX = document.getElementById('4dx_edit')
-
+// Add Theatre
 addTheatresBtn.addEventListener('submit', function (event) {
   event.preventDefault();
+  var formData = new FormData()
   formData.append('name', addTheatresName.value);
   formData.append('address', addTheatresAddress.value);
   formData.append('image', addTheatresImg.files[0]);
@@ -34,18 +33,27 @@ addTheatresBtn.addEventListener('submit', function (event) {
   formData.append('R4DX', addRoom4DX.value);
   axios.post('/admin/addTheatre', formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
-  }).then(response => {
-    console.log(response);
+  }).then(res => {
+    if(res.data.code == 200)
+    {
+      snackbar('success', '<b>Success: </b>  Add Theatre Success', 3000);
+      getAllMovieTheatres()
+    }
+    else {
+      snackbar('error', '<b>Error: </b>  Add Theatre Fail', 3000);
+    }
   }).catch(error => {
+    snackbar('error', '<b>Error: </b>  Add Theatre Fail', 3000);
     console.error(error);
   });
-  window.location.reload();
 })
-
+// Edit Theatre
 editTheatresBtn.addEventListener('submit', function (event) {
   event.preventDefault();
+  var formData = new FormData()
   formData.append('id', editTheatresLabel.getAttribute('theatre_id'));
   formData.append('name', editTheatresName.value);
   formData.append('address', editTheatresAddress.value);
@@ -60,12 +68,20 @@ editTheatresBtn.addEventListener('submit', function (event) {
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     }
-  }).then(response => {
-    console.log(response);
+  }).then(res => {
+    console.log(res)
+    if(res.data.code == 200)
+      {
+        snackbar('success', '<b>Success: </b>  Edit Theatre Success', 3000);
+        getAllMovieTheatres()
+      }
+      else {
+        snackbar('error', '<b>Error: </b>  Edit Theatre Fail', 3000);
+      }
   }).catch(error => {
+    snackbar('error', '<b>Error: </b>  Edit Theatre Fail', 3000);
     console.error(error);
   });
-  window.location.reload();
 })
 
 function getAllMovieTheatres() {
@@ -141,19 +157,28 @@ function deleteTheatreSelected(id) {
     }
   })
     .then(response => {
-      console.log(response.data); // log the response data
+      console.log(response.data);
     })
     .catch(error => {
-      console.log(error); // log any errors
+      console.log(error); 
     });
 }
 btnDelTheatre.addEventListener('click', () => {
-  Promise.all(getDeleteTheatreCheckboxSelected())
+  if(getDeleteTheatreCheckboxSelected().length == 0)
+  {
+    snackbar('error', '<b>Error: </b>  Nothing To Delete', 3000);
+  }
+  else
+  {
+    Promise.all(getDeleteTheatreCheckboxSelected())
     .then(res => {
       console.log(res)
     })
     .catch(err => {
+      snackbar('error', '<b>Error: </b>  Delete Theatre Fail', 3000);
       console.error(err)
     })
-  window.location.reload()
+    window.location.reload()
+
+  }
 })
