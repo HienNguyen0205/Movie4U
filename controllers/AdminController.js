@@ -228,15 +228,22 @@ const AdminControllers = {
 
             const theatre = await getTheatreById(id);
 
+            if(theatre.length === 0) {
+                res.status(202).json({
+                    code: 202,
+                    message: 'No Theatre found'
+                });
+                return;
+            }
+
             let params = [];
             params = [name, address, theatre[0].image, id];
             const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
 
             if (files.image !== undefined) {
                 const fileImage = files.image[0];
-                if (theatre !== null) {
-                    removeFile(theatre[0].image);
-                }
+
+                await removeFile(theatre[0].image, 'theatre');
 
                 // validata image
                 const errImage = validateImage(fileImage);
@@ -300,7 +307,7 @@ const AdminControllers = {
             return;
         }
 
-        removeFile(theatre[0].image);
+        removeFile(theatre[0].image,  'theatre');
 
         const sql = `DELETE FROM theatre WHERE id = ?`;
         const params = [id];
@@ -477,6 +484,230 @@ const AdminControllers = {
             });
     },
 
+    addFoodCombo: async (req, res) => {
+        //form
+        const form = new multiparty.Form();
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+                return;
+            }
+
+            const name = fields.name[0];
+            const price = fields.price[0];
+            const description = fields.description[0];
+            const popcorn = fields.popcorn[0];
+            const drink = fields.drink[0];
+            const imageFile = files.image[0];
+
+            if (!name || !price || !description || !imageFile || !popcorn || !drink) {
+                res.status(400).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
+            const check = await validateImage(imageFile);
+            if (check !== null) {
+                res.status(400).json({
+                    code: 400,
+                    message: check
+                });
+                return;
+            }
+
+            const fileName = imageFile.originalFilename;
+            const filePath = `/images/FoodCombo/${fileName}`;
+            const oldPath = imageFile.path;
+
+            moveFile(oldPath, fileName, 'images/FoodCombo');
+
+            const sql = `INSERT INTO food_combo (name, price, description, image, popcorn, drink) VALUES (?, ?, ?, ?, ?, ?)`;
+            const params = [name, price, description, filePath, popcorn, drink];
+
+            db.queryTransaction(sql, params)
+                .then((result) => {
+                    res.status(200).json({
+                        code: 200,
+                        message: 'Add food combo successfully',
+                        data: result
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({
+                        code: 500,
+                        message: 'Internal server error'
+                    });
+                });
+        });
+    },
+
+    updateFoodCombo: async (req, res) => {
+        const form = new multiparty.Form();
+        form.parse(req, async (err, fields, files) => {
+            if(err) {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+                return;
+            }
+
+            const id = fields.id[0];
+            const name = fields.name[0];
+            const price = fields.price[0];
+            const description = fields.description[0];
+            const popcorn = fields.popcorn[0];
+            const drink = fields.drink[0];
+
+
+            if(!id || !name || !price || !description || !popcorn || !drink) {
+                res.status(400).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
+            const food_combo = await getFoodComboById(id);
+
+            if(food_combo.length === 0) {
+                res.status(404).json({
+                    code: 404,
+                    message: 'Food combo not found'
+                });
+                return;
+            }
+            let params =[name, price, description,food_combo[0].image, popcorn, drink, id];
+            const sql = `UPDATE food_combo SET name = ?, price = ?, description = ?, image = ?, popcorn = ?, drink = ? WHERE id = ?`;
+            if(files.image[0] !== undefined){
+                const imageFile = files.image[0];
+                const check = await validateImage(imageFile);
+                if (check !== null) {
+                    res.status(400).json({
+                        code: 400,
+                        message: check
+                    });
+                    return;
+                }
+                const fileName = `${imageFile.originalFilename}`;
+                const filePath = `/images/FoodCombo/${fileName}`;
+                const oldPath = imageFile.path;
+                moveFile(oldPath, fileName, 'images/FoodCombo');
+                removeFile(food_combo[0].image, 'food_combo');
+                params =[name, price, description, filePath, popcorn, drink, id];
+                db.queryParams(sql, params)
+                    .then((result) => {
+                        res.status(200).json({
+                            code: 200,
+                            message: 'Update food combo successfully',
+                            data: result
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        res.status(500).json({
+                            code: 500,
+                            message: 'Internal server error'
+                        });
+                    });
+            }else{
+                db.queryParams(sql, params)
+                    .then((result) => {
+                        res.status(200).json({
+                            code: 200,
+                            message: 'Update food combo successfully',
+                            data: result
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        res.status(500).json({
+                            code: 500,
+                            message: 'Internal server error'
+                        });
+                    });
+            }
+        });
+    },
+
+    deleteFoodCombo: async (req, res) => {
+        const { id } = req.params;
+        const food_combo = await getFoodComboById(id);
+
+        if(food_combo.length === 0) {
+            res.status(404).json({
+                code: 404,
+                message: 'Food combo not found'
+            });
+            return;
+        }
+
+        const sql = `DELETE FROM food_combo WHERE id = ?`;
+        const params = [id];
+
+        db.queryTransaction(sql, params)
+            .then((result) => {
+                removeFile(food_combo[0].image, 'food_combo');
+                res.status(200).json({
+                    code: 200,
+                    message: 'Delete food combo successfully',
+                    data: result
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+            });
+    },
+
+    addMovie: async (req, res) => {
+        const form = new multiparty.Form();
+        form.parse(req, async (err, fields, files) => {
+            if(err) {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+                return;
+            }
+
+            const name = fields.name[0];
+            const description = fields.description[0];
+            const duration = fields.duration[0];
+            const releaseDate = fields.releaseDate[0];
+            const director = fields.director[0];
+            const cast = fields.cast[0];
+            const trailer = fields.trailer[0];
+            const imageFile = files.image[0];
+            const check = await validateImage(imageFile);
+            if (check !== null) {
+                res.status(400).json({
+                    code: 400,
+                    message: check
+                });
+                return;
+            }
+            const fileName = `${imageFile.originalFilename}`;
+            const filePath = `/images/Movie/${fileName}`;
+            const oldPath = imageFile.path;
+            moveFile(oldPath, fileName, 'images/Movie');
+            
+            const sql = `INSERT INTO movie (name, description, duration, release_date, director, cast, trailer, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        }); 
+    },
+    
 }
 
 function moveFile(oldPath, fileName, destination) {
@@ -485,16 +716,23 @@ function moveFile(oldPath, fileName, destination) {
     return null;
 }
 
-function removeFile(filePath) {
+function removeFile(filePath, table = "") {
     const oldPath = path.join(__dirname, `/../public` + `${filePath}`);
-    console.log(oldPath);
-    if (!fs.existsSync(oldPath)) {
-        console.log('File not exist');
+
+    if(table !== "") {
+        const sql = `SELECT * FROM ${table} WHERE image = ?`;
+        const params = [filePath];
+        db.queryParams(sql, params)
+            .then((result) => {
+                if (result.length > 1) {
+                    fs.unlinkSync(oldPath);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         return null;
     }
-    fs.unlinkSync(oldPath);
-    console.log('File deleted');
-    return null;
 }
 
 function validateImage(fileImage) {
@@ -569,6 +807,30 @@ async function checkScheduleExist(movie_id, theatre_id, room_id, date) {
         return result;
     }
     return null;
+}
+
+async function getFoodComboById(id) {
+    const sql = `SELECT * FROM food_combo WHERE id = ?`;
+    const params = [id];
+    const result = await db.queryParams(sql, params);
+    if (result.length === 0) {
+        return null;
+    }
+    return result;
+}
+
+async function addCategoryForMovie(movie_id, categoryList) {
+    let insertQueries = [];
+    for (let i = 0; i < categoryList.length; i++) {
+        insertQueries.push({
+            sql: 'INSERT INTO movie_category (movie_id, category_id) VALUES (?,?)',
+            values: [movie_id, categoryList[i]]
+        });
+    }
+
+    insertQueries.forEach((query) => {
+        db.queryTransaction(query.sql, query.values);
+    });
 }
 
 module.exports = AdminControllers;

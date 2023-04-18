@@ -62,6 +62,7 @@ router_admin.get('/getAllTicket', ticketControllers.getAllTicket)
 router_admin.post('/addSchedule', adminControllers.addScheduleMovie)
 router_admin.get('/getAllSchedule', adminControllers.getAllSchedule)
 router_admin.get('/getAllMovie', adminControllers.getAllMovie)
-
-
+router_admin.post('/addMovie', adminControllers.addMovie)
+router_admin.post('/addFoodCombo', adminControllers.addFoodCombo)
+router_admin.post('/updateFoodCombo', adminControllers.updateFoodCombo)
 module.exports = router_admin
