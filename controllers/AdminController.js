@@ -651,7 +651,7 @@ const AdminControllers = {
     
         const food_combo = await getFoodComboById(id);
 
-        if(food_combo.length === 0) {
+        if(food_combo?.length === 0 || food_combo === null) {
             res.status(404).json({
                 code: 404,
                 message: 'Food combo not found'
