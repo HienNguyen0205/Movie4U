@@ -364,11 +364,11 @@ const AdminControllers = {
         start_time = helper.convertTime(start_time);
         end_time = helper.convertTime(end_time);
 
-        const checkSchedule = await checkScheduleTime(date, start_time, end_time, room_id);
+        const checkSchedule = await checkScheduleTime(start_time, end_time ,date ,room_id);
 
         console.log(checkSchedule);
 
-        if (checkSchedule === null) {
+        if (checkSchedule !== null) {
             res.status(500).json({
                 code: 500,
                 message: 'Time is not available'
@@ -523,7 +523,9 @@ async function checkScheduleTime(start_time, end_time, date, room_id) {
     `;
     
     const params = [start_time, end_time, start_time, end_time, start_time, end_time, date, room_id];
+    
     const result = await db.queryParams(sql, params);
+    console.log(result);
     
     if (result.length > 0) {
         return result;
