@@ -53,5 +53,7 @@ router.get('/logout', UserControllers.logout)
 
 router.post('/updateUserInfo', middleware.verifyJWT , UserControllers.updateUserInfo)
 
+router.post('/changePassword', middleware.verifyJWT , UserControllers.changePassword)
+
 
 module.exports = router

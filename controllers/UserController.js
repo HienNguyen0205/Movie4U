@@ -102,6 +102,7 @@ const UserController = {
 
     logout: (req, res) => {
         req.session.destroy();
+        req.user = null;
         res.cookie('refreshToken', '', {
             httpOnly: true,
             secure: false,
