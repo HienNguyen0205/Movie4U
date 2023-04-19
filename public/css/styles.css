@@ -531,7 +531,7 @@ footer > div > a:hover {
   border-color: transparent;
 }
 
-.input:focus-visible + .toggle_pass {
+.input:focus-visible + .toggle_pass, .input:focus-visible + .toggle_pass_forget {
   outline: 2px solid var(--pri-btn-color) !important;
   -webkit-outline: 2px solid var(--pri-btn-color) !important;
   -moz-outline: 2px solid var(--pri-btn-color) !important;
@@ -564,7 +564,7 @@ footer > div > a:hover {
   border-right: 0;
 }
 
-.toggle_pass {
+.toggle_pass, .toggle_pass_forget {
   border: 2px solid black !important;
   border-left: 0 !important;
   border-top-left-radius: 0 !important;

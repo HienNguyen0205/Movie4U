@@ -1,4 +1,5 @@
 const listTrailer = document.querySelector('#list_trailer')
+const carousel = document.querySelector('#carousel') 
 
 const renderTrailer = data => {
     listTrailer.insertAdjacentHTML('beforeend', `
@@ -10,6 +11,16 @@ const renderTrailer = data => {
             <h5>${data.name}</h5>
         </div>
     `)
+}
+
+const renderCarousel = data => {
+    data.forEach((item,index) => {
+        carousel.insertAdjacentHTML('beforeend', `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <img src="${item.image}" class="d-block w-100 carousel_img" alt="..." data-bs-interval="6000">
+            </div>
+        `)
+    })
 }
 
 const getLastedMovie = status => {
@@ -34,9 +45,23 @@ const getLastedMovie = status => {
         })
 }
 
-renderTrailer({trailer: '', image: '/images/Carousel/Babylon.jpg', name: ''})
-renderTrailer({trailer: '', image: '/images/Carousel/Babylon.jpg', name: ''})
-renderTrailer({trailer: '', image: '/images/Carousel/Babylon.jpg', name: ''})
-
 getLastedMovie(0)
 getLastedMovie(1)
+
+const getPosters = () => {
+    axios.get('/movie/getAllPoster')
+    .then(res => {
+        res.data.data.forEach(item => {
+            renderTrailer(item)
+        })
+        renderCarousel(res.data.data)
+    })
+    .then(() => {
+        handleTrailerEvent()
+    })
+    .catch(err => {
+        console.error(err)
+    })
+}
+
+getPosters()

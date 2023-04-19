@@ -33,13 +33,13 @@ const handleBuyTicket = id => {
             id: id,
         }
     })
-    .then(res => {
-        localStorage.setItem('movieInfo', JSON.stringify(res.data.data[0]))
-        changePath('movieticket')
-    })
-    .catch(err => {
-        console.error(err)
-    })
+        .then(res => {
+            localStorage.setItem('movieInfo', JSON.stringify(res.data.data[0]))
+            changePath('movieticket')
+        })
+        .catch(err => {
+            console.error(err)
+        })
 }
 
 const openMovieContainer = document.querySelector('#open_movie')
@@ -89,10 +89,14 @@ const resetComingMovie = () => {
 }
 
 const removeTicketInfo = () => {
-    const label = ['ticketSelected','theaterInfo','time','price','foodDetail']
+    const label = ['ticketSelected', 'theaterInfo', 'time', 'price', 'foodDetail']
     label.forEach(item => {
         localStorage.removeItem(item)
     })
+}
+
+const removeUserInfo = () => {
+    localStorage.removeItem('userInfo')
 }
 
 const myToastEl = document.querySelector('#toast_mes_container')
@@ -101,10 +105,10 @@ const toastMes = document.querySelector('#toast_mes')
 const showToastMes = (mes, status) => {
     toastMes.innerHTML = mes
     myToastEl.classList.add('show')
-    if(status === 'success'){
+    if (status === 'success') {
         myToastEl.classList.remove('text-bg-danger')
         myToastEl.classList.add('text-bg-success')
-    }else{
+    } else {
         myToastEl.classList.remove('text-bg-success')
         myToastEl.classList.add('text-bg-danger')
     }
@@ -117,41 +121,44 @@ const showToastMes = (mes, status) => {
 let header = document.getElementsByClassName('header')
 let scrollHandler = e => {
     if (this.scrollY >= 30) {
-        header[0].style.backgroundColor = '#000000'
+        header[0].style.backgroundColor = '#333633'
     } else {
-        header[0].style.backgroundColor = 'rgba(238, 238, 238, 0.3)'
+        header[0].style.backgroundColor = 'rgba(238, 238, 238, 0.1)'
     }
 }
 window.addEventListener('scroll', scrollHandler)
 
 /* Adding an event listener to each trailer item. When the trailer item is clicked, it will set the src
 of the iframe to the data-src attribute of the trailer item. Then it will play the video. */
-const trailerIframe = document.getElementById('trailer_iframe')
-const trailerClose = document.querySelectorAll('.btn-close')
-const trailerItems = document.querySelectorAll('.trailer_item')
-const trailerBtn = document.querySelector('#trailer_btn')
 
-trailerItems.forEach(trailerItem => {
-    trailerItem.addEventListener('click', () => {
-        const src = trailerItem.getAttribute('data-src')
-        trailerIframe.setAttribute('src', src)
+const handleTrailerEvent = () => {
+    const trailerIframe = document.getElementById('trailer_iframe')
+    const trailerClose = document.querySelectorAll('.btn-close')
+    const trailerItems = document.querySelectorAll('.trailer_item')
+    const trailerBtn = document.querySelector('#trailer_btn')
+
+    trailerItems.forEach(trailerItem => {
+        trailerItem.addEventListener('click', () => {
+            const src = trailerItem.getAttribute('data-src')
+            trailerIframe.setAttribute('src', src)
+            setTimeout(() => {
+                trailerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
+            }, 1000)
+        })
+    })
+    trailerClose.forEach(closeBtn => {
+        closeBtn.addEventListener('click', () => {
+            trailerIframe.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
+        })
+    })
+    trailerBtn?.addEventListener('click', () => {
+        const link = trailerBtn.getAttribute('data-link')
+        trailerIframe.setAttribute('src', link)
         setTimeout(() => {
             trailerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
         }, 1000)
     })
-})
-trailerClose.forEach(closeBtn => {
-    closeBtn.addEventListener('click', () => {
-        trailerIframe.contentWindow.postMessage('{"event":"command","func":"stopVideo","args":""}', '*')
-    })
-})
-trailerBtn?.addEventListener('click', () => {
-    const link = trailerBtn.getAttribute('data-link')
-    trailerIframe.setAttribute('src', link)
-    setTimeout(() => {
-        trailerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*')
-    }, 1000)
-})
+}
 
 const blurBG = document.getElementById('blur_bg')
 const signInModal = document.getElementById('sign_in_modal')
@@ -237,26 +244,26 @@ const signInSubmitHandle = () => {
             email: email,
             password: password
         })
-        .then(res => {
-            let status = 'fail'
-            if(res.data.code == 200){
-                status = 'success'
-                if(res.data.status == 0){
-                    changePath('admin/DashBoard')
-                }else if(res.data.status == 1){
-                    logGroup.style.display = 'none'
-                    avatar.style.display = 'block'
-                    localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+            .then(res => {
+                let status = 'fail'
+                if (res.data.code == 200) {
+                    status = 'success'
+                    if (res.data.status == 0) {
+                        changePath('admin/DashBoard')
+                    } else if (res.data.status == 1) {
+                        logGroup.style.display = 'none'
+                        avatar.style.display = 'block'
+                        localStorage.setItem('userInfo', JSON.stringify(res.data.data))
+                    }
+                    closeSignHandle()
+                    // axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
+                    localStorage.setItem('token', res.data.accessToken)
                 }
-                closeSignHandle()
-                // axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
-                localStorage.setItem('token', res.data.accessToken)
-            }
-            showToastMes(res.data.message, status)
-        })
-        .catch(err => {
-            console.error(err)
-        })
+                showToastMes(res.data.message, status)
+            })
+            .catch(err => {
+                console.error(err)
+            })
     } else {
         if (email === '') {
             emailSignInErrMess.innerText = 'Please enter your email'
@@ -291,17 +298,17 @@ const signUpSubmitHandle = () => {
             email: email,
             password: pass
         })
-        .then(res => {
-            let status = 'fail'
-            if(res.data.code == 200){
-                status = 'success'
-                openSignIn()
-            }
-            showToastMes(res.data.message, status)
-        })
-        .catch(err => {
-            console.error(err)
-        })
+            .then(res => {
+                let status = 'fail'
+                if (res.data.code == 200) {
+                    status = 'success'
+                    openSignIn()
+                }
+                showToastMes(res.data.message, status)
+            })
+            .catch(err => {
+                console.error(err)
+            })
     } else {
         if (name === '') {
             nameErrorMess.innerText = 'Please enter your name'
@@ -339,7 +346,6 @@ signUpForm.elements['sign_up_btn'].addEventListener('click', signUpSubmitHandle)
 const togglePass = document.querySelectorAll('.toggle_pass')
 let isShowPass = false
 
-
 togglePass.forEach(element => {
     element.addEventListener('click', () => {
         if (isShowPass) {
@@ -367,9 +373,9 @@ window.addEventListener('load', () => {
 })
 
 const navBtn = document.querySelectorAll('.nav_item')
-const navPaths = ['/','/movie', '/event', '/support']
+const navPaths = ['/', '/movie', '/event', '/support']
 
-if(navPaths.includes(window.location.pathname.toLowerCase())){
+if (navPaths.includes(window.location.pathname.toLowerCase())) {
     document.querySelector('.nav-active').classList.remove('nav-active')
     navBtn[navPaths.indexOf(window.location.pathname.toLowerCase())].classList.add('nav-active')
 }
@@ -382,29 +388,28 @@ navBtn.forEach(element => {
     })
 })
 
-if(window.location.pathname.toLowerCase() !== '/movieticket'){
+if (window.location.pathname.toLowerCase() !== '/movieticket') {
     removeTicketInfo()
     window.removeEventListener('load', removeTicketInfo)
 }
 
 const checkAccessToken = () => {
-    if(localStorage.getItem('token') !== null){
+    if (localStorage.getItem('token') !== null) {
         logGroup.style.display = 'none'
         avatar.style.display = 'block'
-    }else{
+    } else {
         logGroup.style.display = 'block'
         avatar.style.display = 'none'
+        removeUserInfo()
     }
 }
 
 checkAccessToken()
 
 const handleLogOut = () => {
-    axios.get('/logout')
-    .then(() => {
-        localStorage.removeItem('token')
-        checkAccessToken()
-    })
+    changePath('logout')
+    localStorage.removeItem('token')
+    checkAccessToken()
 }
 
 const profileBtn = document.querySelector('#profile-btn')
