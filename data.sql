@@ -137,6 +137,10 @@ CREATE TABLE poster (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+INSERT INTO poster(image,trailer) VALUES
+('/images/Carousel/Babylon.jpg','https://www.youtube.com/embed/5muQK7CuFtY'),
+('/images/Carousel/Missing.jpg','https://www.youtube.com/embed/seBixtcx19E'),
+('/images/Carousel/Titanic.jpg','https://www.youtube.com/embed/kVrqfYjkTdQ');
 
 
 -- Insert categories
