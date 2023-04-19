@@ -27,7 +27,7 @@ const AdminControllers = {
     deleteUser: (req, res) => {
         const id = req.query.id;
         if (!id) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -100,7 +100,7 @@ const AdminControllers = {
         const theatre_id = req.query.theatre_id;
 
         if (!theatre_id) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -153,7 +153,7 @@ const AdminControllers = {
             const fileImage = files.image[0];
 
             if (!name || !address || !roomList || !fileImage) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: 'Bad request'
                 });
@@ -163,7 +163,7 @@ const AdminControllers = {
             // validate image
             const errImage = validateImage(fileImage);
             if (errImage) {
-                res.status(500).json({
+                res.status(200).json({
                     code: 500,
                     message: errImage
                 });
@@ -175,7 +175,7 @@ const AdminControllers = {
             const fileName = fileImage.originalFilename;
             const errMove = moveFile(oldPath, fileName, destination);
             if (errMove) {
-                res.status(500).json({
+                res.status(200).json({
                     code: 500,
                     message: errMove
                 });
@@ -219,7 +219,7 @@ const AdminControllers = {
             const address = fields.address[0];
 
             if (!id || !name || !address) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: 'Bad request'
                 });
@@ -229,7 +229,7 @@ const AdminControllers = {
             const theatre = await getTheatreById(id);
 
             if (theatre?.length === 0 || theatre === null) {
-                res.status(202).json({
+                res.status(200).json({
                     code: 202,
                     message: 'No Theatre found'
                 });
@@ -248,7 +248,7 @@ const AdminControllers = {
                 // validata image
                 const errImage = validateImage(fileImage);
                 if (errImage) {
-                    res.status(500).json({
+                    res.status(200).json({
                         code: 500,
                         message: errImage
                     });
@@ -262,7 +262,7 @@ const AdminControllers = {
                 params = [name, address, destination + fileImage.originalFilename, id];
 
                 if (errMove) {
-                    res.status(500).json({
+                    res.status(200).json({
                         code: 500,
                         message: errMove
                     });
@@ -291,7 +291,7 @@ const AdminControllers = {
         const id = req.query.id;
 
         if (!id) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -303,7 +303,7 @@ const AdminControllers = {
         console.log(theatre);
 
         if (theatre === null || theatre?.length === 0) {
-            res.status(500).json({
+            res.status(200).json({
                 code: 500,
                 message: 'Theatre not exist'
             });
@@ -364,7 +364,7 @@ const AdminControllers = {
     addScheduleMovie: async (req, res) => {
         let { movie_id, theatre_id, room_id, date, start_time, end_time, price } = req.body;
         if (!movie_id || !theatre_id || !room_id || !date || !start_time || !end_time || !price) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -529,7 +529,7 @@ const AdminControllers = {
             const imageFile = files.image[0];
 
             if (!name || !price || !description || !imageFile || !popcorn || !drink) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: 'Bad request'
                 });
@@ -538,7 +538,7 @@ const AdminControllers = {
 
             const check = await validateImage(imageFile);
             if (check !== null) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: check
                 });
@@ -593,7 +593,7 @@ const AdminControllers = {
 
 
             if (!id || !name || !price || !description || !popcorn || !drink) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: 'Bad request'
                 });
@@ -603,8 +603,8 @@ const AdminControllers = {
             const food_combo = await getFoodComboById(id);
 
             if (food_combo.length === 0) {
-                res.status(404).json({
-                    code: 404,
+                res.status(200).json({
+                    code: 400,
                     message: 'Food combo not found'
                 });
                 return;
@@ -615,7 +615,7 @@ const AdminControllers = {
                 const imageFile = files.image[0];
                 const check = await validateImage(imageFile);
                 if (check !== null) {
-                    res.status(400).json({
+                    res.status(200).json({
                         code: 400,
                         message: check
                     });
@@ -666,7 +666,7 @@ const AdminControllers = {
         const id = req.query.id;
 
         if (!id) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -676,8 +676,8 @@ const AdminControllers = {
         const food_combo = await getFoodComboById(id);
 
         if (food_combo?.length === 0 || food_combo === null) {
-            res.status(404).json({
-                code: 404,
+            res.status(200).json({
+                code: 400,
                 message: 'Food combo not found'
             });
             return;
@@ -728,7 +728,7 @@ const AdminControllers = {
             const category_id = fields.category_id[0];
 
             if (!name || !description || !duration || !releaseDate || !director || !actors || !trailer || !imageFile || !status || !category_id) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: 'Bad request'
                 });
@@ -739,7 +739,7 @@ const AdminControllers = {
 
             const check = await validateImage(imageFile);
             if (check !== null) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: check
                 });
@@ -798,7 +798,7 @@ const AdminControllers = {
             const category_id = fields.category_id[0];
 
             if (!id || !name || !description || !duration || !releaseDate || !director || !actors || !trailer || !status || !category_id) {
-                res.status(400).json({
+                res.status(200).json({
                     code: 400,
                     message: 'Bad request'
                 });
@@ -810,8 +810,8 @@ const AdminControllers = {
             const movie = await getMovieById(id);
 
             if (movie?.length === 0 || movie === null) {
-                res.status(404).json({
-                    code: 404,
+                res.status(200).json({
+                    code: 400,
                     message: 'Movie not found'
                 });
                 return;
@@ -821,7 +821,7 @@ const AdminControllers = {
                 const imageFile = files.image[0];
                 const check = await validateImage(imageFile);
                 if (check !== null) {
-                    res.status(400).json({
+                    res.status(200).json({
                         code: 400,
                         message: check
                     });
@@ -875,7 +875,7 @@ const AdminControllers = {
     deleteMovie: async (req, res) => {
         const id = req.query.id;
         if (!id) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -884,8 +884,8 @@ const AdminControllers = {
 
         const movie = await getMovieById(id);
         if (movie?.length === 0 || movie === null) {
-            res.status(404).json({
-                code: 404,
+            res.status(200).json({
+                code: 400,
                 message: 'Movie not found'
             });
             return;

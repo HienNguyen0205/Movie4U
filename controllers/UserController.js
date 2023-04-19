@@ -14,7 +14,7 @@ const UserController = {
         const user = req.body;
 
         if(!user.email || !user.password || !user.name) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -24,8 +24,8 @@ const UserController = {
         const isEmailExist = await checkEmail(user.email);
         //check Email 
         if (isEmailExist !== null) {
-            res.status(500).json({
-                code: 500,
+            res.status(200).json({
+                code: 201,
                 message: 'Email already exists'
             });
             return;
@@ -64,18 +64,17 @@ const UserController = {
         // check if email exists
         const user = await checkEmail(email);
         if(!user) {
-            res.status(500).json({
-                code: 500,
+            res.status(200).json({
+                code: 201,
                 message: 'Email/Password is not correct'
             });
             return;
         }
-        console.log(user);
         // check password
         const checkPassword = bcrypt.compareSync(password, user[0].password);
         if(!checkPassword) {
-            res.status(500).json({
-                code: 500,
+            res.status(200).json({
+                code: 201,
                 message: 'Email/Password is not correct'
             });
             return;
@@ -102,7 +101,7 @@ const UserController = {
 
     logout: (req, res) => {
         req.session.destroy();
-        req.user = null;
+        req.user = null
         res.cookie('refreshToken', '', {
             httpOnly: true,
             secure: false,
@@ -197,7 +196,7 @@ const UserController = {
         const confirmPassword = req.body.confirmPassword;
 
         if(!password || !newPassword || !confirmPassword) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'Bad request'
             });
@@ -205,7 +204,7 @@ const UserController = {
         }
 
         if(newPassword !== confirmPassword) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 400,
                 message: 'New password and confirm password are not the same'
             });
@@ -244,14 +243,114 @@ const UserController = {
             });
     },
 
-        
+    forgotPassword: async (req, res) => {
+        const email = req.body.email;
+        if(!email) {
+            res.status(200).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
+        const user = await checkEmail(email);
+        if(!user) {
+            res.status(200).json({
+                code: 500,
+                message: 'Email is not correct'
+            });
+            return;
+        }
+
+        const token = UserController.generateJWT(user[0].id, user[0].email, user[0].status);
+        const url = `http://localhost:3000/reset-password/${token}`;
+        const html = `
+            <h3>Click <a href="${url}">here</a> to reset password</h3>
+        `;
+
+        const mailOptions = {
+            from:  process.env.EMAIL,
+            to: email,
+            subject: 'Reset password',
+            html: html
+        };
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if(err) {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
+                return;
+            }
+
+            res.status(200).json({
+                code: 200,
+                message: 'Please check your email to reset password'
+            });
+        });
+    },
+    
+    resetPassword: async (req, res) => {
+        const token = req.params.token;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+
+        if(!password || !confirmPassword) {
+            res.status(200).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
+        if(password !== confirmPassword) {
+            res.status(200).json({
+                code: 400,
+                message: 'Password and confirm password are not the same'
+            });
+            return;
+        }
+
+        try {
+            const user = jwt.verify(token, process.env.JWT_SECRET);
+            const salt = bcrypt.genSaltSync(10);
+            const hashPassword = bcrypt.hashSync(password, salt);
+
+            const sql = `UPDATE account SET password = ? WHERE id = ?`;
+            const params = [hashPassword, user.id];
+
+            db.queryParams(sql, params)
+                .then((result) => {
+                    res.status(200).json({
+                        code: 200,
+                        message: 'Reset password successfully',
+                        data: result[0]
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({
+                        code: 500,
+                        message: 'Internal server error'
+                    });
+                });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                code: 500,
+                message: 'Internal server error'
+            });
+        }
+    }
+    
 };
 
 async function checkEmail(email) {
     const sql = `SELECT * FROM account WHERE email = ?`;
     const params = [email];
     const result = await db.queryParams(sql, params);
-    console.log(result.length);
     if(result.length == 0) {
         return null;
     }
