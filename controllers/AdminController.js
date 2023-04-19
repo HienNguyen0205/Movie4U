@@ -726,8 +726,9 @@ const AdminControllers = {
             const imageFile = files.image[0];
             const status = fields.status[0];
             const category_id = fields.category_id[0];
+            const age_restrict = fields.age_restrict[0];
 
-            if (!name || !description || !duration || !releaseDate || !director || !actors || !trailer || !imageFile || !status || !category_id) {
+            if (!name || !description || !duration || !releaseDate || !director || !actors || !trailer || !imageFile || !status || !category_id || !age_restrict ) {
                 res.status(200).json({
                     code: 400,
                     message: 'Bad request'
@@ -750,8 +751,8 @@ const AdminControllers = {
             const oldPath = imageFile.path;
             moveFile(oldPath, fileName, 'images/Movie');
 
-            const sql = `INSERT INTO movie (name, description, duration, release_date, director, actors, trailer, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-            const params = [name, description, duration, releaseDate, director, actors, trailer, filePath, status];
+            const sql = `INSERT INTO movie (name, description, duration, release_date, director, actors, trailer, image, status, age_restrict) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            const params = [name, description, duration, releaseDate, director, actors, trailer, filePath, status, age_restrict];
 
             db.queryTransaction(sql, params)
                 .then(async (result) => {
@@ -796,8 +797,9 @@ const AdminControllers = {
             const trailer = fields.trailer[0];
             const status = fields.status[0];
             const category_id = fields.category_id[0];
+            const age_restrict = fields.age_restrict[0];
 
-            if (!id || !name || !description || !duration || !releaseDate || !director || !actors || !trailer || !status || !category_id) {
+            if (!id || !name || !description || !duration || !releaseDate || !director || !actors || !trailer || !status || !category_id || !age_restrict) {
                 res.status(200).json({
                     code: 400,
                     message: 'Bad request'
@@ -816,8 +818,8 @@ const AdminControllers = {
                 });
                 return;
             }
-
             if (files?.image !== undefined) {
+                console.log('image');
                 const imageFile = files.image[0];
                 const check = await validateImage(imageFile);
                 if (check !== null) {
@@ -832,8 +834,8 @@ const AdminControllers = {
                 const oldPath = imageFile.path;
                 moveFile(oldPath, fileName, 'images/Movie');
                 removeFile(movie[0].image, 'movie');
-                const sql = `UPDATE movie SET name = ?, description = ?, duration = ?, release_date = ?, director = ?, actors = ?, trailer = ?, image = ?, status = ? WHERE id = ?`;
-                params = [name, description, duration, releaseDate, director, actors, trailer, filePath, status, id];
+                const sql = `UPDATE movie SET name = ?, description = ?, duration = ?, release_date = ?, director = ?, actors = ?, trailer = ?, image = ?, status = ?, age_restrict = ? WHERE id = ?`;
+                params = [name, description, duration, releaseDate, director, actors, trailer, filePath, status, age_restrict, id];
                 db.queryParams(sql, params)
                     .then(async (result) => {
                         await updateCategoryForMovie(id, categoryList);
@@ -851,7 +853,8 @@ const AdminControllers = {
                         });
                     });
             } else {
-                params = [name, description, duration, releaseDate, director, actors, trailer, status, id];
+                const sql = `UPDATE movie SET name = ?, description = ?, duration = ?, release_date = ?, director = ?, actors = ?, trailer = ?, status = ?, age_restrict = ? WHERE id = ?`;
+                params = [name, description, duration, releaseDate, director, actors, trailer, status, age_restrict, id];
                 db.queryParams(sql, params)
                     .then(async (result) => {
                         await updateCategoryForMovie(id, categoryList);
