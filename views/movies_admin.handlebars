@@ -4,8 +4,7 @@
         <div class="content_btn">
             <button type="button" class="btn btn-success " data-bs-toggle="modal"
                 data-bs-target="#movies_add-modal">Add</button>
-            <button id="delete_selected-movies" type="button" class="btn btn-danger "
-                >Delete Selected</button>
+            <button id="delete_selected-movies" type="button" class="btn btn-danger ">Delete Selected</button>
         </div>
     </div>
     <table id="table_movies" class="table">
@@ -15,6 +14,7 @@
                 <th scope="col">Movie Name</th>
                 <th scope="col">Poster</th>
                 <th scope="col">Trailer</th>
+                <th scope="col">Status</th>
                 <th scope="col">Delete</th>
                 <th scope="col" colspan="2">Modify</th>
             </tr>
@@ -45,30 +45,40 @@
                 <div class="modal-body">
                     <p>Movie Name</p>
                     <div class="input-group flex-nowrap">
-                        <input type="text" id="movie_name" class="form-control" placeholder="Enter movie name">
+                        <input type="text" id="movie_name" class="form-control" placeholder="Enter movie name" required>
                     </div>
                     <p>Movie Poster</p>
                     <div class="mb-3 add_image-outer">
-                        <input class="form-control" type="file" id="movie_img">
+                        <input class="form-control" type="file" id="movie_img" required>
                     </div>
                     <p>Movie Trailer Link</p>
                     <div class="input-group flex-nowrap">
                         <input type="text" id="movie_trailer" class="form-control"
                             placeholder="Enter movie trailer link">
                     </div>
+                    <p>Movie Actors</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="movie_actors" class="form-control" placeholder="Enter movie actors"
+                            required>
+                    </div>
+                    <p>Movie Directors</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="movie_directors" class="form-control" placeholder="Enter movie directors"
+                            required>
+                    </div>
                     <p>Movie Duration</p>
                     <div class="input-group flex-nowrap">
                         <input type="number" id="movie_duration" class="form-control"
-                            placeholder="Enter movie duration (s)">
+                            placeholder="Enter movie duration (minute)" required>
                     </div>
                     <p>Movie Release Date</p>
                     <div class="input-group flex-nowrap">
-                        <input type="date" id="movie_rel_date" class="form-control">
+                        <input type="date" id="movie_rel_date" class="form-control" required>
                     </div>
                     <p>Movie Description</p>
                     <div class="input-group flex-nowrap">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                            placeholder="Enter movie description"></textarea>
+                        <textarea class="form-control" id="movie_description" rows="3"
+                            placeholder="Enter movie description" required></textarea>
                     </div>
                     <p>Movie Category</p>
                     <div class="container">
@@ -76,35 +86,34 @@
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Action</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category" value="action"><span class="checkmark"></span></label>
+                                        name="movie_category" value="1"><span class="checkmark"></span></label>
                             </div>
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Comedy</label>
-
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category" value="comedy"><span class="checkmark"></span></label>
+                                        name="movie_category" value="2"><span class="checkmark"></span></label>
                             </div>
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Drama</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category" value="drama"><span class="checkmark"></span></label>
+                                        name="movie_category" value="3"><span class="checkmark"></span></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col col_movie_checkbox">
+                                <label for="" class="category_title">Horror</label>
+                                <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
+                                        name="movie_category" value="4"><span class="checkmark"></span></label>
+                            </div>
+                            <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Fantasty</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category" value="fantasty"><span class="checkmark"></span></label>
+                                        name="movie_category" value="5"><span class="checkmark"></span></label>
                             </div>
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Romance</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category" value="romance"><span class="checkmark"></span></label>
-                            </div>
-                            <div class="col col_movie_checkbox">
-                                <label for="" class="category_title">Horror</label>
-                                <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category" value=""><span class="checkmark"></span></label>
+                                        name="movie_category" value="6"><span class="checkmark"></span></label>
                             </div>
                         </div>
                     </div>
@@ -114,21 +123,22 @@
                             <div class="col col_movie_radio">
                                 <label for="" class="status_title">Now</label>
                                 <label class="content_checkbox-outer"><input type="radio" class="content_checkbox"
-                                        name="movie_category" value="action"><span
+                                        name="movie_status" value="1"><span
                                         class="checkmark checkmark_radio"></span></label>
                             </div>
                             <div class="col col_movie_radio">
                                 <label for="" class="status_title">Up Coming</label>
                                 <label class="content_checkbox-outer"><input type="radio" class="content_checkbox"
-                                        name="movie_category" value="comedy"><span
+                                        name="movie_status" value="0"><span
                                         class="checkmark checkmark_radio"></span></label>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="btn_add-movie" class="btn btn-primary" data-bs-dismiss="modal">Add
+                    <button type="submit" id="btn_add-movies" class="btn btn-primary" data-bs-dismiss="modal">Add
                         movie</button>
                 </div>
             </div>
@@ -138,36 +148,47 @@
         <div class="modal-dialog modal-dialog-scrollable big_modal">
             <div class="modal-content add_modal">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="movies_edit-label">Edit Movie</h4>
+                    <h4 class="modal-title" id="movie_edit-label">Edit Movie</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Movie Name</p>
                     <div class="input-group flex-nowrap">
-                        <input type="text" id="movie_name-edit" class="form-control" placeholder="Enter movie name">
+                        <input type="text" id="movie_name-edit" class="form-control" placeholder="Enter movie name"
+                            required>
                     </div>
                     <p>Movie Poster</p>
                     <div class="mb-3 add_image-outer">
-                        <input class="form-control" type="file" id="movie_img-edit">
+                        <input class="form-control" type="file" id="movie_img-edit" required>
                     </div>
                     <p>Movie Trailer Link</p>
                     <div class="input-group flex-nowrap">
                         <input type="text" id="movie_trailer-edit" class="form-control"
-                            placeholder="Enter movie trailer link">
+                            placeholder="Enter movie trailer link" required>
+                    </div>
+                    <p>Movie Actors</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="movie_actors-edit" class="form-control" placeholder="Enter movie actors"
+                            required>
+                    </div>
+                    <p>Movie Directors</p>
+                    <div class="input-group flex-nowrap">
+                        <input type="text" id="movie_directors-edit" class="form-control"
+                            placeholder="Enter movie directors" required>
                     </div>
                     <p>Movie Duration</p>
                     <div class="input-group flex-nowrap">
                         <input type="number" id="movie_duration-edit" class="form-control"
-                            placeholder="Enter movie duration (s)">
+                            placeholder="Enter movie duration (minute)" required>
                     </div>
                     <p>Movie Release Date</p>
                     <div class="input-group flex-nowrap">
-                        <input type="date" id="movie_rel_date-edit" class="form-control">
+                        <input type="date" id="movie_rel_date-edit" class="form-control" required>
                     </div>
                     <p>Movie Description</p>
                     <div class="input-group flex-nowrap">
                         <textarea class="form-control" id="movie_des-edit" rows="3"
-                            placeholder="Enter movie description"></textarea>
+                            placeholder="Enter movie description" required></textarea>
                     </div>
                     <p>Movie Category</p>
                     <div class="container">
@@ -175,40 +196,35 @@
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Action</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category-edit" value="action"><span
-                                        class="checkmark"></span></label>
+                                        name="movie_category-edit" value="1"><span class="checkmark"></span></label>
                             </div>
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Comedy</label>
 
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category-edit" value="comedy"><span
-                                        class="checkmark"></span></label>
+                                        name="movie_category-edit" value="2"><span class="checkmark"></span></label>
                             </div>
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Drama</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category-edit" value="drama"><span class="checkmark"></span></label>
+                                        name="movie_category-edit" value="3"><span class="checkmark"></span></label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col col_movie_checkbox">
+                                <label for="" class="category_title">Horror</label>
+                                <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
+                                        name="movie_category-edit" value="4"><span class="checkmark"></span></label>
+                            </div>
+                            <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Fantasty</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category-edit" value="fantasty"><span
-                                        class="checkmark"></span></label>
+                                        name="movie_category-edit" value="5"><span class="checkmark"></span></label>
                             </div>
                             <div class="col col_movie_checkbox">
                                 <label for="" class="category_title">Romance</label>
                                 <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category-edit" value="romance"><span
-                                        class="checkmark"></span></label>
-                            </div>
-                            <div class="col col_movie_checkbox">
-                                <label for="" class="category_title">Horror</label>
-                                <label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                                        name="movie_category-edit" value=""><span
-                                        class="checkmark"></span></label>
+                                        name="movie_category-edit" value="6"><span class="checkmark"></span></label>
                             </div>
                         </div>
                     </div>
@@ -218,13 +234,13 @@
                             <div class="col col_movie_radio">
                                 <label for="" class="status_title">Now</label>
                                 <label class="content_checkbox-outer"><input type="radio" class="content_checkbox"
-                                        name="movie_status-edit" value="now"><span
+                                        name="movie_status-edit" value="1"><span
                                         class="checkmark checkmark_radio"></span></label>
                             </div>
                             <div class="col col_movie_radio">
                                 <label for="" class="status_title">Up Coming</label>
                                 <label class="content_checkbox-outer"><input type="radio" class="content_checkbox"
-                                        name="movie_status-edit" value="upcoming"><span
+                                        name="movie_status-edit" value="0" disabled><span
                                         class="checkmark checkmark_radio"></span></label>
                             </div>
                         </div>
@@ -232,8 +248,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="btn_edit-movie" class="btn btn-primary"
-                        data-bs-dismiss="modal">Edit Movie</button>
+                    <button type="submit" id="btn_edit-movies" class="btn btn-primary" data-bs-dismiss="modal">Edit
+                        Movie</button>
                 </div>
             </div>
         </div>
