@@ -1,5 +1,5 @@
 window.removeEventListener('scroll', scrollHandler)
-header[0].style.backgroundColor = '#000000'
+header[0].style.backgroundColor = '#333633'
 header[0].style.position = 'static'
 
 const data = JSON.parse(localStorage.getItem('movieInfo'))
@@ -392,6 +392,7 @@ const renderMovieInfo = () => {
             </button>
         </div>
     `)
+    handleTrailerEvent()
 }
 
 renderMovieInfo()
@@ -511,7 +512,7 @@ const getMovieTheaterInfo = (date , order) => {
         params: {
             movie_id: data.id,
             date: formatDate(date)
-        },
+        }, 
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }

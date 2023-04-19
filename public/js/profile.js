@@ -1,5 +1,5 @@
 window.removeEventListener('scroll', scrollHandler)
-header[0].style.backgroundColor = '#000000'
+header[0].style.backgroundColor = '#333633'
 header[0].style.position = 'static'
 
 const userInfoItem = document.querySelectorAll('.user_info_item')
@@ -38,27 +38,72 @@ const handleEditBtn = (input , btn) => {
     }
 }
 
-userInfoItem.forEach((item,index) => {
-    const curr = item.querySelector('input')
-    const editBtn = item.querySelector('span')
-    switch (index){
-        case 0:
-            curr.value = userInfo.name
-            break
-        case 1:
-            curr.value = userInfo.email
-            break
-        case 2:
-            curr.value = userInfo.phone
-            break
-        case 3:
-            curr.value = userInfo.address
-            break
-        case 4:
-            curr.value = userInfo.birthday
-            break
-    }
-    editBtn.addEventListener('click', () => {
-        handleEditBtn(curr, editBtn)
+if(userInfo != null){
+    userInfoItem.forEach((item,index) => {
+        const curr = item.querySelector('input')
+        const editBtn = item.querySelector('span')
+        switch (index){
+            case 0:
+                curr.value = userInfo.name
+                break
+            case 1:
+                curr.value = userInfo.email
+                break
+            case 2:
+                curr.value = userInfo.phone
+                break
+            case 3:
+                curr.value = userInfo.address
+                break
+            case 4:
+                curr.value = userInfo.birthday
+                break
+        }
+        editBtn.addEventListener('click', () => {
+            handleEditBtn(curr, editBtn)
+        })
+    })
+}
+
+const forgetPassToggle = document.querySelectorAll('.toggle_pass_forget')
+
+forgetPassToggle.forEach(item=> {
+    item.addEventListener('click', () => {
+        const input = item.parentNode.children[0]
+        const state = input.getAttribute('data-show')
+        if(state == 'true'){
+            input.setAttribute('type', 'password')
+            input.setAttribute('data-show', 'false')
+        }else{
+            input.setAttribute('type', 'text')
+            input.setAttribute('data-show', 'true')
+        }
+    })
+})
+
+const changePassBtn = document.querySelector('#change_pass_btn')
+
+changePassBtn.addEventListener('click', () => {
+    const currPassword = document.querySelector('#curr_pass')
+    const newPassword = document.querySelector('#new_pass')
+    const confirmNewPassword = document.querySelector('#confirm_new_pass')
+    axios.post('/changePassword', {
+        password : currPassword.value,
+        newPassword : newPassword.value,
+        confirmPassword : confirmNewPassword.value
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+    .then(res => {
+        if(res.data.code == 200){
+            showToastMes(res.data.message, 'success')
+        }else{
+            showToastMes(res.data.message, 'fail')
+        }
+    })
+    .catch(err => {
+        console.error(err)
     })
 })
