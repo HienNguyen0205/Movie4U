@@ -43,7 +43,7 @@ addTheatresBtn.addEventListener('submit', function (event) {
       getAllMovieTheatres()
     }
     else {
-      snackbar('error', '<b>Error: </b>  Add Theatre Fail', 3000);
+      snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
     }
   }).catch(error => {
     snackbar('error', '<b>Error: </b>  Add Theatre Fail', 3000);
@@ -76,7 +76,7 @@ editTheatresBtn.addEventListener('submit', function (event) {
         getAllMovieTheatres()
       }
       else {
-        snackbar('error', '<b>Error: </b>  Edit Theatre Fail', 3000);
+        snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
       }
   }).catch(error => {
     snackbar('error', '<b>Error: </b>  Edit Theatre Fail', 3000);

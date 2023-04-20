@@ -113,12 +113,16 @@ function addSchedule() {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     })
-        .then(response => {
-            snackbar('success', '<b>Success: </b>  Add Schedule Success', 3000);
-            getAllTiming()
-            console.log('Response:', response.data);
+        .then(res => {
+            if (res.data.code == 200) {
+                snackbar('success', '<b>Success: </b>  Add Timing Success', 3000);
+                getAllTiming()
+            }
+            else {
+                snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
+            }
         })
-        .catch(error => {
+        .catch(err => {
             snackbar('error', '<b>Error: </b>  Add Schedule Fail', 3000);
             console.error(err)
         });
@@ -147,7 +151,7 @@ function renderAllTiming(data) {
         var listEndTime = element.end_times.split(',')
         for (var i = 0; i < listStartTime.length; i++) {
             listTiming.insertAdjacentHTML('beforeend',
-            `
+                `
             <tr>
                     <th scope="row">${element.schedule_id}</th>
                     <td>${element.theatre_name}</td>
@@ -159,22 +163,6 @@ function renderAllTiming(data) {
                 </tr>
             `)
         }
-        // listTiming.insertAdjacentHTML('beforeend',
-        // `
-        // <tr>
-        //         <th scope="row">${element.schedule_id}</th>
-        //         <td>${element.theatre_name}</td>
-        //         <td>${element.movie_name}</td>
-        //         <td>${element.room_id}</td>
-        //         <td>${timingDate}</td>
-        //         <td>${element.start_times}/${element.end_times}</td>
-        //         <td>${element.price}</td>
-        //         <td><label class="content_checkbox-outer"><input type="checkbox" id="timing1" class="content_checkbox"
-        //                     name="timing1"><span class="checkmark"></span></label></td>
-        //         <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-        //                 data-bs-target="#timing_edit-modal">Edit</button></td>
-        //     </tr>
-        // `)
     });
 }
 getAllTiming()

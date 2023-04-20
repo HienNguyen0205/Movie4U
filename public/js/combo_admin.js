@@ -41,7 +41,7 @@ addComboBtn.addEventListener('submit', function (event) {
             getAllCombo()
         }
         else {
-            snackbar('error', '<b>Error: </b>  Add Combo Fail', 3000);
+            snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
         }
     }).catch(error => {
         snackbar('error', '<b>Error: </b>  Add Combo Fail', 3000);
@@ -77,7 +77,7 @@ editComboBtn.addEventListener('submit', function (event) {
             getAllCombo()
         }
         else {
-            snackbar('error', '<b>Error: </b>  Edit Combo Fail', 3000);
+            snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
         }
     }).catch(error => {
         snackbar('error', '<b>Error: </b>  Edit Combo Fail', 3000);
@@ -139,7 +139,7 @@ btnDelCombo.addEventListener('click', () => {
                 snackbar('success', '<b>Success: </b>  Delete Combo Success', 3000);
             })
             .catch(err => {
-                snackbar('error', '<b>Error: </b>  Delete Combo Fail', 3000);
+                snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000); 
                 console.error(err)
             })
         window.location.reload()

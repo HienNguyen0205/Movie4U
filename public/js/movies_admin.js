@@ -96,7 +96,7 @@ btnAddMovies.addEventListener('click', function () {
             getAllMovies()
         }
         else {
-            snackbar('error', '<b>Error: </b>  Add Movies Fail', 3000);
+            snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
         }
     }).catch(error => {
         snackbar('error', '<b>Error: </b>  Add Movies Fail', 3000);
@@ -140,7 +140,7 @@ btnEditMovies.addEventListener('click', function () {
             getAllMovies()
         }
         else {
-            snackbar('error', '<b>Error: </b>  Edit Movies Fail', 3000);
+            snackbar('error', `<b>Error: </b> ${res.data.message}`, 3000);
         }
     }).catch(error => {
         snackbar('error', '<b>Error: </b>  Edit Movies Fail', 3000);
