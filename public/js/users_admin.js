@@ -25,8 +25,8 @@ function renderAllUsers(data) {
                 <td>${element.email}</td>
                 <td>${element.phone}</td>
                 <td>${element.address}</td>
-                <td>${element.birthday}</td>
-                <td>${element.createAt}</td>
+                <td>${element.birthday.slice(0, 10)}</td>
+                <td>${element.createAt.slice(0, 10)}</td>
             </tr>
         `)
     });
