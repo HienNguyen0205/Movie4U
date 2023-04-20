@@ -8,11 +8,11 @@ const helper = {
         }
 
     },
-    createOTPCode: function (account_id) {
+    createOTPCode: function (email) {
         // code i 6 digits
         let code = Math.floor(100000 + Math.random() * 900000);
-        const sql = `INSERT INTO otp_code (account_id, code) VALUES (?, ?)`;
-        db.queryParams(sql, [account_id, code])
+        const sql = `INSERT INTO otp_code (email, code) VALUES (?, ?)`;
+        db.queryParams(sql, [email, code])
             .then((results) => {
                 return code;
             })
@@ -21,10 +21,10 @@ const helper = {
                 return null;
             });
     },
-    verifyOTPCode: function (account_id, code) {
+    verifyOTPCode: function (email, code) {
         // time out is 2 minutes
-        const sql = `SELECT * FROM otp_code WHERE account_id = ? AND code = ?`;
-        db.queryParams(sql, [account_id, code])
+        const sql = `SELECT * FROM otp_code WHERE email = ? AND code = ?`;
+        db.queryParams(sql, [email, code])
             .then((results) => {
                 if (results.length > 0) {
                     // check time out
@@ -35,8 +35,8 @@ const helper = {
                         return false;
                     }
                     //delete otp code
-                    const sql = `DELETE FROM otp_code WHERE account_id = ? AND code = ?`;
-                    db.queryParams(sql, [account_id, code])
+                    const sql = `DELETE FROM otp_code WHERE email = ? AND code = ?`;
+                    db.queryParams(sql, [email, code])
                         .then((results) => {
                             return true;
                         })

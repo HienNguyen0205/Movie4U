@@ -58,6 +58,12 @@ router.post('/register', UserControllers.register)
 
 router.get('/logout', UserControllers.logout)
 
+router.post('/createOTP', UserControllers.createOTP)
+
+router.post('/verifyOTP', UserControllers.verifyOTP)
+
+router.post('resetPassword', UserControllers.resetPassword)
+
 router.post('/updateUserInfo', middleware.verifyJWT , UserControllers.updateUserInfo)
 
 router.post('/changePassword', middleware.verifyJWT , UserControllers.changePassword)

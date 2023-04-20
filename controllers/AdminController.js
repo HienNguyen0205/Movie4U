@@ -172,7 +172,7 @@ const AdminControllers = {
             const errImage = validateImage(fileImage);
             if (errImage) {
                 res.status(200).json({
-                    code: 500,
+                    code: 201,
                     message: errImage
                 });
                 return;
@@ -184,7 +184,7 @@ const AdminControllers = {
             const errMove = moveFile(oldPath, fileName, destination);
             if (errMove) {
                 res.status(200).json({
-                    code: 500,
+                    code: 201,
                     message: errMove
                 });
                 return;
@@ -247,7 +247,7 @@ const AdminControllers = {
 
             if (theatre?.length === 0 || theatre === null) {
                 res.status(200).json({
-                    code: 202,
+                    code: 201,
                     message: 'No Theatre found'
                 });
                 return;
@@ -266,7 +266,7 @@ const AdminControllers = {
                 const errImage = validateImage(fileImage);
                 if (errImage) {
                     res.status(200).json({
-                        code: 500,
+                        code: 201,
                         message: errImage
                     });
                     return;
@@ -280,7 +280,7 @@ const AdminControllers = {
 
                 if (errMove) {
                     res.status(200).json({
-                        code: 500,
+                        code: 201,
                         message: errMove
                     });
                     return;
@@ -321,7 +321,7 @@ const AdminControllers = {
 
         if (theatre === null || theatre?.length === 0) {
             res.status(200).json({
-                code: 500,
+                code: 201,
                 message: 'Theatre not exist'
             });
             return;
@@ -394,8 +394,8 @@ const AdminControllers = {
         let checkSchedule = await checkScheduleTime(start_time, end_time, date, room_id);
 
         if (checkSchedule !== null) {
-            res.status(500).json({
-                code: 500,
+            res.status(200).json({
+                code: 201,
                 message: 'Time is not available'
             });
             return;
@@ -564,7 +564,7 @@ const AdminControllers = {
             const check = await validateImage(imageFile);
             if (check !== null) {
                 res.status(200).json({
-                    code: 400,
+                    code: 201,
                     message: check
                 });
                 return;
@@ -637,7 +637,7 @@ const AdminControllers = {
 
             if (food_combo.length === 0) {
                 res.status(200).json({
-                    code: 400,
+                    code: 201,
                     message: 'Food combo not found'
                 });
                 return;
@@ -650,7 +650,7 @@ const AdminControllers = {
                 const check = await validateImage(imageFile);
                 if (check !== null) {
                     res.status(200).json({
-                        code: 400,
+                        code: 201,
                         message: check
                     });
                     return;
@@ -874,7 +874,7 @@ const AdminControllers = {
                 const check = await validateImage(imageFile);
                 if (check !== null) {
                     res.status(200).json({
-                        code: 400,
+                        code: 201,
                         message: check
                     });
                     return;
