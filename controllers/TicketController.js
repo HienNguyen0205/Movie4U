@@ -1,50 +1,6 @@
 const db = require('../database');
 const jwt = require('jsonwebtoken');
 const TicketControllers = {
-    getAllTicket: (req, res) => {
-        const status = req.query.status;
-        const sql = `SELECT ticket.id, ticket.name, ticket.price, ticket.status
-                    FROM ticket
-                    WHERE ticket.status = ?`;
-        db.queryParams(sql, [status])
-            .then((results) => {
-                res.status(200).json(
-                    {
-                        code: 200,
-                        message: 'Success',
-                        data: results
-                    }
-                );
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json({
-                    code: 500,
-                    message: 'Internal server error'
-                });
-            });
-    },
-    getTicketById: (req, res) => {
-        const id = req.query.id;
-        const sql = `SELECT ticket.id, ticket.name, ticket.price, ticket.status
-                    FROM ticket
-                    WHERE ticket.id = ?`;
-        db.queryParams(sql, [id])
-            .then((results) => {
-                res.status(200).json({
-                    code: 200,
-                    message: 'Success',
-                    data: results
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json({
-                    code: 500, 
-                    message: 'Internal server error' 
-                });
-            });
-    },
     getMovieSchedule(req, res) {
         const moive_id = req.query.movie_id;
         const date = req.query.date;
@@ -171,6 +127,8 @@ const TicketControllers = {
         t.id AS ticket_id,
         t.schedule_time_id,
         t.account_id,
+        th.name AS theatre_name,
+        r.name AS room_name,
         st.start_time,
         st.end_time,
         CONVERT_TZ(sch.date, '-07:00', '+07:00') as date,
@@ -200,6 +158,10 @@ const TicketControllers = {
             food_combo_ticket ft ON t.id = ft.ticket_id
         JOIN
             food_combo f ON ft.food_combo_id = f.id
+        JOIN 
+            theatre th ON sch.theatre_id = th.id
+        JOIN
+            room r ON sch.room_id = r.id
         WHERE
             t.account_id = ?
         GROUP BY

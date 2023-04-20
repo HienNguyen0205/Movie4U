@@ -146,6 +146,14 @@ const AdminControllers = {
                 return;
             }
 
+            if(!fields.name || !fields.address || !fields.R2D_3D || !fields.R4DX || !fields.RIMAX || !files.image) {
+                res.status(200).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
             const name = fields.name[0];
             const address = fields.address[0];
             const roomList = [fields.R2D_3D[0], fields.R4DX[0], fields.RIMAX[0]];
@@ -214,6 +222,15 @@ const AdminControllers = {
                 });
                 return;
             }
+
+            if(!fields.id || !fields.name || !fields.address) {
+                res.status(200).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
             const id = fields.id[0];
             const name = fields.name[0];
             const address = fields.address[0];
@@ -521,6 +538,14 @@ const AdminControllers = {
                 return;
             }
 
+            if(!fields.name || !fields.price || !fields.description || !files.image || !fields.popcorn || !fields.drink) {
+                res.status(200).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
             const name = fields.name[0];
             const price = fields.price[0];
             const description = fields.description[0];
@@ -584,6 +609,14 @@ const AdminControllers = {
                 return;
             }
 
+            if(!fields.id || !fields.name || !fields.price || !fields.description || !fields.popcorn || !fields.drink) {
+                res.status(200).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
             const id = fields.id[0];
             const name = fields.name[0];
             const price = fields.price[0];
@@ -609,6 +642,7 @@ const AdminControllers = {
                 });
                 return;
             }
+
             let params = [name, price, description, food_combo[0].image, popcorn, drink, id];
             const sql = `UPDATE food_combo SET name = ?, price = ?, description = ?, image = ?, popcorn = ?, drink = ? WHERE id = ?`;
             if (files?.image !== undefined) {
@@ -716,6 +750,14 @@ const AdminControllers = {
                 return;
             }
 
+            if(!fields.name || !fields.description || !fields.duration || !fields.releaseDate || !fields.director || !fields.actors || !fields.trailer || !fields.status || !fields.category_id || !fields.age_restrict) {
+                res.status(200).json({
+                    code: 400,
+                    message: 'Bad request'
+                });
+                return;
+            }
+
             const name = fields.name[0];
             const description = fields.description[0];
             const duration = fields.duration[0];
@@ -783,6 +825,14 @@ const AdminControllers = {
                 res.status(500).json({
                     code: 500,
                     message: 'Internal server error'
+                });
+                return;
+            }
+
+            if(!fields.id || !fields.name || !fields.description || !fields.duration || !fields.releaseDate || !fields.director || !fields.actors || !fields.trailer || !fields.status || !fields.category_id || !fields.age_restrict) {
+                res.status(200).json({
+                    code: 400,
+                    message: 'Bad request'
                 });
                 return;
             }
