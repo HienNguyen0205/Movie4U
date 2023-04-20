@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config('../.env');
 const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const MailService = require('../services/MailService');
+const helper = require('../helper');
 let refreshTokens = [];
 
 
@@ -205,7 +206,7 @@ const UserController = {
 
         if(newPassword !== confirmPassword) {
             res.status(200).json({
-                code: 400,
+                code: 201,
                 message: 'New password and confirm password are not the same'
             });
             return;
@@ -243,7 +244,7 @@ const UserController = {
             });
     },
 
-    forgotPassword: async (req, res) => {
+    createOTP: async (req, res) => {
         const email = req.body.email;
         if(!email) {
             res.status(200).json({
@@ -256,46 +257,80 @@ const UserController = {
         const user = await checkEmail(email);
         if(!user) {
             res.status(200).json({
-                code: 500,
+                code: 201,
                 message: 'Email is not correct'
             });
             return;
         }
 
-        const token = UserController.generateJWT(user[0].id, user[0].email, user[0].status);
-        const url = `http://localhost:3000/reset-password/${token}`;
-        const html = `
-            <h3>Click <a href="${url}">here</a> to reset password</h3>
-        `;
+        const otp = helper.createOTPCode(email);
 
-        const mailOptions = {
-            from:  process.env.EMAIL,
-            to: email,
-            subject: 'Reset password',
-            html: html
-        };
-
-        transporter.sendMail(mailOptions, (err, info) => {
-            if(err) {
-                console.log(err);
-                res.status(500).json({
-                    code: 500,
-                    message: 'Internal server error'
-                });
-                return;
-            }
-
+        if(!otp) {
             res.status(200).json({
-                code: 200,
-                message: 'Please check your email to reset password'
+                code: 500,
+                message: 'Internal server error'
             });
+            return;
+        }
+
+        const html = `
+            <h1>Reset password</h1>
+            <p>OTP: ${otp}</p>
+        `
+
+        MailService.sendMail(email, 'Reset password', html);
+
+    },
+
+    verifyOTP: async (req, res) => {
+        const email = req.body.email;
+        const otp = req.body.otp;
+
+        if(!email || !otp) {
+            res.status(200).json({
+                code: 400,
+                message: 'Bad request'
+            });
+            return;
+        }
+
+        const user = await checkEmail(email);
+        if(!user) {
+            res.status(200).json({
+                code: 201,
+                message: 'Email is not correct'
+            });
+            return;
+        }
+
+        const check = await helper.verifyOTPCode(email, otp);
+        if(!check) {
+            res.status(200).json({
+                code: 201,
+                message: 'OTP is not correct'
+            });
+            return;
+        }
+
+        res.status(200).json({
+            code: 200,
+            message: 'Success'
         });
     },
-    
+
     resetPassword: async (req, res) => {
-        const token = req.params.token;
-        const password = req.body.password;
+        const email = req.body.email;
+        const password = req.body.password;   
         const confirmPassword = req.body.confirmPassword;
+
+        const check = await checkEmail(email);
+        if(!check) {
+            res.status(200).json({
+                code: 201,
+                message: 'Email is not correct'
+            });
+            return;
+        }
 
         if(!password || !confirmPassword) {
             res.status(200).json({
@@ -313,36 +348,27 @@ const UserController = {
             return;
         }
 
-        try {
-            const user = jwt.verify(token, process.env.JWT_SECRET);
-            const salt = bcrypt.genSaltSync(10);
-            const hashPassword = bcrypt.hashSync(password, salt);
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(password, salt);
 
-            const sql = `UPDATE account SET password = ? WHERE id = ?`;
-            const params = [hashPassword, user.id];
+        const sql = `UPDATE account SET password = ? WHERE email = ?`;
+        const params = [hashPassword, email];
 
-            db.queryParams(sql, params)
-                .then((result) => {
-                    res.status(200).json({
-                        code: 200,
-                        message: 'Reset password successfully',
-                        data: result[0]
-                    });
-                })
-                .catch((err) => {
-                    console.log(err);
-                    res.status(500).json({
-                        code: 500,
-                        message: 'Internal server error'
-                    });
+        db.queryParams(sql, params)
+            .then((result) => {
+                res.status(200).json({
+                    code: 200,
+                    message: 'Reset password successfully',
+                    data: result[0]
                 });
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({
-                code: 500,
-                message: 'Internal server error'
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({
+                    code: 500,
+                    message: 'Internal server error'
+                });
             });
-        }
     }
     
 };

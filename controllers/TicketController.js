@@ -57,18 +57,13 @@ const TicketControllers = {
             });
     },
     addTicket: async (req, res) => {
-        if (req.user == null) {
-            res.status(401).json({ message: 'Unauthorized' });
-            return;
-        }
-
         const { schedule_id, schedule_time_id, seat, food_combo_id, food_combo_quantity} = req.body;
     
 
         if (!schedule_id || !schedule_time_id || !seat) {
             console.log('Bad request');
-            res.status(400).json({ 
-                code: 201,
+            res.status(200).json({ 
+                code: 400,
                 message: 'Bad request' 
             });
             return;
@@ -82,7 +77,7 @@ const TicketControllers = {
         const check = await checkSeat(schedule_time_id, seatList);
 
         if (!check) {
-            res.status(400).json({
+            res.status(200).json({
                 code: 201, 
                 message: 'Seat is not available' 
             });
@@ -110,14 +105,10 @@ const TicketControllers = {
         });
     },
     getTicketByAccountId: async (req, res) => {
-        if (req.user === null) {
-            res.status(401).json({ message: 'Unauthorized' });
-            return;
-        }
         const account_id = req.user.id;
         if(account_id == null) {
-            res.status(400).json({
-                code: 201,
+            res.status(200).json({
+                code: 400,
                 message: 'Bad request'
             });
             return;
