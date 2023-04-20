@@ -225,26 +225,26 @@ const resetInput = () => {
     confirmPassSignUpErrMess.innerText = ''
 }
 
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-
 const emailSignInErrMess = document.getElementById('email_sign_in_error')
 const passSignInErrMess = document.getElementById('password_sign_in_error')
 const logGroup = document.querySelector('#log_group')
 const avatar = document.querySelector('#user_opt_container')
 
+const emailRegex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 /**
  * If the email and password are valid, submit the form. Otherwise, display an error message.
  */
 const signInSubmitHandle = () => {
     const email = signInForm.elements['email_sign_in'].value.trim()
     const password = signInForm.elements['password_sign_in'].value.trim()
-    if (emailRegex.test(email) && passwordRegex.test(password)) {
+    if(emailRegex.test(email) && passwordRegex.test(password)) {
         axios.post('/login', {
             email: email,
             password: password
         })
             .then(res => {
+                console.log(2)
                 let status = 'fail'
                 if (res.data.code == 200) {
                     status = 'success'
@@ -256,7 +256,7 @@ const signInSubmitHandle = () => {
                         localStorage.setItem('userInfo', JSON.stringify(res.data.data))
                     }
                     closeSignHandle()
-                    // axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
                     localStorage.setItem('token', res.data.accessToken)
                 }
                 showToastMes(res.data.message, status)
@@ -373,7 +373,7 @@ window.addEventListener('load', () => {
 })
 
 const navBtn = document.querySelectorAll('.nav_item')
-const navPaths = ['/', '/movie', '/event', '/support']
+const navPaths = ['/', '/movie', '/theater', '/support']
 
 if (navPaths.includes(window.location.pathname.toLowerCase())) {
     document.querySelector('.nav-active').classList.remove('nav-active')
@@ -397,6 +397,7 @@ const checkAccessToken = () => {
     if (localStorage.getItem('token') !== null) {
         logGroup.style.display = 'none'
         avatar.style.display = 'block'
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     } else {
         logGroup.style.display = 'block'
         avatar.style.display = 'none'
@@ -412,8 +413,13 @@ const handleLogOut = () => {
     checkAccessToken()
 }
 
-const profileBtn = document.querySelector('#profile-btn')
+const profileBtn = document.querySelector('#profile_btn')
+const historyBtn = document.querySelector('#history_btn')
 
 profileBtn.addEventListener('click', () => {
     changePath('profile')
+})
+
+historyBtn.addEventListener('click', () => {
+    changePath('history')
 })

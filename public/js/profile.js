@@ -15,9 +15,12 @@ const saveUserInfo = () => {
         phone : phone.value,
         birthday : birthday.value,
         address : address.value
-    }, {
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+    })
+    .then(res => {
+        if(res.data.code == 200){
+            showToastMes(res.data.message, 'success')
+        }else{
+            showToastMes(res.data.message, 'fail')
         }
     })
     .catch(err => {
@@ -91,10 +94,6 @@ changePassBtn.addEventListener('click', () => {
         password : currPassword.value,
         newPassword : newPassword.value,
         confirmPassword : confirmNewPassword.value
-    }, {
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
     })
     .then(res => {
         if(res.data.code == 200){

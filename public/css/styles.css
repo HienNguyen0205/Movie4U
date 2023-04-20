@@ -98,6 +98,7 @@ button {
 .logo {
   height: 56px;
   user-select: none;
+  filter: drop-shadow(3px 3px 3px black);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

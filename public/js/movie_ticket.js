@@ -512,9 +512,6 @@ const getMovieTheaterInfo = (date , order) => {
         params: {
             movie_id: data.id,
             date: formatDate(date)
-        }, 
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
     })
     .then(res => {
@@ -578,10 +575,12 @@ purchaseBtn.addEventListener('click', () => {
             seat: seats.join(','),
             food_combo_id: foodId.join(','),
             food_combo_quantity: foodQuantity.join(','),
-        }, {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
+        })
+        .then(res => {
+            
+        })
+        .catch(err => {
+            console.error(err)
         })
     }
 })

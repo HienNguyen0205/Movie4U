@@ -7,13 +7,6 @@ router.get('/',(req, res) => {
     res.render('home', {
         layout: 'mainLayout',
         script: '/js/home.js',
-        carousel: [
-            {index: 0, src: '/images/Carousel/Babylon.jpg'},
-            {index: 1, src: '/images/Carousel/Knock-at-the-Cabin.jpg'},
-            {index: 2, src: '/images/Carousel/Missing.jpg'},
-            {index: 3, src: '/images/Carousel/Shazam_-Fury-of-the-Gods.jpg'},
-            {index: 4, src: '/images/Carousel/Titanic.jpg'},
-        ],
     })
 })
 
@@ -42,6 +35,20 @@ router.get('/profile', (req, res) => {
     res.render('profile', {
         layout: 'mainLayout',
         script: '/js/profile.js',
+    })
+})
+
+router.get('/history', (req,res) => {
+    res.render('history', {
+        layout: 'mainLayout',
+        script: '/js/history.js',
+    })
+})
+
+router.get('/theater', (req,res) => {
+    res.render('theater', {
+        layout: 'mainLayout',
+        script: '/js/theater.js',
     })
 })
 
