@@ -1073,3 +1073,17 @@ footer > div > a:hover {
 .cursor-pointer{
   cursor: pointer;
 }
+
+.theater_container{
+  display: flex;
+  padding: 24px 32px;
+  border: 1px solid var(--border-orange);
+  border-radius: 24px;
+  margin: 32px 0;
+}
+
+.theater_container img{
+  aspect-ratio: 4/3;
+  width: 33%;
+  border-radius: 24px;
+}

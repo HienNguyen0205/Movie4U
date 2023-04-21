@@ -14,6 +14,7 @@ const renderTrailer = data => {
 }
 
 const renderCarousel = data => {
+    carousel.innerHTML = ''
     data.forEach((item,index) => {
         carousel.insertAdjacentHTML('beforeend', `
             <div class="carousel-item ${index === 0 ? 'active' : ''}">
@@ -51,6 +52,7 @@ getLastedMovie(1)
 const getPosters = () => {
     axios.get('/movie/getAllPoster')
     .then(res => {
+        listTrailer.innerHTML = ''
         res.data.data.forEach(item => {
             renderTrailer(item)
         })

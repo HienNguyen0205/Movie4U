@@ -70,5 +70,4 @@ router.post('/updateUserInfo', middleware.authForUser , UserControllers.updateUs
 
 router.post('/changePassword', middleware.authForUser , UserControllers.changePassword)
 
-
 module.exports = router
