@@ -57,7 +57,7 @@ const MiddleWaresController = {
             return res.redirect('/');
         }
 
-        jwt.verify(refreshToken, process.env.JWT_SECRET, (err, user) => {
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
             if(err){
                 return res.redirect('/');
             }
@@ -76,7 +76,7 @@ const MiddleWaresController = {
             return res.redirect('/');
         }
 
-        jwt.verify(refreshToken, process.env.JWT_SECRET, (err, user) => {
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
             if(err){
                 return res.redirect('/');
             }

@@ -3,7 +3,7 @@ const router = express.Router()
 const UserControllers = require('../controllers/UserController')
 const middleware = require('../middlewares')
 
-router.get('/',(req, res) => {
+router.get('/', (req, res) => {
     res.render('home', {
         layout: 'mainLayout',
         script: '/js/home.js',
@@ -17,7 +17,7 @@ router.get('/movie', (req, res) => {
     })
 })
 
-router.get('/movieticket', middleware.authForAdminAndRedirect, (req, res) => {
+router.get('/movieticket', (req, res) => {
     res.render('movieTicket', {
         layout: 'mainLayout',
         script: '/js/movie_ticket.js',

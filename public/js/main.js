@@ -249,7 +249,7 @@ const signInSubmitHandle = () => {
                 if (res.data.code == 200) {
                     status = 'success'
                     if (res.data.status == 0) {
-                        changePath('admin/DashBoard')
+                        changePath('admin')
                     } else if (res.data.status == 1) {
                         logGroup.style.display = 'none'
                         avatar.style.display = 'block'

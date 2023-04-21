@@ -1021,7 +1021,9 @@ function removeFile(filePath, table = "") {
         db.queryParams(sql, params)
             .then((result) => {
                 if (result.length > 1) {
-                    fs.unlinkSync(oldPath);
+                    if(fs.existsSync(oldPath)) {
+                        fs.unlinkSync(oldPath);
+                    }
                 }
             })
             .catch((err) => {
