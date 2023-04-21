@@ -64,9 +64,9 @@ router.post('/verifyOTP', UserControllers.verifyOTP)
 
 router.post('resetPassword', UserControllers.resetPassword)
 
-router.post('/updateUserInfo', middleware.verifyJWT , UserControllers.updateUserInfo)
+router.post('/updateUserInfo', middleware.authForUser , UserControllers.updateUserInfo)
 
-router.post('/changePassword', middleware.verifyJWT , UserControllers.changePassword)
+router.post('/changePassword', middleware.authForUser , UserControllers.changePassword)
 
 
 module.exports = router

@@ -52,28 +52,28 @@ router_admin.get('/Booking',(req, res) => {
     })
 })
 
-router_admin.get('/getAllUser', adminControllers.getAllUser)
-router_admin.get('/getRevenue', adminControllers.getRevenue)
+router_admin.get('/getAllUser', middleware.authForAdmin, adminControllers.getAllUser)
+router_admin.get('/getRevenue', middleware.authForAdmin, adminControllers.getRevenue)
 
-router_admin.get('/getAllTheatres', adminControllers.getAllTheatres)
-router_admin.get('/getTheatreById', adminControllers.getTheatreById)
-router_admin.post('/addTheatre', adminControllers.addTheatre)
-router_admin.post('/updateTheatre', adminControllers.updateTheatre)
-router_admin.delete('/deleteTheatre', adminControllers.deleteTheatre)
+router_admin.get('/getAllTheatres', middleware.authForAdmin, adminControllers.getAllTheatres)
+router_admin.get('/getTheatreById', middleware.authForAdmin, adminControllers.getTheatreById)
+router_admin.post('/addTheatre', middleware.authForAdmin, adminControllers.addTheatre)
+router_admin.post('/updateTheatre', middleware.authForAdmin, adminControllers.updateTheatre)
+router_admin.delete('/deleteTheatre', middleware.authForAdmin, adminControllers.deleteTheatre)
 
-router_admin.get('/getAllTicket', ticketControllers.getAllTicket)
+router_admin.get('/getAllTicket', middleware.authForAdmin, ticketControllers.getAllTicket)
 
-router_admin.get('/getAllSchedule', adminControllers.getAllSchedule)
-router_admin.post('/addSchedule', adminControllers.addScheduleMovie)
+router_admin.get('/getAllSchedule', middleware.authForAdmin, adminControllers.getAllSchedule)
+router_admin.post('/addSchedule', middleware.authForAdmin, adminControllers.addScheduleMovie)
 
-router_admin.get('/getFoodComboById', adminControllers.getFoodComboById)
-router_admin.post('/addFoodCombo', adminControllers.addFoodCombo)
-router_admin.post('/updateFoodCombo', adminControllers.updateFoodCombo)
-router_admin.delete('/deleteFoodCombo', adminControllers.deleteFoodCombo)
+router_admin.get('/getFoodComboById', middleware.authForAdmin, adminControllers.getFoodComboById)
+router_admin.post('/addFoodCombo', middleware.authForAdmin, adminControllers.addFoodCombo)
+router_admin.post('/updateFoodCombo', middleware.authForAdmin, adminControllers.updateFoodCombo)
+router_admin.delete('/deleteFoodCombo', middleware.authForAdmin, adminControllers.deleteFoodCombo)
 
-router_admin.get('/getAllMovie', adminControllers.getAllMovie)
-router_admin.post('/addMovie', adminControllers.addMovie)
-router_admin.post('/updateMovie', adminControllers.updateMovie)
-router_admin.delete('/deleteMovie', adminControllers.deleteMovie)
+router_admin.get('/getAllMovie', middleware.authForAdmin, adminControllers.getAllMovie)
+router_admin.post('/addMovie', middleware.authForAdmin, adminControllers.addMovie)
+router_admin.post('/updateMovie', middleware.authForAdmin, adminControllers.updateMovie)
+router_admin.delete('/deleteMovie', middleware.authForAdmin, adminControllers.deleteMovie)
 
 module.exports = router_admin

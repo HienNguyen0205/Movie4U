@@ -12,10 +12,7 @@ const MiddleWaresController = {
 
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
             if(err){
-                req.session.flash = {
-                    message: 'Unauthorized'                    
-                }
-                return res.redirect(303,'/');
+                return res.status(403).json({message: 'Invalid token'});
             }
             req.user = user;
             next();
@@ -48,29 +45,25 @@ const MiddleWaresController = {
         });
     },
 
-    authForUserAndRedirect: (req, res, next) => {
-        console.log(req.user);
-        if(req.user.status !== 1){
-            next();
-        }else{
-            req.session.flash = {
-                message: 'You are not user'                    
-            }
-            res.redirect(303,'/admin');
+    authForRedirect: (req, res, next) => {
+        const refreshToken = req.cookies.refreshToken;
+        if(!refreshToken){
+            return res.redirect('/');
         }
-    },
 
-    authForAdminAndRedirect: (req, res, next) => {
-        if(req.user.status !== 0){
-            next();
-        }else{
-            req.session.flash = {
-                message: 'You are not admin'                    
+        jwt.verify(refreshToken, process.env.JWT_SECRET, (err, user) => {
+            if(err){
+                return res.redirect('/');
             }
-            res.redirect(303,'/');
-        }
+            req.user = user;
+            if(req.user.status === 1){
+                res.redirect('/');
+            }else{
+                res.redirect('/admin');
+            }
+            next();
+        });
     }
-    
 }
 
 module.exports = MiddleWaresController;

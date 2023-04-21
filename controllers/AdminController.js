@@ -388,15 +388,51 @@ const AdminControllers = {
             return;
         }
 
+        if(date < new Date().toISOString().split('T')[0]) {
+            res.status(200).json({
+                code: 201,
+                message: 'Date is not available'
+            });
+            return;
+        }
+
         start_time = helper.convertTime(start_time);
         end_time = helper.convertTime(end_time);
+
+        if(start_time >= end_time) {
+            res.status(200).json({
+                code: 201,
+                message: 'End time must be greater than start time'
+            });
+            return;
+        }
+
+        const movie = await getMovieById(movie_id);
+        if (movie === null || movie?.length === 0) {
+            res.status(200).json({
+                code: 201,
+                message: 'Movie not exist'
+            });
+            return;
+        }else{
+            const duration = movie[0].duration;
+            const end_time_movie = new Date(start_time);
+            end_time_movie.setMinutes(end_time_movie.getMinutes() + duration);
+            if(end_time_movie > end_time) {
+                res.status(200).json({
+                    code: 201,
+                    message: 'Time duration is not enough'
+                });
+                return;
+            }
+        }
 
         let checkSchedule = await checkScheduleTime(start_time, end_time, date, room_id);
 
         if (checkSchedule !== null) {
             res.status(200).json({
                 code: 201,
-                message: 'Time is not available'
+                message: 'There is a schedule in this time'
             });
             return;
         }
