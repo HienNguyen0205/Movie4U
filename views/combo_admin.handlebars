@@ -19,16 +19,6 @@
             </tr>
         </thead>
         <tbody id="list_combo" class="content_list">
-            <tr>
-                {{!-- <th scope="row">1</th>
-                <td>Mua Đi Làm Ơn</td>
-                <td><img class="theatres_img" src="/images/UI/popcorn&cola.jpg" alt=""></td>
-                <td>10$</td>
-                <td><label class="content_checkbox-outer"><input type="checkbox" class="content_checkbox"
-                            name="theatre1" value=""><span class="checkmark"></span></label></td>
-                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                        data-bs-target="#combo_edit-modal">Edit</button></td> --}}
-            </tr>
         </tbody>
     </table>
     <div class="modal fade" id="combo_add-modal" tabindex="-1" aria-labelledby="combo_add-label" aria-hidden="true">
@@ -57,13 +47,13 @@
                             <div class="combo_amount-large1">
                                 <p>Popcorns</p>
                                 <div class="input-group flex-nowrap">
-                                    <input type="number" id="popcorn_amount" class="form-control">
+                                    <input type="number" id="popcorn_amount" class="form-control" min="0" max="100">
                                 </div>
                             </div>
                             <div class="combo_amount-large2">
                                 <p>Drinks</p>
                                 <div class="input-group flex-nowrap">
-                                    <input type="number" id="drink_amount" class="form-control">
+                                    <input type="number" id="drink_amount" class="form-control" min="0" max="100">
                                 </div>
                             </div>
                         </div>
@@ -110,13 +100,13 @@
                             <div class="combo_amount-large1">
                                 <p>Popcorns</p>
                                 <div class="input-group flex-nowrap">
-                                    <input type="number" id="popcorn_amount-edit" class="form-control">
+                                    <input type="number" id="popcorn_amount-edit" class="form-control" min="0" max="100">
                                 </div>
                             </div>
                             <div class="combo_amount-large2">
                                 <p>Drinks</p>
                                 <div class="input-group flex-nowrap">
-                                    <input type="number" id="drink_amount-edit" class="form-control">
+                                    <input type="number" id="drink_amount-edit" class="form-control" min="0" max="100">
                                 </div>
                             </div>
                         </div>

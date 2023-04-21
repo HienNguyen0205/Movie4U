@@ -6,6 +6,10 @@ var showDate = document.getElementById('show_date')
 var startTime = document.getElementById('start_time')
 var endTime = document.getElementById('end_time')
 var priceMovie = document.getElementById('price_movie')
+
+// Validate Date Of Show
+const today = new Date().toISOString().split('T')[0];
+showDate.setAttribute('min', today)
 // Get All Theatres To Selection
 function getAllTheatres() {
     axios.get('/admin/getAllTheatres', {

@@ -19,19 +19,6 @@
             </tr>
         </thead>
         <tbody id="list_timing" class="content_list">
-            {{!-- <tr>
-                <th scope="row">1</th>
-                <td>Ben Tre CGV</td>
-                <td>Black Panther</td>
-                <td>1</td>
-                <td>2023-04-13/2023-05-13</td>
-                <td>10:00:00/20:00:00</td>
-                <td>50$</td>
-                <td><label class="content_checkbox-outer"><input type="checkbox" id="timing1" class="content_checkbox"
-                            name="timing1"><span class="checkmark"></span></label></td>
-                <td><button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                        data-bs-target="#timing_edit-modal">Edit</button></td>
-            </tr> --}}
         </tbody>
     </table>
 
@@ -48,47 +35,24 @@
                     <div class="input-group flex-nowrap">
                         <select id="timing_theatre-select" class="form-select" aria-label="Default select example">
                             <option selected>Choose Theatre</option>
-                            {{!-- <option value="1">Ben Tre CGV</option>
-                            <option value="2">Go Vap CGV</option>
-                            <option value="3">HCM CGV</option> --}}
                         </select>
                     </div>
                     <p>Select Movie</p>
                     <div class="mb-3 add_image-outer">
                         <select id="timing_movie-select" class="form-select" aria-label="Default select example">
                             <option selected>Choose Movie</option>
-                            {{!-- <option value="1">End Game</option>
-                            <option value="2">Star War</option>
-                            <option value="3">Mario Bros</option> --}}
                         </select>
                     </div>
                     <p>Select Room</p>
                     <div class="mb-3 add_image-outer">
                         <select id="timing_room-select" class="form-select" aria-label="Default select example">
                             <option selected>None</option>
-                            {{!-- <option value="1">2D/3D</option>
-                            <option value="2">4DX</option>
-                            <option value="3">IMAX</option> --}}
                         </select>
                     </div>
                     <p>Show Date</p>
                     <div class="input-group  flex-nowrap">
                         <input type="date" id="show_date" class="form-control">
                     </div>
-                    {{!-- <div class="timing_date-outer">
-                        <div class="timing_date-large1">
-                            <p>Show Start Date</p>
-                            <div class="input-group flex-nowrap">
-                                <input type="date" id="start_date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="timing_date-large2">
-                            <p>Show End Date</p>
-                            <div class="input-group flex-nowrap">
-                                <input type="date" id="end_date" class="form-control">
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="timing_time-outer">
                         <div class="timing_time-large1">
                             <p>Show Start Time</p>
@@ -106,7 +70,7 @@
                     <div class="timing_price-outer">
                         <p>Price</p>
                         <div class="input-group flex-nowrap">
-                            <input type="number" id="price_movie" class="form-control">
+                            <input type="number" id="price_movie" class="form-control" min="0">
                         </div>
                     </div>
                 </div>
