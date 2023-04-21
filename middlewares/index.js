@@ -25,6 +25,29 @@ const MiddleWaresController = {
         });
     },
 
+    checkToken: (req, res) => {
+        const token = req.query.token;
+        if(!token){
+            return res.status(401).json({
+                code: 401,
+                message: 'Token not found'
+            });
+        }
+
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            if(err){
+                return res.status(403).json({
+                    code: 403,
+                    message: 'Invalid token'
+                });
+            }
+            res.status(200).json({
+                code: 200,
+                message: 'Token is valid'
+            });
+        });
+    },
+
     authForUser: (req, res, next) => {
         MiddleWaresController.verifyJWT(req, res, () => {
             if(req.user.status === 1){

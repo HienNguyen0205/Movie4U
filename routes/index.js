@@ -62,7 +62,9 @@ router.post('/createOTP', UserControllers.createOTP)
 
 router.post('/verifyOTP', UserControllers.verifyOTP)
 
-router.post('resetPassword', UserControllers.resetPassword)
+router.post('/resetPassword', UserControllers.resetPassword)
+
+router.get('/checkToken', middleware.checkToken)
 
 router.post('/updateUserInfo', middleware.authForUser , UserControllers.updateUserInfo)
 
