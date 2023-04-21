@@ -168,7 +168,12 @@ checkTicketContainer()
 const deleteTicketItem = seatId => {
     const ticket = document.querySelector(`.${seatId}_ticket`)
     const seat = document.querySelector(`.${seatId}_seat`)
+    const ticketSelected = JSON.parse(localStorage.getItem('ticketSelected'))
+    const index = ticketSelected.indexOf(seatId)
+    ticketSelected.splice(index, index + 1)
     if (seat.classList.contains('seat_item-selected')) {
+        localStorage.setItem('ticketSelected', JSON.stringify(ticketSelected))
+        calcTicketPrice(JSON.parse(localStorage.getItem('theaterInfo')))
         ticket.remove()
         seat.classList.remove('seat_item-selected')
         seat.classList.add('seat_item-empty')
@@ -314,6 +319,7 @@ const setFoodEvent = () => {
 }
 
 const renderFood = data => {
+    foodContainer.innerHTML = ''
     data.forEach(item => {
         foodContainer.insertAdjacentHTML('beforeend', `
             <div class="d-flex">
@@ -360,9 +366,14 @@ nextStepSeatBtn.addEventListener('click', () => {
 })
 
 const nextFoodBtn = document.querySelector('#next_food_btn')
+const prevFoodBtn = document.querySelector('#prev_food_btn')
 
 nextFoodBtn.addEventListener('click', () => {
     changeTicketSection(2, 3)
+})
+
+prevFoodBtn.addEventListener('click', () => {
+    changeTicketSection(2, 1)
 })
 
 const movieInfo = document.querySelector('#movie_info')
@@ -507,7 +518,6 @@ const renderDateSelect = () => {
 renderDateSelect()
 
 const getMovieTheaterInfo = (date , order) => {
-    console.log(date , order)
     axios.get('/ticket/getMovieSchedule', {
         params: {
             movie_id: data.id,
@@ -546,7 +556,6 @@ const purchaseInfo = document.querySelectorAll('.purchase_info')
 purchaseBtn.addEventListener('click', () => {
     let flag = false
     purchaseInfo.forEach((item,index) => {
-        console.log(index, item)
         const value = item.value
         if((index === 0 || index === 1 || index === 3 || index === 5) && value == ''){
             flag = true
@@ -577,7 +586,11 @@ purchaseBtn.addEventListener('click', () => {
             food_combo_quantity: foodQuantity.join(','),
         })
         .then(res => {
-            
+            if(res.data.code == 200){
+                showToastMes(res.data.message, 'success')
+            }else{
+                showToastMes(res.data.message, 'fail')
+            }
         })
         .catch(err => {
             console.error(err)

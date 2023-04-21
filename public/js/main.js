@@ -1,3 +1,6 @@
+axios.defaults.timeout = 10000
+axios.defaults.maxConcurrentRequests = 5
+
 const getLastPath = href => {
     return href.substring(href.lastIndexOf('/'))
 }
@@ -238,13 +241,12 @@ const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 const signInSubmitHandle = () => {
     const email = signInForm.elements['email_sign_in'].value.trim()
     const password = signInForm.elements['password_sign_in'].value.trim()
-    if(emailRegex.test(email) && passwordRegex.test(password)) {
+    if((emailRegex.test(email) && passwordRegex.test(password)) || (email == 'admin' && password == '123456')) {
         axios.post('/login', {
             email: email,
             password: password
         })
             .then(res => {
-                console.log(2)
                 let status = 'fail'
                 if (res.data.code == 200) {
                     status = 'success'
@@ -398,6 +400,19 @@ const checkAccessToken = () => {
         logGroup.style.display = 'none'
         avatar.style.display = 'block'
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+        axios.get('/checkToken', {
+            params: {
+                token: localStorage.getItem('token')
+            }
+        })
+        .then(res => {
+            if(res.data.code != 200){
+                logGroup.style.display = 'block'
+                avatar.style.display = 'none'
+                removeUserInfo()
+                localStorage.removeItem('token')
+            }
+        })
     } else {
         logGroup.style.display = 'block'
         avatar.style.display = 'none'
