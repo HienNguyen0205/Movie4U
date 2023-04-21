@@ -17,7 +17,7 @@ router.get('/movie', (req, res) => {
     })
 })
 
-router.get('/movieticket', (req, res) => {
+router.get('/movieticket', middleware.authForAdminAndRedirect, (req, res) => {
     res.render('movieTicket', {
         layout: 'mainLayout',
         script: '/js/movie_ticket.js',
@@ -31,14 +31,14 @@ router.get('/support', (req, res) => {
     })
 })
 
-router.get('/profile', (req, res) => {
+router.get('/profile', middleware.authForAdminAndRedirect, (req, res) => {
     res.render('profile', {
         layout: 'mainLayout',
         script: '/js/profile.js',
     })
 })
 
-router.get('/history', (req,res) => {
+router.get('/history', middleware.authForAdminAndRedirect, (req,res) => {
     res.render('history', {
         layout: 'mainLayout',
         script: '/js/history.js',

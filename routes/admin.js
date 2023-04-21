@@ -4,7 +4,7 @@ const  adminControllers = require('../controllers/AdminController')
 const ticketControllers = require('../controllers/TicketController')
 const middleware = require('../middlewares')
 
-router_admin.get('/', (req, res) => {
+router_admin.get('/', middleware.authForAdminAndRedirect, (req, res) => {
     res.render('dashboard_admin', {
         layout: 'mainLayout_admin',
         script: '/js/dashboard_admin.js',
@@ -15,7 +15,7 @@ router_admin.get('/', (req, res) => {
         ],
     })
 })
-router_admin.get('/MovieTheatres',(req, res) => {
+router_admin.get('/MovieTheatres', middleware.authForAdminAndRedirect, (req, res) => {
     res.render('movieTheatres_admin', {
         layout: 'mainLayout_admin',
         script: '/js/movietheatres_admin.js',
@@ -27,25 +27,25 @@ router_admin.get('/Movies',(req, res) => {
         script: '/js/movies_admin.js',
     })
 })
-router_admin.get('/ShowTiming',(req, res) => {
+router_admin.get('/ShowTiming',middleware.authForAdminAndRedirect, (req, res) => {
     res.render('showTiming_admin', {
         layout: 'mainLayout_admin',
         script: '/js/showTiming_admin.js',
     })
 })
-router_admin.get('/Combo',(req, res) => {
+router_admin.get('/Combo',middleware.authForAdminAndRedirect, (req, res) => {
     res.render('combo_admin', {
         layout: 'mainLayout_admin',
         script: '/js/combo_admin.js',
     })
 })
-router_admin.get('/Users',(req, res) => {
+router_admin.get('/Users',middleware.authForAdminAndRedirect, (req, res) => {
     res.render('users_admin', {
         layout: 'mainLayout_admin',
         script: '/js/users_admin.js',
     })
 })
-router_admin.get('/Booking',(req, res) => {
+router_admin.get('/Booking',middleware.authForAdminAndRedirect, (req, res) => {
     res.render('booking_admin', {
         layout: 'mainLayout_admin',
         script: '/js/booking_admin.js',

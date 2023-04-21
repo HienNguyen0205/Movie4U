@@ -71,7 +71,7 @@ const AdminControllers = {
 
     getAllTheatres: (req, res) => {
         const sql = `
-                SELECT t.id, t.name, t.address, t.image,
+                SELECT t.id, t.name, t.address, t.image, t.tel, t.description,
                 COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
                 COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS 'R4DX',
                 COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'RIMAX',
@@ -108,7 +108,7 @@ const AdminControllers = {
         }
 
         $sql = `
-                SELECT t.id AS theatre_id, t.name AS theatre_name, t.address AS theatre_address, t.image AS theatre_image,
+                SELECT t.id AS theatre_id, t.name AS theatre_name, t.address AS theatre_address, t.image AS theatre_image, t.tel, t.description,
                 COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
                 COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS 'R4DX',
                 COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'RIMAX',
@@ -146,7 +146,7 @@ const AdminControllers = {
                 return;
             }
 
-            if(!fields.name || !fields.address || !fields.R2D_3D || !fields.R4DX || !fields.RIMAX || !files.image) {
+            if(!fields.name || !fields.address || !fields.tel || !fields.description  || !fields.R2D_3D || !fields.R4DX || !fields.RIMAX || !files.image) {
                 res.status(200).json({
                     code: 400,
                     message: 'Bad request'
@@ -156,11 +156,13 @@ const AdminControllers = {
 
             const name = fields.name[0];
             const address = fields.address[0];
+            const tel = fields.tel[0];
+            const description = fields.description[0];
             const roomList = [fields.R2D_3D[0], fields.R4DX[0], fields.RIMAX[0]];
             const roomListName = ['2D/3D', '4DX', 'IMAX'];
             const fileImage = files.image[0];
 
-            if (!name || !address || !roomList || !fileImage) {
+            if (!name || !address || !roomList || !fileImage || !tel || !description) {
                 res.status(200).json({
                     code: 400,
                     message: 'Bad request'
@@ -189,8 +191,8 @@ const AdminControllers = {
                 });
                 return;
             }
-            const sql = `INSERT INTO theatre(name, address, image) VALUES(?, ?, ?)`;
-            const params = [name, address, destination + fileImage.originalFilename];
+            const sql = `INSERT INTO theatre(name, address, image, tel, description) VALUES(?, ?, ?, ?, ?)`;
+            const params = [name, address, destination + fileImage.originalFilename, tel, description];
             db.queryTransaction(sql, params)
                 .then(async (result) => {
                     const theatreId = result.insertId;
@@ -223,7 +225,7 @@ const AdminControllers = {
                 return;
             }
 
-            if(!fields.id || !fields.name || !fields.address) {
+            if(!fields.id || !fields.name || !fields.address || !fields.tel || !fields.description) {
                 res.status(200).json({
                     code: 400,
                     message: 'Bad request'
@@ -234,8 +236,10 @@ const AdminControllers = {
             const id = fields.id[0];
             const name = fields.name[0];
             const address = fields.address[0];
+            const tel = fields.tel[0];
+            const description = fields.description[0];
 
-            if (!id || !name || !address) {
+            if (!id || !name || !address || !tel || !description) {
                 res.status(200).json({
                     code: 400,
                     message: 'Bad request'
@@ -254,8 +258,8 @@ const AdminControllers = {
             }
 
             let params = [];
-            params = [name, address, theatre[0].image, id];
-            const sql = `UPDATE theatre SET name = ?, address = ?, image = ? WHERE id = ?`;
+            params = [name, address, theatre[0].image, tel, description, id];
+            const sql = `UPDATE theatre SET name = ?, address = ?, image = ?, tel = ?, description = ? WHERE id = ?`;
 
             if (files?.image !== undefined) {
                 const fileImage = files.image[0];
@@ -276,7 +280,7 @@ const AdminControllers = {
                 const destination = '/images/MovieTheatres/';
                 const fileName = fileImage.originalFilename;
                 const errMove = moveFile(oldPath, fileName, destination);
-                params = [name, address, destination + fileImage.originalFilename, id];
+                params = [name, address, destination + fileImage.originalFilename, tel, description , id];
 
                 if (errMove) {
                     res.status(200).json({

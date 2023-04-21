@@ -5,14 +5,20 @@ const MiddleWaresController = {
         const token = req.headers.authorization;
 
         if(!token){
-            return res.status(401).json({message: 'Token not found'});
+            return res.status(401).json({
+                code: 401,
+                message: 'Token not found'
+            });
         }
 
         const accessToken = token.split(' ')[1];
 
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
             if(err){
-                return res.status(403).json({message: 'Invalid token'});
+                return res.status(403).json({
+                    code: 403,
+                    message: 'Invalid token'
+                });
             }
             req.user = user;
             next();
@@ -34,7 +40,7 @@ const MiddleWaresController = {
 
     authForAdmin: (req, res, next) => {
         MiddleWaresController.verifyJWT(req, res, () => {
-            if(req.user.status !== 0){
+            if(req.user.status === 0){
                 next();
             }else{
                 res.status(403).json({
@@ -45,7 +51,26 @@ const MiddleWaresController = {
         });
     },
 
-    authForRedirect: (req, res, next) => {
+    authForAdminAndRedirect: (req, res, next) => {
+        const refreshToken = req.cookies.refreshToken;
+        if(!refreshToken){
+            return res.redirect('/');
+        }
+
+        jwt.verify(refreshToken, process.env.JWT_SECRET, (err, user) => {
+            if(err){
+                return res.redirect('/');
+            }
+            req.user = user;
+            if(req.user.status === 0){
+                next()
+            }else{
+                res.redirect('/');
+            }
+        });
+    },
+
+    authForUserAndRedirect: (req, res, next) => {
         const refreshToken = req.cookies.refreshToken;
         if(!refreshToken){
             return res.redirect('/');
@@ -57,13 +82,12 @@ const MiddleWaresController = {
             }
             req.user = user;
             if(req.user.status === 1){
-                res.redirect('/');
+                next()
             }else{
                 res.redirect('/admin');
             }
-            next();
         });
-    }
+    },
 }
 
 module.exports = MiddleWaresController;

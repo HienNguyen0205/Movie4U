@@ -31,6 +31,8 @@ CREATE TABLE theatre (
   name VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
   image VARCHAR(255) NOT NULL,
+  tel VARCHAR(255) NOT NULL,
+  description VARCHAR(21844) DEFAULT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -206,11 +208,11 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (7, 2), (7, 3), (7, 5)
 -- Jumanji: The Next Level
 INSERT INTO movie_category (movie_id, category_id) VALUES (7, 1), (7, 2), (7, 3), (7, 5);
 
-INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$X3J7jf7EB4mAylqYJDzJiuj2ApXC0xL1b0kdP3FOK580odhTJatn2",0);
+INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin@gmail.com","1234567890","$2a$04$oJCZANOYwzOmICUrRAAG2uOt6nZ1fWSJ/UhhiV1jfr5OE0KjSnyiK",0);
 
-INSERT INTO theatre(name, address, image) VALUES("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg");
-
-INSERT INTO theatre(name, address, image) VALUES("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/govap_cinema.jpg");
+INSERT INTO theatre(name, address, image, tel, description) VALUES
+("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","asd"),
+("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/govap_cinema.jpg","0808080808","asd");
 
 INSERT INTO room (name,type,theatre_id) 
 VALUES
