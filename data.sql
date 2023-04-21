@@ -208,7 +208,7 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (7, 2), (7, 3), (7, 5)
 -- Jumanji: The Next Level
 INSERT INTO movie_category (movie_id, category_id) VALUES (7, 1), (7, 2), (7, 3), (7, 5);
 
-INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin@gmail.com","1234567890","$2a$04$oJCZANOYwzOmICUrRAAG2uOt6nZ1fWSJ/UhhiV1jfr5OE0KjSnyiK",0);
+INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$YYzITgz7yyA1sVxRwMjOZeMbNM0yu6qy5UXgKqegko27WuHuGAYu.",0);
 
 INSERT INTO theatre(name, address, image, tel, description) VALUES
 ("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","asd"),
