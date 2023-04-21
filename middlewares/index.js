@@ -5,7 +5,7 @@ const MiddleWaresController = {
         const token = req.headers.authorization;
 
         if(!token){
-            return res.status(401).json({
+            return res.status(200).json({
                 code: 401,
                 message: 'Token not found'
             });
@@ -15,7 +15,7 @@ const MiddleWaresController = {
 
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
             if(err){
-                return res.status(403).json({
+                return res.status(200).json({
                     code: 403,
                     message: 'Invalid token'
                 });
@@ -28,7 +28,7 @@ const MiddleWaresController = {
     checkToken: (req, res) => {
         const token = req.query.token;
         if(!token){
-            return res.status(401).json({
+            return res.status(200).json({
                 code: 401,
                 message: 'Token not found'
             });
@@ -36,7 +36,7 @@ const MiddleWaresController = {
 
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if(err){
-                return res.status(403).json({
+                return res.status(200).json({
                     code: 403,
                     message: 'Invalid token'
                 });
@@ -53,7 +53,7 @@ const MiddleWaresController = {
             if(req.user.status === 1){
                 next();
             }else{
-                res.status(403).json({
+                res.status(200).json({
                     code: 403,                    
                     message: 'You are not user'
                 });
@@ -66,7 +66,7 @@ const MiddleWaresController = {
             if(req.user.status === 0){
                 next();
             }else{
-                res.status(403).json({
+                res.status(200).json({
                     code: 403,
                     message: 'You are not admin'
                 });
