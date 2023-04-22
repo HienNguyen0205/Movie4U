@@ -15,6 +15,8 @@ const MiddleWaresController = {
 
         jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
             if(err){
+                req.cookies.refreshToken = null;
+
                 return res.status(200).json({
                     code: 403,
                     message: 'Invalid token'
@@ -36,6 +38,7 @@ const MiddleWaresController = {
 
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if(err){
+                req.cookies.refreshToken = null;
                 return res.status(200).json({
                     code: 403,
                     message: 'Invalid token'
