@@ -31,18 +31,22 @@ const formatTrailerLink = link => {
 }
 
 const handleBuyTicket = id => {
-    axios.get('/movie/getMovieById', {
-        params: {
-            id: id,
-        }
-    })
-        .then(res => {
-            localStorage.setItem('movieInfo', JSON.stringify(res.data.data[0]))
-            changePath('movieticket')
+    if(localStorage.getItem('token') != null){
+        axios.get('/movie/getMovieById', {
+            params: {
+                id: id,
+            }
         })
-        .catch(err => {
-            console.error(err)
-        })
+            .then(res => {
+                localStorage.setItem('movieInfo', JSON.stringify(res.data.data[0]))
+                changePath('movieticket')
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }else{
+        signInModal.classList.add('modal_show')
+    }
 }
 
 const openMovieContainer = document.querySelector('#open_movie')

@@ -8,7 +8,7 @@ window.addEventListener('load', removeTicketInfo)
 
 const date = new Date()
 const dateList = []
-for(let i = 0; i < 7; i++) {
+for (let i = 0; i < 7; i++) {
     const newDate = new Date()
     newDate.setDate(date.getDate() + i)
     dateList.push(newDate)
@@ -22,10 +22,10 @@ const formatDate = date => {
 }
 
 const formatDateSelect = date => {
-    const options = { weekday: 'long' , day: 'numeric', month: 'numeric'}
+    const options = { weekday: 'long', day: 'numeric', month: 'numeric' }
     const arr = date.toLocaleDateString('en-US', options).split(', ')
     return {
-        weekday: arr[0].slice(0,3),
+        weekday: arr[0].slice(0, 3),
         dateMonth: arr[1]
     }
 }
@@ -47,7 +47,7 @@ const changeTicketSection = (from, to) => {
     buyTicketStep[from].classList.remove('buy_ticket_step-active')
     buyTicketSection[to].classList.remove('d-none')
     buyTicketSection[from].classList.add('d-none')
-    if(to < 1){
+    if (to < 1) {
         const selected = document.querySelectorAll('.seat_item-selected')
         ticketContainer.innerHTML = ''
         checkTicketContainer()
@@ -56,8 +56,13 @@ const changeTicketSection = (from, to) => {
             item.classList.add('seat_item-empty')
         })
         localStorage.removeItem('ticketSelected')
-    }else if(to < 2){
+    } else if (to < 2) {
         localStorage.removeItem('foodDetail')
+        totalFoodPrice.forEach(item => {
+            item.innerHTML = '$' + Number(0).toFixed(2)
+        })
+        priceStorage.food = Number(0).toFixed(2)
+        calcTotalPrice()
     }
     activeIndex = to
 }
@@ -141,7 +146,7 @@ const renderSeat = () => {
                 break
             } else {
                 let seatState = 'seat_item-empty'
-                if(seatNotAvai.includes(seatOrder[i]+(j + 1))){ seatState = 'seat_item-lock' }
+                if (seatNotAvai.includes(seatOrder[i] + (j + 1))) { seatState = 'seat_item-lock' }
                 lastRow.insertAdjacentHTML('beforeend', `<div class="seat_item ${seatState} ${seatOrder[i] + (j + 1)}_seat" data-row="${seatOrder[i]}" data-seat="${j + 1}">${j + 1}</div>`)
             }
         }
@@ -236,7 +241,7 @@ const ticketSeat = document.querySelectorAll('.ticket_seat')
 const formatSeat = () => {
     const seats = JSON.parse(localStorage.getItem('ticketSelected'))
     let result = ''
-    seats.forEach((item,index) => {
+    seats.forEach((item, index) => {
         result += item + (index === seats.length - 1 ? '' : ', ')
     })
     return result
@@ -260,19 +265,19 @@ const totalFoodPrice = document.querySelectorAll('.total_food_price')
 const calcFoodPrice = (id, price, quantity) => {
     let foodDetail = JSON.parse(localStorage.getItem('foodDetail'))
     let foodPrice = 0
-    if(foodDetail == null){
-        foodDetail = [{id: id, price: price, quantity: quantity}]
-        localStorage.setItem('foodDetail', JSON.stringify([{id: id, price: price, quantity: quantity}]))
-    }else{
+    if (foodDetail == null) {
+        foodDetail = [{ id: id, price: price, quantity: quantity }]
+        localStorage.setItem('foodDetail', JSON.stringify([{ id: id, price: price, quantity: quantity }]))
+    } else {
         let flag = false
         foodDetail.forEach(item => {
-            if(item.id == id){
+            if (item.id == id) {
                 flag = true
                 item.quantity = quantity
             }
         })
-        if(!flag){
-            foodDetail.push({id: id, price: price, quantity: quantity})
+        if (!flag) {
+            foodDetail.push({ id: id, price: price, quantity: quantity })
         }
         localStorage.setItem('foodDetail', JSON.stringify(foodDetail))
     }
@@ -345,15 +350,15 @@ const renderFood = data => {
 
 const getFood = () => {
     axios.get('/ticket/getFoodCombo')
-    .then(res => {
-        renderFood(res.data.data)
-    })
-    .then(() => {
-        setFoodEvent()
-    })
-    .catch(err => {
-        console.error(err)
-    })
+        .then(res => {
+            renderFood(res.data.data)
+        })
+        .then(() => {
+            setFoodEvent()
+        })
+        .catch(err => {
+            console.error(err)
+        })
 }
 
 nextStepSeatBtn.addEventListener('click', () => {
@@ -377,8 +382,10 @@ prevFoodBtn.addEventListener('click', () => {
 })
 
 const movieInfo = document.querySelector('#movie_info')
+const poster = document.querySelector('#poster')
 
 const renderMovieInfo = () => {
+    poster.setAttribute('src', data.image)
     movieInfo.insertAdjacentHTML('beforeend', `
         <image id="movie_ticket_poster" src="${data.image}" alt="" />
         <div class="flex-grow-1">
@@ -468,18 +475,18 @@ const getSeatInfo = scheduleTimeId => {
             schedule_time_id: scheduleTimeId
         }
     })
-    .then(res => {
-        seatNotAvai = res.data.data.seat_names.split(',')
-    })
-    .then(() => {
-        renderSeat()
-    })
-    .then(() => {
-        setSeatEvent()
-    })
-    .catch(err => {
-        console.error(err)
-    })
+        .then(res => {
+            seatNotAvai = res.data.data.seat_names.split(',')
+        })
+        .then(() => {
+            renderSeat()
+        })
+        .then(() => {
+            setSeatEvent()
+        })
+        .catch(err => {
+            console.error(err)
+        })
 }
 
 const setTimeMovieEvent = () => {
@@ -517,64 +524,108 @@ const renderDateSelect = () => {
 
 renderDateSelect()
 
-const getMovieTheaterInfo = (date , order) => {
+const dateItem = document.querySelectorAll('.date_item')
+let dateActive = 0
+
+const getMovieTheaterInfo = (date, order) => {
     axios.get('/ticket/getMovieSchedule', {
         params: {
             movie_id: data.id,
             date: formatDate(date)
         }
     })
-    .then(res => {
-        const dateItem = document.querySelectorAll('.date_item')
-        dateItem.forEach((item,index) => {
-            item.addEventListener('click', () => {
-                getMovieTheaterInfo(dateList[index], index)
-            })
-            if(item.classList.contains('active') && index != order){
-                item.classList.remove('active')
-            }
-            if(index == order){
-                item.classList.add('active')
-            }
+        .then(res => {
+            dateItem[dateActive].classList.remove('active')
+            dateItem[order].classList.add('active')
+            dateActive = order
+            localStorage.setItem('theatersInfo', JSON.stringify(res.data.data))
+            renderTheater(res.data.data)
         })
-        localStorage.setItem('theatersInfo', JSON.stringify(res.data.data))
-        renderTheater(res.data.data)
-    })
-    .then(() => {
-        setTimeMovieEvent()
-    })
-    .catch(err => {
-        console.error(err)
-    })
+        .then(() => {
+            setTimeMovieEvent()
+        })
+        .catch(err => {
+            console.error(err)
+        })
 }
+
+dateItem.forEach((item, index) => {
+    item.addEventListener('click', () => {
+        getMovieTheaterInfo(dateList[index], index)
+    })
+})
 
 getMovieTheaterInfo(dateList[0], 0)
 
 const purchaseBtn = document.querySelector('#purchase_btn')
 const purchaseInfo = document.querySelectorAll('.purchase_info')
+const ticketError = document.querySelectorAll('.ticket_error')
+const purchaseUI = document.querySelector('#purchase_ui')
+const purchaseSuccess = document.querySelector('#purchase_success')
+
+const showPurchaseInputInfo = () => {
+    purchaseUI.style.display = 'block'
+    purchaseSuccess.style.display = 'none'
+}
+
+if(activeIndex != 3){
+    showPurchaseInputInfo()
+}
+
+const showTicketSuccessUI = () => {
+    purchaseUI.style.display = 'none'
+    purchaseSuccess.style.display = 'block'
+}
 
 purchaseBtn.addEventListener('click', () => {
     let flag = false
-    purchaseInfo.forEach((item,index) => {
+    purchaseInfo.forEach((item, index) => {
         const value = item.value
-        if((index === 0 || index === 1 || index === 3 || index === 5) && value == ''){
+        if(index != 5){
+            ticketError[index].innerHTML = ''
+        }
+        if(index == 0 && value == ''){
             flag = true
-        }else if(index === 2 && (value == '' || value.length != 16)){
+            ticketError[index].innerHTML = 'Please enter your firstname'
+        }
+        if(index == 1 && value == ''){
             flag = true
-        }else if(index === 4 && (value == '' || value.length != 3)){
+            ticketError[index].innerHTML = 'Please enter your lastname'
+        }
+        if(index == 2 && value == ''){
             flag = true
-        }else if(index === 6 && (value == '' || value.length != 5)){
+            ticketError[index].innerHTML = 'Please enter your card number'
+        }else if(index == 2 && value.length != 16){
             flag = true
+            ticketError[index].innerHTML = 'Card number must contain 16 numbers'
+        }
+        if(index == 3 && value == ''){
+            flag = true
+            ticketError[index].innerHTML = 'Please enter card expiration date'
+        }
+        if(index == 4 && value == ''){
+            flag = true
+            ticketError[index].innerHTML = 'Please enter cvv'
+        }else if(index == 4 && value.length != 3){
+            flag = true
+            ticketError[index].innerHTML = 'CVV must contain 3 numbers'
+        }
+        if(index == 6 && value == ''){
+            flag = true
+            ticketError[index].innerHTML = 'Please enter Postal code'
+        }else if(index == 6 && value.length != 5){
+            flag = true
+            ticketError[index].innerHTML = 'Postal must contain 5 numbers'
         }
     })
-    if(!flag){
+    if (!flag) {
         const theaterInfo = JSON.parse(localStorage.getItem('theaterInfo'))
         const scheduleTimeId = localStorage.getItem('scheduleTimeId')
         const seats = JSON.parse(localStorage.getItem('ticketSelected'))
         const foods = JSON.parse(localStorage.getItem('foodDetail'))
         const foodId = []
         const foodQuantity = []
-        foods.forEach(item => {
+        foods?.forEach(item => {
             foodId.push(item.id)
             foodQuantity.push(item.quantity)
         })
@@ -585,15 +636,26 @@ purchaseBtn.addEventListener('click', () => {
             food_combo_id: foodId.join(','),
             food_combo_quantity: foodQuantity.join(','),
         })
-        .then(res => {
-            if(res.data.code == 200){
-                showToastMes(res.data.message, 'success')
-            }else{
-                showToastMes(res.data.message, 'fail')
-            }
-        })
-        .catch(err => {
-            console.error(err)
-        })
+            .then(res => {
+                if (res.data.code == 200) {
+                    showTicketSuccessUI()
+                    showToastMes(res.data.message, 'success')
+                } else {
+                    showToastMes(res.data.message, 'fail')
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
+})
+
+const paymentMethod = document.querySelectorAll('.payment_icon')
+
+paymentMethod.forEach(item => {
+    item.addEventListener('click', () => {
+        const paymentActive = document.querySelectorAll('.payment-active')[0]
+        paymentActive.classList.remove('payment-active')
+        item.classList.add('payment-active')
+    })
 })

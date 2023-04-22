@@ -68,14 +68,14 @@ const getMovieByKeyWord = keyword => {
     .then(res => {
         const filter = res.data.data.filter(item => item.status == indexType)
         if(indexType == 0){
-            resetOpenMovie()
-            filter.forEach(item => {
-                renderOpenMovie(item)
-            })
-        }else if(indexType == 1){
             resetComingMovie()
             filter.forEach(item => {
                 renderComingMovie(item)
+            })
+        }else if(indexType == 1){
+            resetOpenMovie()
+            filter.forEach(item => {
+                renderOpenMovie(item)
             })
         }
     })
