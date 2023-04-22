@@ -94,7 +94,15 @@ const UserController = {
         res.status(200).json({
             code: 200,
             message: 'User logged in successfully',
-            data: user[0],
+            data: {
+                email: user[0].email,
+                name: user[0].name,
+                status: user[0].status,
+                phone: user[0].phone,
+                address: user[0].address,
+                birthday: user[0].birthday,
+                createAt: user[0].createAt,                
+            },
             accessToken: accessToken,
             status: user[0].status
         });
@@ -178,7 +186,12 @@ const UserController = {
                 res.status(200).json({
                     code: 200,
                     message: 'Update account successfully',
-                    data: result[0]
+                    data: {
+                        name: name,
+                        phone: phone,
+                        birthday: birthday,
+                        address: address
+                    }
                 });
             })
             .catch((err) => {
