@@ -12,11 +12,11 @@ let indexType = 1
 movieTypeBtn.forEach((element, index) => {
     element.addEventListener('click', () => {
         const selectedMovieBtn = document.querySelector('.movie_btn-selected')
-        indexType = index
+        indexType = index == 0 ? 1 : 0
         if (!element.isSameNode(selectedMovieBtn)) {
             selectedMovieBtn.classList.remove('movie_btn-selected')
             element.classList.add('movie_btn-selected')
-            if (index === 1) {
+            if (index === 0) {
                 openMovieContainer.style.display = 'grid'
                 comingMovieContainer.style.display = 'none'
             } else {
