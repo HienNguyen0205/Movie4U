@@ -31,14 +31,14 @@ router.get('/support', (req, res) => {
     })
 })
 
-router.get('/profile', middleware.authForAdminAndRedirect, (req, res) => {
+router.get('/profile', middleware.authForUserAndRedirect, (req, res) => {
     res.render('profile', {
         layout: 'mainLayout',
         script: '/js/profile.js',
     })
 })
 
-router.get('/history', middleware.authForAdminAndRedirect, (req,res) => {
+router.get('/history', middleware.authForUserAndRedirect, (req,res) => {
     res.render('history', {
         layout: 'mainLayout',
         script: '/js/history.js',
