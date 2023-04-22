@@ -17,18 +17,36 @@ function getAllUsers() {
 function renderAllUsers(data) {
     listUsers.innerHTML = ''
     data.forEach(element => {
-        listUsers.insertAdjacentHTML('beforeend',
-        `
-        <tr>
-                <th scope="row">${element.id}</th>
-                <td>${element.name}</td>
-                <td>${element.email}</td>
-                <td>${element.phone}</td>
-                <td>${element.address}</td>
-                <td>${element.birthday.slice(0, 10)}</td>
-                <td>${element.createAt.slice(0, 10)}</td>
-            </tr>
-        `)
+        if(element.birthday == null || element.phone == null || element.address == null)
+        {
+            listUsers.insertAdjacentHTML('beforeend',
+            `
+            <tr>
+                    <th scope="row">${element.id}</th>
+                    <td>${element.name}</td>
+                    <td>${element.email}</td>
+                    <td>Null</td>
+                    <td>Null</td>
+                    <td>Null</td>
+                    <td>${element.createAt.slice(0, 10)}</td>
+                </tr>
+            `)
+        }
+        else
+        {
+            listUsers.insertAdjacentHTML('beforeend',
+            `
+            <tr>
+                    <th scope="row">${element.id}</th>
+                    <td>${element.name}</td>
+                    <td>${element.email}</td>
+                    <td>${element.phone}</td>
+                    <td>${element.address}</td>
+                    <td>${element.birthday.slice(0, 10)}</td>
+                    <td>${element.createAt.slice(0, 10)}</td>
+                </tr>
+            `)
+        }
     });
 }
 getAllUsers()
