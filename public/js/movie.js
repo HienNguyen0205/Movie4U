@@ -7,7 +7,7 @@ const movieTypeBtn = document.querySelectorAll('.movie_btn')
 openMovieContainer.style.display = 'grid'
 comingMovieContainer.style.display = 'none'
 
-let indexType = 0
+let indexType = 1
 
 movieTypeBtn.forEach((element, index) => {
     element.addEventListener('click', () => {
@@ -16,7 +16,7 @@ movieTypeBtn.forEach((element, index) => {
         if (!element.isSameNode(selectedMovieBtn)) {
             selectedMovieBtn.classList.remove('movie_btn-selected')
             element.classList.add('movie_btn-selected')
-            if (index === 0) {
+            if (index === 1) {
                 openMovieContainer.style.display = 'grid'
                 comingMovieContainer.style.display = 'none'
             } else {
