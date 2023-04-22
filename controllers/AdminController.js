@@ -356,7 +356,9 @@ const AdminControllers = {
         let revenue = 0;
         await db.query(sql)
             .then((result) => {
-                revenue = result[0].total;
+                if(result[0].total !== null){
+                    revenue = result[0].total;
+                }
             });
         sql = `SELECT COUNT(*) as total FROM ticket`;
         let totalTicket = 0;
@@ -420,9 +422,17 @@ const AdminControllers = {
             return;
         }else{
             const duration = movie[0].duration;
-            const end_time_movie = new Date(start_time);
-            end_time_movie.setMinutes(end_time_movie.getMinutes() + duration);
-            if(end_time_movie > end_time) {
+            const date1 = new Date(0, 0, 0, start_time.split(':')[0], start_time.split(':')[1], 0);
+            const date2 = new Date(0, 0, 0, end_time.split(':')[0], end_time.split(':')[1], 0);
+            if(date2 < date1) {
+                res.status(200).json({
+                    code: 201,
+                    message: 'End time must be greater than start time'
+                });
+                return;
+            }
+            
+            if(duration > (date2 - date1) / 1000 / 60) {
                 res.status(200).json({
                     code: 201,
                     message: 'Time duration is not enough'

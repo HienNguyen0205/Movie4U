@@ -211,8 +211,8 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (7, 1), (7, 2), (7, 3)
 INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$YYzITgz7yyA1sVxRwMjOZeMbNM0yu6qy5UXgKqegko27WuHuGAYu.",0);
 
 INSERT INTO theatre(name, address, image, tel, description) VALUES
-("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","Tầng 5 TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, Phường 7, Quận Gò Vấp"),
-("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/binhthanh_cinema.jpg","0808080808","Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM");
+("Movie4U Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","Tầng 5 TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, Phường 7, Quận Gò Vấp"),
+("Movie4U Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/binhthanh_cinema.png","0808080808","Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM");
 
 INSERT INTO room (name,type,theatre_id) 
 VALUES
@@ -237,12 +237,12 @@ VALUES
 -- Add sample schedule times for Theatre 1
 INSERT INTO schedule_time (schedule_id, start_time, end_time)
 VALUES
-  (1, '10:00:00', '12:00:00'),
-  (1, '14:00:00', '16:00:00'),
-  (1, '16:00:00', '18:00:00'),
-  (2, '13:30:00', '15:31:00'),
-  (3, '16:15:00', '18:30:00'),
-  (4, '19:00:00', '21:00:00');
+  (1, '10:00:00', '12:30:00'),
+  (1, '14:00:00', '16:30:00'),
+  (1, '18:00:00', '20:30:00'),
+  (2, '13:00:00', '15:30:00'),
+  (3, '17:00:00', '19:30:00'),
+  (4, '19:00:00', '21:30:00');
 
 -- Add sample schedules for Theatre 2
 INSERT INTO schedule (movie_id, room_id, theatre_id, price)
@@ -255,10 +255,10 @@ VALUES
 -- Add sample schedule times for Theatre 2
 INSERT INTO schedule_time (schedule_id, start_time, end_time)
 VALUES
-  (5, '12:30:00', '14:30:00'),
-  (6, '16:00:00', '18:01:00'),
+  (5, '12:00:00', '14:30:00'),
+  (6, '16:00:00', '18:30:00'),
   (7, '18:45:00', '21:00:00'),
-  (8, '21:30:00', '23:30:00');
+  (8, '20:30:00', '23:00:00');
 
 INSERT INTO food_combo(name,price,popcorn,drink,description,image) VALUES 
 ("1 Popcorn And 2 Drink",10,1,2,'Include 1 popcorn + 2 drink','/images/FoodCombo/1p2d.jpg'),
