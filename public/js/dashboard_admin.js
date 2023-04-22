@@ -154,7 +154,7 @@ function getAllDashboard() {
     .then(res => {
       viewsValue.innerHTML = res.data.data.toltalView
       orderValue.innerHTML = res.data.data.totalTicket
-      revenueValue.innerHTML = res.data.data.revenue
+      revenueValue.innerHTML = res.data.data.revenue +'$'
     })
     .catch(err => {
       console.error(err)
