@@ -5,6 +5,13 @@ header[0].style.position = 'static'
 const userInfoItem = document.querySelectorAll('.user_info_item')
 const userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
+const formatDateForInput = date => {
+    const year = date.getFullYear()
+    const month = (date.getMonth() + 1).toString().padStart(2, "0")
+    const day = date.getDate().toString().padStart(2, "0")
+    return `${year}-${month}-${day}`
+}
+
 const saveUserInfo = () => {
     const name = document.querySelector('#full_name_profile')
     const phone = document.querySelector('#phone')
@@ -59,7 +66,7 @@ if(userInfo != null){
                 curr.value = userInfo.address
                 break
             case 4:
-                curr.value = userInfo.birthday
+                curr.value = formatDateForInput(new Date(userInfo.birthday))
                 break
         }
         editBtn.addEventListener('click', () => {

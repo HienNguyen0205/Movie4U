@@ -64,6 +64,9 @@ const changeTicketSection = (from, to) => {
         priceStorage.food = Number(0).toFixed(2)
         calcTotalPrice()
     }
+    if(to == 3){
+        showPurchaseInputInfo()
+    }
     activeIndex = to
 }
 
@@ -566,10 +569,6 @@ const purchaseSuccess = document.querySelector('#purchase_success')
 const showPurchaseInputInfo = () => {
     purchaseUI.style.display = 'block'
     purchaseSuccess.style.display = 'none'
-}
-
-if(activeIndex != 3){
-    showPurchaseInputInfo()
 }
 
 const showTicketSuccessUI = () => {
