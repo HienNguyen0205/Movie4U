@@ -17,7 +17,7 @@ router.get('/movie', (req, res) => {
     })
 })
 
-router.get('/movieticket', (req, res) => {
+router.get('/movieticket', middleware.authForUserAndRedirect, (req, res) => {
     res.render('movieTicket', {
         layout: 'mainLayout',
         script: '/js/movie_ticket.js',

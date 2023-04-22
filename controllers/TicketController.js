@@ -1,5 +1,6 @@
 const db = require('../database');
 const jwt = require('jsonwebtoken');
+const MailService = require('../services/MailService');
 const TicketControllers = {
     getMovieSchedule(req, res) {
         const moive_id = req.query.movie_id;
@@ -84,11 +85,16 @@ const TicketControllers = {
             return;
         }
 
-        await addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
+        const ticket_id = await addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_time_id, req.user.id, food_combo_idList, food_combo_quantityList);
+        
+        const ticket = await getTicketById(ticket_id);
+        
+        MailService.sendTicket(req.user.email, "Ticket", "Thank for purchase tickets" ,ticket);
 
         res.status(200).json({
             code: 200,
-            message: 'Success'
+            message: 'Success',
+            data: ticket
         });
     },
     getSeat: async (req, res) => {
@@ -118,6 +124,7 @@ const TicketControllers = {
         t.id AS ticket_id,
         t.schedule_time_id,
         t.account_id,
+        th.id AS theatre_id,
         th.name AS theatre_name,
         r.name AS room_name,
         st.start_time,
@@ -130,10 +137,11 @@ const TicketControllers = {
         m.duration AS movie_duration,
         m.description AS movie_description,
         m.trailer AS movie_trailer,
-        GROUP_CONCAT(DISTINCT s.name) AS seat_names,
-        GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
-        GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
-        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
+        IFNULL(GROUP_CONCAT(DISTINCT s.name), '') AS seat_names,
+        IFNULL(GROUP_CONCAT(DISTINCT f.id), '') AS food_combo_ids,
+        IFNULL(GROUP_CONCAT(DISTINCT f.name), '') AS food_combo_names,
+        IFNULL(GROUP_CONCAT(DISTINCT f.price), '') AS food_combo_prices,
+        IFNULL(GROUP_CONCAT(DISTINCT f.image), '') AS food_combo_images,
         t.total
         FROM
             ticket t
@@ -145,9 +153,9 @@ const TicketControllers = {
             movie m ON sch.movie_id = m.id
         JOIN
             seat s ON t.id = s.ticket_id
-        JOIN
+        LEFT JOIN
             food_combo_ticket ft ON t.id = ft.ticket_id
-        JOIN
+        LEFT JOIN
             food_combo f ON ft.food_combo_id = f.id
         JOIN 
             theatre th ON sch.theatre_id = th.id
@@ -156,8 +164,8 @@ const TicketControllers = {
         WHERE
             t.account_id = ?
         GROUP BY
-            t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
-        
+            t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer
+        ORDER BY t.createAt DESC;
     `;
         const results = await db.queryParams(sql, [account_id]);
         res.status(200).json({
@@ -180,6 +188,7 @@ const TicketControllers = {
         t.account_id,
         a.email,
         th.id AS theatre_id,
+        th.name AS theatre_name,
         t.id AS ticket_id,
         t.schedule_time_id,
         t.account_id,
@@ -194,11 +203,11 @@ const TicketControllers = {
         m.duration AS movie_duration,
         m.description AS movie_description,
         m.trailer AS movie_trailer,
-        GROUP_CONCAT(DISTINCT s.name) AS seat_names,
-        GROUP_CONCAT(DISTINCT f.id) AS food_combo_ids,
-        GROUP_CONCAT(DISTINCT f.name) AS food_combo_names,
-        GROUP_CONCAT(DISTINCT f.price) AS food_combo_prices,
-        GROUP_CONCAT(DISTINCT f.image) AS food_combo_images,
+        IFNULL(GROUP_CONCAT(DISTINCT s.name), '') AS seat_names,
+        IFNULL(GROUP_CONCAT(DISTINCT f.id), '') AS food_combo_ids,
+        IFNULL(GROUP_CONCAT(DISTINCT f.name), '') AS food_combo_names,
+        IFNULL(GROUP_CONCAT(DISTINCT f.price), '') AS food_combo_prices,
+        IFNULL(GROUP_CONCAT(DISTINCT f.image), '') AS food_combo_images,
         t.total
         FROM
             ticket t
@@ -210,15 +219,16 @@ const TicketControllers = {
             movie m ON sch.movie_id = m.id
         JOIN
             seat s ON t.id = s.ticket_id
-        JOIN
+        LEFT JOIN
             food_combo_ticket ft ON t.id = ft.ticket_id
-        JOIN
+        LEFT JOIN
             food_combo f ON ft.food_combo_id = f.id
         JOIN
             account a ON t.account_id = a.id
         JOIN
             theatre th ON sch.theatre_id = th.id
-        GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer;
+        GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer
+        ORDER BY t.createAt DESC;
         `;
 
         const results = await db.query(sql);
@@ -251,13 +261,12 @@ async function addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_t
     
     const foodComboPriceSql = 'SELECT price FROM food_combo WHERE id = ?';
     let foodComboPrice = 0;
-    for (let i = 0; i < food_combo_list.length; i++) {
-        const foodComboPriceResult = await db.queryParams(foodComboPriceSql, [food_combo_list[i]]);
-        foodComboPrice += Number(foodComboPriceResult[0].price)  * food_combo_quantity_list[i];
+    if(food_combo_list.length > 0 && !!food_combo_list[0]){
+        for (let i = 0; i < food_combo_list.length; i++) {
+            const foodComboPriceResult = await db.queryParams(foodComboPriceSql, [food_combo_list[i]]);
+            foodComboPrice += Number(foodComboPriceResult[0].price)  * food_combo_quantity_list[i];
+        }
     }
-
-    console.log(foodComboPrice);
-    console.log(moviePrice);
 
     const total = Number(moviePrice)  + Number(foodComboPrice);
 
@@ -270,10 +279,66 @@ async function addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_t
         const sql = 'Insert into seat (ticket_id,schedule_time_id,name) values (?,?,?)';
         await db.queryTransaction(sql, [ticket_id,schedule_time_id, seatList[i]]);
     }
-    for (let i = 0; i < food_combo_list.length; i++) {
-        const sql = 'Insert into food_combo_ticket (ticket_id,food_combo_id,quantity,account_id) values (?,?,?,?)';
-        await db.queryTransaction(sql, [ticket_id, food_combo_list[i], food_combo_quantity_list[i], account_id]);
+    if(food_combo_list.length > 0 && !!food_combo_list[0]){
+        for (let i = 0; i < food_combo_list.length; i++) {
+            const sql = 'Insert into food_combo_ticket (ticket_id,food_combo_id,quantity,account_id) values (?,?,?,?)';
+            await db.queryTransaction(sql, [ticket_id, food_combo_list[i], food_combo_quantity_list[i], account_id]);
+        }
     }
+    return ticket_id;
+}
+
+async function getTicketById(ticket_id){
+    const sql = `SELECT
+    t.account_id,
+    a.email,
+    th.id AS theatre_id,
+    th.name AS theatre_name,
+    t.id AS ticket_id,
+    t.schedule_time_id,
+    t.account_id,
+    t.createAt,
+    st.start_time,
+    st.end_time,
+    CONVERT_TZ(sch.date, '-07:00', '+07:00') as date,
+    sch.price,
+    sch.movie_id,
+    m.name AS movie_name,
+    m.image AS movie_image,
+    m.duration AS movie_duration,
+    m.description AS movie_description,
+    m.trailer AS movie_trailer,
+    IFNULL(GROUP_CONCAT(DISTINCT s.name), '') AS seat_names,
+    IFNULL(GROUP_CONCAT(DISTINCT f.id), '') AS food_combo_ids,
+    IFNULL(GROUP_CONCAT(DISTINCT f.name), '') AS food_combo_names,
+    IFNULL(GROUP_CONCAT(DISTINCT f.price), '') AS food_combo_prices,
+    IFNULL(GROUP_CONCAT(DISTINCT f.image), '') AS food_combo_images,
+    t.total
+    FROM
+        ticket t
+    JOIN
+        schedule_time st ON t.schedule_time_id = st.id
+    JOIN
+        schedule sch ON st.schedule_id = sch.id
+    JOIN
+        movie m ON sch.movie_id = m.id
+    JOIN
+        seat s ON t.id = s.ticket_id
+    LEFT JOIN
+        food_combo_ticket ft ON t.id = ft.ticket_id
+    LEFT JOIN
+        food_combo f ON ft.food_combo_id = f.id
+    JOIN
+        account a ON t.account_id = a.id
+    JOIN
+        theatre th ON sch.theatre_id = th.id
+    WHERE
+        t.id = ?
+    GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer
+    ORDER BY t.createAt DESC;
+    `;
+    const results = await db.queryParams(sql, [ticket_id]);
+    return results;
 }
 
 module.exports = TicketControllers;

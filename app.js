@@ -20,8 +20,8 @@ app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, 'views'))
 
 /* Setting up the middleware for the express app. */
-app.use(bodyParser.json({limit: '30mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '30mb', extended: true}))
+app.use(bodyParser.json({ limit: '30mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 app.use(logger('dev'))
 app.use(cookieParser('cookie'))
@@ -29,7 +29,7 @@ app.use(session({
     secret: 'secret',
     resave: false,
     saveUninitialized: true,
-    cookie: {secure: true}
+    cookie: { secure: true }
 }))
 
 app.use((req, res, next) => {
@@ -44,5 +44,23 @@ app.use('/', indexRouter)
 app.use('/admin', adminRouter)
 app.use('/movie', movieRouter)
 app.use('/ticket', ticketRouter)
+
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    next(createError(404));
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+
+    //re direct trang dang nhap
+    res.render('error');
+});
 
 module.exports = app
