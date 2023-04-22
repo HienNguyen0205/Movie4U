@@ -356,7 +356,9 @@ const AdminControllers = {
         let revenue = 0;
         await db.query(sql)
             .then((result) => {
-                revenue = result[0].total;
+                if(result[0].total !== null){
+                    revenue = result[0].total;
+                }
             });
         sql = `SELECT COUNT(*) as total FROM ticket`;
         let totalTicket = 0;
