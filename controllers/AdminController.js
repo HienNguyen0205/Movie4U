@@ -351,23 +351,23 @@ const AdminControllers = {
                 });
             });
     },
-    getRevenue(req, res) {
-        $sql = `SELECT SUM(total) as total FROM ticket`;
+    getRevenue: async (req, res) => {
+        let sql = `SELECT SUM(total) as total FROM ticket`;
         let revenue = 0;
-        db.query($sql)
+        await db.query(sql)
             .then((result) => {
                 revenue = result[0].total;
             });
-        $sql = `SELECT COUNT(*) as total FROM ticket`;
+        sql = `SELECT COUNT(*) as total FROM ticket`;
         let totalTicket = 0;
-        db.query($sql)
+        await db.query(sql)
             .then((result) => {
                 totalTicket = result[0].total;
             }
             );
         let toltalView = 0;
-        $sql = `SELECT COUNT(*) as total FROM seat`;
-        db.query($sql)
+        sql = `SELECT COUNT(*) as total FROM seat`;
+        await db.query(sql)
             .then((result) => {
                 toltalView = result[0].total;
             });
@@ -440,9 +440,6 @@ const AdminControllers = {
             });
             return;
         }
-
-        // schedule time store start and end time as start_time and end_time and also link to schedule table so need to insert to schedule table first
-        // schedule table has movie_id, theatre_id, room_id, date
 
         checkSchedule = await checkScheduleExist(movie_id, theatre_id, room_id, date);
 

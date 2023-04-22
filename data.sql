@@ -212,7 +212,7 @@ INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1
 
 INSERT INTO theatre(name, address, image, tel, description) VALUES
 ("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","Tầng 5 TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, Phường 7, Quận Gò Vấp"),
-("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/govap_cinema.jpg","0808080808","Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM");
+("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/binhthanh_cinema.jpg","0808080808","Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM");
 
 INSERT INTO room (name,type,theatre_id) 
 VALUES
