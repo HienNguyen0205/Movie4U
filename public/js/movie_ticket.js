@@ -574,7 +574,7 @@ if(activeIndex != 3){
 
 const showTicketSuccessUI = () => {
     purchaseUI.style.display = 'none'
-    purchaseSuccess.style.display = 'block'
+    purchaseSuccess.style.display = 'flex'
 }
 
 purchaseBtn.addEventListener('click', () => {
@@ -659,3 +659,7 @@ paymentMethod.forEach(item => {
         item.classList.add('payment-active')
     })
 })
+
+const checkHistory = () => {
+    changePath('history')
+}

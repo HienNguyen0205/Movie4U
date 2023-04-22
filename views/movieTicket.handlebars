@@ -426,11 +426,11 @@
                         </button>
                     </div>
                 </div>
-                <div id="purchase_success">
+                <div id="purchase_success" class="d-flex flex-column align-items-center">
                     <i id="success_ticket_icon" class="fa-solid fa-circle-check my-4 text-center" style="color: #3ee568;"></i>
-                    <h3 class="text-center text-dander">Purchase Successfully</h3>
-                    <p class="text-center">Tickets have been already sent to your email</p>
-                    <button id="check_history">Check History</button>
+                    <h3 class="text-center text-dander mb-2">Purchase Successfully</h3>
+                    <p class="text-center my-2">Tickets have been already sent to your email</p>
+                    <button id="check_history" class="btn btn-success mt-2" onclick="checkHistory()">Check History</button>
                 </div>
             </div>
             <div id="purchase_info_container">
@@ -453,7 +453,7 @@
                 <p><span class="text-hightlight w-30 d-inline-block">Food price:</span><span
                         class="total_food_price"></span></p>
                 <hr>
-                <h4 class="header_text mt-2">Total: <span class="total_price" style="color: white;">$125</span></h4>
+                <h4 class="header_text mt-2">Total: <span class="total_price" style="color: white;"></span></h4>
             </div>
         </div>
     </div>

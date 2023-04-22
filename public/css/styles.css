@@ -1087,3 +1087,7 @@ footer > div > a:hover {
   width: 33%;
   border-radius: 24px;
 }
+
+#success_ticket_icon{
+  font-size: 80px;
+}
