@@ -161,10 +161,10 @@ INSERT INTO category (name) VALUES ('Action'), ('Comedy'), ('Drama'), ('Horror')
 -- Insert current movies
 INSERT INTO movie (name, duration, release_date, image, trailer, director, actors, age_restrict, description)
 VALUES
-  ('Aladdin', 120, '2019-05-22', '/images/Movie/aladdin.jpg', 'https://www.youtube.com/embed/foyufD52aog', 'Guy Ritchie', 'Mena Massoud, Naomi Scott, Will Smith, Marwan Kenzari', 'PG-7','dadada'),
-  ('Avengers: Endgame', 181, '2019-04-26', '/images/Movie/avenger-endgame.jpg', 'https://www.youtube.com/embed/TcMBFSGVi1c', 'Anthony Russo, Joe Russo', 'Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth', 'PG-13','adadadad'),
-  ('Captain Marvel', 124, '2019-03-08', '/images/Movie/captain-marvel.jpg', 'https://www.youtube.com/embed/Z1BCujX3pw8', 'Anna Boden, Ryan Fleck', 'Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Jude Law', 'PG-13','adadada'),
-  ('Cruella', 134, '2021-05-28', '/images/Movie/cruella.jpg', 'https://www.youtube.com/embed/gmRKv7n2If8', 'Craig Gillespie', 'Emma Stone, Emma Thompson, Joel Fry, Paul Walter Hauser', 'PG-13','adadadad');
+  ('Aladdin', 120, '2019-05-22', '/images/Movie/aladdin.jpg', 'https://www.youtube.com/embed/foyufD52aog', 'Guy Ritchie', 'Mena Massoud, Naomi Scott, Will Smith, Marwan Kenzari', 'PG-7','A kind-hearted street urchin Aladdin vies for the love of the beautiful princess Jasmine, the princess of Agrabah. When he finds a magic lamp, he uses the genies magic power to make himself a prince in order to marry her. Hes also on a mission to stop the powerful Jafar who plots to steal the magic lamp that could make his deepest wishes come true'),
+  ('Avengers: Endgame', 181, '2019-04-26', '/images/Movie/avenger-endgame.jpg', 'https://www.youtube.com/embed/TcMBFSGVi1c', 'Anthony Russo, Joe Russo', 'Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth', 'PG-13','After the devastating events of Avengers: Infinity War (2018), the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanoss actions and undo the chaos to the universe, no matter what consequences may be in store, and no matter who they face...'),
+  ('Captain Marvel', 124, '2019-03-08', '/images/Movie/captain-marvel.jpg', 'https://www.youtube.com/embed/Z1BCujX3pw8', 'Anna Boden, Ryan Fleck', 'Brie Larson, Samuel L. Jackson, Ben Mendelsohn, Jude Law', 'PG-13','After crashing an experimental aircraft, Air Force pilot Carol Danvers is discovered by the Kree and trained as a member of the elite Starforce Military under the command of her mentor Yon-Rogg. Six years later, after escaping to Earth while under attack by the Skrulls, Danvers begins to discover theres more to her past. With help from S.H.I.E.L.D. agent Nick Fury, they set out to unravel the truth.'),
+  ('Cruella', 134, '2021-05-28', '/images/Movie/cruella.jpg', 'https://www.youtube.com/embed/gmRKv7n2If8', 'Craig Gillespie', 'Emma Stone, Emma Thompson, Joel Fry, Paul Walter Hauser', 'PG-13','Before she becomes Cruella de Vil, teenage Estella has a dream. She wishes to become a fashion designer, having been gifted with talent, innovation, and ambition all in equal measures. But life seems intent on making sure her dreams never come true. Having wound up penniless and orphaned in London at 12, 10 years later Estella runs wild through the city streets with her best friends and partners-in-(petty)-crime, Horace and Jasper, two amateur thieves. When a chance encounter vaults Estella into the world of the young rich and famous, however, she begins to question the existence shes built for herself in London and wonders whether she might, indeed, be destined for more after all.');
   -- ('No Time To Die', 134, '2021-09-30', '/images/Movie/no-time-to-die.jpg', 'https://www.youtube.com/embed/BIhNsAtPbPI', 'Cary Joji Fukunaga', 'Daniel Craig, Rami Malek, Léa Seydoux, Lashana Lynch', 'PG-13'),
   -- ('Spider-Man: Far From Home', 129, '2019-07-02', '/images/Movie/spider-man-far-from-home.jpg', 'https://www.youtube.com/embed/Nt9L1jCKGnE', 'Jon Watts', 'Tom Holland, Samuel L. Jackson, Zendaya, Jake Gyllenhaal', 'PG-13'),
   -- ('Star Wars: The Rise of Skywalker', 142, '2019-12-20', '/images/Movie/star-wars.jpg', 'https://www.youtube.com/embed/8Qn_spdM5Zg', 'J.J. Abrams', 'Daisy Ridley, Adam Driver, John Boyega, Oscar Isaac', 'PG-13'),
@@ -175,10 +175,10 @@ VALUES
 -- Insert upcoming movies
 INSERT INTO movie (name, duration, release_date, image, trailer, status, actors, director, age_restrict, description)
 VALUES
-  ('Joker', 122, '2019-10-04', '/images/Movie/joker.jpg', 'https://www.youtube.com/embed/zAGVQLHvwOY', 0, 'Joaquin Phoenix, Robert De Niro, Zazie Beetz', 'Todd Phillips', 'R','adadada'),
-  ('The Lion King', 118, '2019-07-19', '/images/Movie/lion-king.jpg', 'https://www.youtube.com/embed/7TavVZMewpY', 0, 'Donald Glover, Beyoncé, James Earl Jones', 'Jon Favreau', 'PG','adadadad'),
-  ('Frozen 2', 103, '2019-11-22', '/images/Movie/frozen-2.jpg', 'https://www.youtube.com/embed/Zi4LMpSDccc', 0, 'Kristen Bell, Idina Menzel, Josh Gad', 'Chris Buck, Jennifer Lee', 'PG','adadadad'),
-  ('Jumanji: The Next Level', 123, '2019-12-13', '/images/Movie/jumanji-next-level.jpg', 'https://www.youtube.com/embed/F6QaLsw8EWY', 0, 'Dwayne Johnson, Kevin Hart, Jack Black', 'Jake Kasdan', 'PG-13','adada');
+  ('Joker', 122, '2019-10-04', '/images/Movie/joker.jpg', 'https://www.youtube.com/embed/zAGVQLHvwOY', 0, 'Joaquin Phoenix, Robert De Niro, Zazie Beetz', 'Todd Phillips', 'R','A socially inept clown for hire - Arthur Fleck aspires to be a stand up comedian among his small job working dressed as a clown holding a sign for advertising. He takes care of his mother- Penny Fleck, and as he learns more about his mental illness, he learns more about his past. Dealing with all the negativity and bullying from society he heads downwards on a spiral, in turn showing how his alter ego "Joker", came to be.'),
+  ('The Lion King', 118, '2019-07-19', '/images/Movie/lion-king.jpg', 'https://www.youtube.com/embed/7TavVZMewpY', 0, 'Donald Glover, Beyoncé, James Earl Jones', 'Jon Favreau', 'PG','In Africa, the lion cub Simba is the pride and joy of his parents King Mufasa and Queen Sarabi. Mufasa prepares Simba to be the next king of the jungle. However, the naive Simba believes in his envious uncle Scar that wants to kill Mufasa and Simba to become the next king. He lures Simba and his friend Nala to go to a forbidden place and they are attacked by hyenas but they are rescued by Mufasa. Then Scar plots another scheme to kill Mufasa and Simba but the cub escapes alive and leaves the kingdom believing he was responsible for the death of his father. Now Scar becomes the king supported by the evil hyenas while Simba grows in a distant land. Sometime later, Nala meets Simba and tells that the kingdom has become a creepy wasteland. What will Simba do?'),
+  ('Frozen 2', 103, '2019-11-22', '/images/Movie/frozen-2.jpg', 'https://www.youtube.com/embed/Zi4LMpSDccc', 0, 'Kristen Bell, Idina Menzel, Josh Gad', 'Chris Buck, Jennifer Lee', 'PG','Having harnessed her ever-growing power after lifting the dreadful curse of the eternal winter in Nữ Hoàng Băng Giá (2013), the beautiful conjurer of snow and ice, Queen Elsa, now rules the peaceful kingdom of Arendelle, enjoying a happy life with her sister, Princess Anna. However, a melodious voice that only Elsa can hear keeps her awake, inviting her to the mystical enchanted forest that the sisters father told them about a long time ago. Now, unable to block the thrilling call of the secret siren, Elsa, along with Anna, Kristoff, Olaf, and Sven summons up the courage to follow the voice into the unknown, intent on finding answers in the perpetually misty realm in the woods. More and more, an inexplicable imbalance is hurting not only her kingdom but also the neighboring tribe of Northuldra. Can Queen Elsa put her legendary magical skills to good use to restore peace and stability?'),
+  ('Jumanji: The Next Level', 123, '2019-12-13', '/images/Movie/jumanji-next-level.jpg', 'https://www.youtube.com/embed/F6QaLsw8EWY', 0, 'Dwayne Johnson, Kevin Hart, Jack Black', 'Jake Kasdan', 'PG-13','The gang is back but the game has changed. As they return to Jumanji to rescue one of their own, they discover that nothing is as they expect. The players will have to brave parts unknown and unexplored, from the arid deserts to the snowy mountains, in order to escape the worlds most dangerous game.');
   -- ('Black Widow', 134, '2021-07-09', '/images/Movie/black-widow.jpg', 'https://www.youtube.com/embed/Fp9pNPdNwjI', 0, 'Scarlett Johansson, Florence Pugh, David Harbour', 'Cate Shortland', 'PG-13'),
   -- ('Fast & Furious 9', 143, '2021-06-25', '/images/Movie/fast-furious-9.jpg', 'https://www.youtube.com/embed/FUK2kdPsBws', 0, 'Vin Diesel, Michelle Rodriguez, John Cena', 'Justin Lin', 'PG-13'),
   -- ('Godzilla vs. Kong', 113, '2021-03-31', '/images/Movie/godzilla-vs-kong.jpg', 'https://www.youtube.com/embed/odM92ap8_c0', 0, 'Alexander Skarsgård, Millie Bobby Brown, Rebecca Hall', 'Adam Wingard', 'PG-13'),
@@ -211,8 +211,8 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (7, 1), (7, 2), (7, 3)
 INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$YYzITgz7yyA1sVxRwMjOZeMbNM0yu6qy5UXgKqegko27WuHuGAYu.",0);
 
 INSERT INTO theatre(name, address, image, tel, description) VALUES
-("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","asd"),
-("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/govap_cinema.jpg","0808080808","asd");
+("CGV Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","Tầng 5 TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, Phường 7, Quận Gò Vấp"),
+("CGV Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/govap_cinema.jpg","0808080808","Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM");
 
 INSERT INTO room (name,type,theatre_id) 
 VALUES
@@ -260,8 +260,8 @@ VALUES
   (7, '18:45:00', '21:00:00'),
   (8, '21:30:00', '23:30:00');
 
-INSERT INTO food_combo(name,price,popcorn,drink,description) VALUES 
-("1 Popcorn And 2 Drink",10,1,2,'Include 1 popcorn + 2 drink'),
-("2 PopcornS And 3 Drink",20,2,3,'Include popcorn + 3 drink'),
-("3 PopcornS And 5 Drink",30,3,5,'Include popcorn + 5 drink'),
-("4 PopcornS And 7 Drink",50,4,7,'Include popcorn + 7 drink');
+INSERT INTO food_combo(name,price,popcorn,drink,description,image) VALUES 
+("1 Popcorn And 2 Drink",10,1,2,'Include 1 popcorn + 2 drink','/images/FoodCombo/1p2d.jpg'),
+("2 PopcornS And 3 Drink",20,2,3,'Include popcorn + 3 drink','/images/FoodCombo/1p2d.jpg'),
+("3 PopcornS And 5 Drink",30,3,5,'Include popcorn + 5 drink','/images/FoodCombo/1p2d.jpg'),
+("4 PopcornS And 7 Drink",50,4,7,'Include popcorn + 7 drink','/images/FoodCombo/1p2d.jpg');
