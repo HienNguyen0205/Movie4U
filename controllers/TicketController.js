@@ -15,6 +15,7 @@ const TicketControllers = {
         const sql = `SELECT
         sch.id AS schedule_id,
         sch.movie_id,
+        m.name AS movie_name,
         sch.room_id,
         sch.theatre_id,
         CONVERT_TZ(sch.date, '-07:00', '+07:00') as date,
@@ -36,6 +37,8 @@ const TicketControllers = {
             room r ON sch.room_id = r.id
         JOIN 
             schedule_time st ON sch.id = st.schedule_id
+        JOIN
+            movie m ON sch.movie_id = m.id
         WHERE 
             sch.movie_id = ? 
             AND DATE(sch.date) = ?
@@ -281,8 +284,8 @@ async function addTicketAndSeatAndFoodComboList(seatList,schedule_id ,schedule_t
     }
     if(food_combo_list.length > 0 && !!food_combo_list[0]){
         for (let i = 0; i < food_combo_list.length; i++) {
-            const sql = 'Insert into food_combo_ticket (ticket_id,food_combo_id,quantity,account_id) values (?,?,?,?)';
-            await db.queryTransaction(sql, [ticket_id, food_combo_list[i], food_combo_quantity_list[i], account_id]);
+            const sql = 'Insert into food_combo_ticket (ticket_id,food_combo_id,quantity) values (?,?,?)';
+            await db.queryTransaction(sql, [ticket_id, food_combo_list[i], food_combo_quantity_list[i]]);
         }
     }
     return ticket_id;

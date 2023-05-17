@@ -12,8 +12,9 @@ CREATE TABLE account (
   address VARCHAR(255) DEFAULT NULL,
   birthday DATE DEFAULT NULL,
   password VARCHAR(255) NOT NULL,
-  status TINYINT NOT NULL DEFAULT 1,
+  status INT NOT NULL DEFAULT 1,
   createAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  role VARCHAR(255) NOT NULL DEFAULT 'USER',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -49,7 +50,7 @@ CREATE TABLE movie (
   release_date DATE NOT NULL,
   image VARCHAR(255) NOT NULL,
   trailer VARCHAR(255) NOT NULL,
-  status TINYINT NOT NULL DEFAULT 1,
+  status INT NOT NULL DEFAULT 1,
   description VARCHAR(21844) DEFAULT NULL,
   age_restrict VARCHAR(255) NOT NULL,
   director VARCHAR(255) NOT NULL,
@@ -80,7 +81,7 @@ CREATE TABLE schedule (
   room_id INT NOT NULL,
   theatre_id INT NOT NULL,
   date DATE NOT NULL DEFAULT CURDATE(),
-  price DECIMAL(8,2) NOT NULL,
+  price INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (theatre_id) REFERENCES theatre(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -101,7 +102,7 @@ CREATE TABLE food_combo (
   name VARCHAR(255) NOT NULL,
   popcorn INT NOT NULL,
   drink INT NOT NULL,
-  price DECIMAL(8,2) NOT NULL,
+  price INT NOT NULL,
   description VARCHAR(21844) DEFAULT NULL,
   image VARCHAR(255) DEFAULT '/images/UI/popcorn&cola.jpg',
   PRIMARY KEY (id)
@@ -112,7 +113,7 @@ CREATE TABLE ticket (
   account_id INT NOT NULL,
   schedule_time_id INT NOT NULL,
   createAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  total DECIMAL(8,2) NOT NULL,
+  total INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (schedule_time_id) REFERENCES schedule_time(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -122,11 +123,9 @@ CREATE TABLE food_combo_ticket (
   id INT NOT NULL AUTO_INCREMENT,
   food_combo_id INT NOT NULL,
   ticket_id INT NOT NULL,
-  account_id INT NOT NULL,
   quantity INT NOT NULL,
   FOREIGN KEY (food_combo_id) REFERENCES food_combo(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (ticket_id) REFERENCES ticket(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -208,11 +207,12 @@ INSERT INTO movie_category (movie_id, category_id) VALUES (7, 2), (7, 3), (7, 5)
 -- Jumanji: The Next Level
 INSERT INTO movie_category (movie_id, category_id) VALUES (7, 1), (7, 2), (7, 3), (7, 5);
 
-INSERT INTO account(name,email,phone,password,status) VALUES ("admin","admin","1234567890","$2a$04$YYzITgz7yyA1sVxRwMjOZeMbNM0yu6qy5UXgKqegko27WuHuGAYu.",0);
+INSERT INTO account(name,email,phone,password,status,role) VALUES ("admin","admin","1234567890","$2a$04$YYzITgz7yyA1sVxRwMjOZeMbNM0yu6qy5UXgKqegko27WuHuGAYu.",0,"ADMIN");
+INSERT INTO account(name,email,phone,password,status,role) VALUES ("Nguyen Xuan Binh","binhnguyenxuan47@gmail.com","1234567890","$2a$04$D73d95wgjYUGotTLDSepcuIWo4dqv.dX0EQ5H99TfL0w8Xc6ypYEG",1,"USER");
 
 INSERT INTO theatre(name, address, image, tel, description) VALUES
-("Movie4U Gò Vấp", "Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","Tầng 5 TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, Phường 7, Quận Gò Vấp"),
-("Movie4U Bình Thạnh", "Bình Thạnh", "/images/MovieTheatres/binhthanh_cinema.png","0808080808","Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM");
+("Movie4U Gò Vấp", "Tầng 5 TTTM Vincom Plaza Gò Vấp, 12 Phan Văn Trị, Phường 7, Quận Gò Vấp", "/images/MovieTheatres/govap_cinema.jpg","0909090909","Trải nghiệm điện ảnh chất lượng nhất tại cụm rạp CGV trên toàn quốc. Trang thông tin tổng hợp lịch chiếu, trailers phim mới nhất."),
+("Movie4U Bình Thạnh", "Tầng 5, Pearl Plaza, 561A Điện Biên Phủ, P.25, Q.Bình Thạnh, TP.HCM", "/images/MovieTheatres/binhthanh_cinema.png","0808080808","Trải nghiệm điện ảnh chất lượng nhất tại cụm rạp CGV trên toàn quốc. Trang thông tin tổng hợp lịch chiếu, trailers phim mới nhất.");
 
 INSERT INTO room (name,type,theatre_id) 
 VALUES

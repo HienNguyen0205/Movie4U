@@ -71,7 +71,7 @@ const AdminControllers = {
 
     getAllTheatres: (req, res) => {
         const sql = `
-                SELECT t.id, t.name, t.address, t.image, t.tel, t.description,
+                SELECT t.id AS id, t.name AS name, t.address AS address, t.image AS image, t.tel, t.description,
                 COALESCE(SUM(CASE WHEN r.type = '2D/3D' THEN 1 ELSE 0 END), 0) AS 'R2D_3D',
                 COALESCE(SUM(CASE WHEN r.type = '4DX' THEN 1 ELSE 0 END), 0) AS 'R4DX',
                 COALESCE(SUM(CASE WHEN r.type = 'IMAX' THEN 1 ELSE 0 END), 0) AS 'RIMAX',
@@ -532,7 +532,6 @@ const AdminControllers = {
         JOIN 
             movie m ON sch.movie_id = m.id
         GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;
-     
         `;
         db.query(sql)
             .then((result) => {
@@ -835,6 +834,7 @@ const AdminControllers = {
                 });
                 return;
             }
+            
             const fileName = `${imageFile.originalFilename}`;
             const filePath = `/images/Movie/${fileName}`;
             const oldPath = imageFile.path;
