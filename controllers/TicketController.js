@@ -192,6 +192,7 @@ const TicketControllers = {
         a.email,
         th.id AS theatre_id,
         th.name AS theatre_name,
+        r.name AS room_name,
         t.id AS ticket_id,
         t.schedule_time_id,
         t.account_id,
@@ -230,6 +231,8 @@ const TicketControllers = {
             account a ON t.account_id = a.id
         JOIN
             theatre th ON sch.theatre_id = th.id
+        JOIN
+            room r ON sch.room_id = r.id
         GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer
         ORDER BY t.createAt DESC;
         `;
@@ -297,6 +300,7 @@ async function getTicketById(ticket_id){
     a.email,
     th.id AS theatre_id,
     th.name AS theatre_name,
+    r.name AS room_name,
     t.id AS ticket_id,
     t.schedule_time_id,
     t.account_id,
@@ -335,6 +339,8 @@ async function getTicketById(ticket_id){
         account a ON t.account_id = a.id
     JOIN
         theatre th ON sch.theatre_id = th.id
+    JOIN
+        room r ON sch.room_id = r.id
     WHERE
         t.id = ?
     GROUP BY t.id, st.start_time, st.end_time, sch.date, sch.price, sch.movie_id, m.name, m.image, m.duration, m.description, m.trailer

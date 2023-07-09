@@ -26,6 +26,13 @@ const saveUserInfo = () => {
     .then(res => {
         if(res.data.code == 200){
             showToastMes(res.data.message, 'success')
+            localStorage.setItem('userInfo', {
+                ...JSON.parse(localStorage.getItem('userInfo')),
+                name : name.value,
+                phone : phone.value,
+                birthday : birthday.value,
+                address : address.value
+            })
         }else{
             showToastMes(res.data.message, 'fail')
         }
@@ -69,7 +76,7 @@ if(userInfo != null){
                 curr.value = formatDateForInput(new Date(userInfo.birthday))
                 break
         }
-        editBtn.addEventListener('click', () => {
+        editBtn?.addEventListener('click', () => {
             handleEditBtn(curr, editBtn)
         })
     })
@@ -92,24 +99,46 @@ forgetPassToggle.forEach(item=> {
 })
 
 const changePassBtn = document.querySelector('#change_pass_btn')
+var modal = new bootstrap.Modal('#change_pass_modal');
 
 changePassBtn.addEventListener('click', () => {
-    const currPassword = document.querySelector('#curr_pass')
-    const newPassword = document.querySelector('#new_pass')
-    const confirmNewPassword = document.querySelector('#confirm_new_pass')
-    axios.post('/changePassword', {
-        password : currPassword.value,
-        newPassword : newPassword.value,
-        confirmPassword : confirmNewPassword.value
-    })
-    .then(res => {
-        if(res.data.code == 200){
-            showToastMes(res.data.message, 'success')
-        }else{
-            showToastMes(res.data.message, 'fail')
+    const currPassword = document.querySelector('#curr_pass').value
+    const newPassword = document.querySelector('#new_pass').value
+    const confirmNewPassword = document.querySelector('#confirm_new_pass').value
+    const errMes = document.querySelectorAll('.error_mess')
+    if(passwordRegex.test(currPassword) && passwordRegex.test(newPassword) && newPassword == confirmNewPassword){
+        axios.post('/changePassword', {
+            password : currPassword,
+            newPassword : newPassword,
+            confirmPassword : confirmNewPassword
+        })
+        .then(res => {
+            if(res.data.code == 200){
+                showToastMes(res.data.message, 'success')
+                modal.hide();
+                errMes.forEach(item => {
+                    item.innerHTML = ''
+                })
+            }else{
+                showToastMes(res.data.message, 'fail')
+            }
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    }else{
+        if(!passwordRegex.test(currPassword) || currPassword == ''){
+            const password = document.querySelector('#curr_pass_error')
+            password.innerHTML = 'Password is invalid'
         }
-    })
-    .catch(err => {
-        console.error(err)
-    })
+        if(!passwordRegex.test(newPassword) || newPassword == ''){
+            const password = document.querySelector('#new_pass_error')
+            password.innerHTML = 'New password is invalid'
+        }
+        if(newPassword != confirmNewPassword || confirmNewPassword == ''){
+            const password = document.querySelector('#new_pass_confirm_error')
+            password.innerHTML = 'Confirm password is invalid'
+        }
+    }
+        
 })

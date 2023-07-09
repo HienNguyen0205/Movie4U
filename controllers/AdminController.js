@@ -6,7 +6,7 @@ const helper = require('../helper');
 
 const AdminControllers = {
     getAllUser: (req, res) => {
-        $sql = 'SELECT * FROM account WHERE status = 1';
+        $sql = 'SELECT * FROM account WHERE status = 1 ORDER BY createAt DESC';
         db.query($sql)
             .then((results) => {
                 res.status(200).json({
@@ -531,7 +531,8 @@ const AdminControllers = {
             schedule_time st ON sch.id = st.schedule_id
         JOIN 
             movie m ON sch.movie_id = m.id
-        GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity;
+        GROUP BY sch.id, th.name, th.address, th.image, r.name, r.type, r.capacity
+        ORDER BY date desc;
         `;
         db.query(sql)
             .then((result) => {

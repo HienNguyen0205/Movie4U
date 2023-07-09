@@ -227,7 +227,7 @@ const UserController = {
 
         const check = await checkPassword(user.id, password);
         if(!check) {
-            res.status(500).json({
+            res.status(200).json({
                 code: 500,
                 message: 'Password is not correct'
             });

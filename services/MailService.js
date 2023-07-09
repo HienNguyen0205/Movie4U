@@ -95,6 +95,7 @@ function tiketHTML(ticket) {
     const movie_name = ticketInfo.movie_name;
     const theatre_name = ticketInfo.theatre_name;
     const seat_names = ticketInfo.seat_names;
+    const room = ticketInfo.room_name;
     const html =
         `
     <!DOCTYPE html>
@@ -347,6 +348,7 @@ function tiketHTML(ticket) {
                     </div>
                     <div class="time">
                         <p>${start_time}<span> TO </span>${end_time}</p>
+                        <p>${room}</p>
                         <p>Seat: ${seat_names}</p>
                     </div>
     

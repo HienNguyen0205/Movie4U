@@ -43,6 +43,7 @@ const ticketContainer = document.querySelector('#ticket_wrap')
 let activeIndex = 0
 
 const changeTicketSection = (from, to) => {
+    if(from == 5) return 0
     buyTicketStep[to].classList.add('buy_ticket_step-active')
     buyTicketStep[from].classList.remove('buy_ticket_step-active')
     buyTicketSection[to].classList.remove('d-none')
@@ -639,6 +640,7 @@ purchaseBtn.addEventListener('click', () => {
                 if (res.data.code == 200) {
                     showTicketSuccessUI()
                     showToastMes(res.data.message, 'success')
+                    activeIndex = 5
                 } else {
                     showToastMes(res.data.message, 'fail')
                 }
